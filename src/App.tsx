@@ -1,8 +1,13 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
+import { TabelaDeFinancas } from "./TabelaDeFinancas";
 
 function App() {
-  return <Button variant="contained">Hello World</Button>;
+  return (
+    <main>
+      <TabelaDeFinancas />
+    </main>
+  );
 }
 
 export default App;
