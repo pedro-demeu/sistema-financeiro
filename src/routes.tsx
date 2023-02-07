@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { TabelaDeFinancas } from "./TabelaDeFinancas";
-import { Login } from "./pages";
+import { LoginForm } from "./pages/Account";
 
 export const routes = createBrowserRouter([
   {
@@ -13,6 +13,6 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <LoginForm />,
   },
 ]);

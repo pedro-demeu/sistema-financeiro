@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-export const Login: React.FC = () => {
+export const LoginForm: React.FC = () => {
   return (
     <Box
       sx={{
