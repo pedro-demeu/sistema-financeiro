@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { TabelaDeFinancas } from "./TabelaDeFinancas";
+import { Dashboard } from "./pages";
 import { ForgotPassword, LoginForm, CreateAccountForm } from "./pages/Account";
 
 export const routes = createBrowserRouter([
@@ -9,7 +9,7 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <TabelaDeFinancas />,
+    element: <Dashboard />,
   },
   {
     path: "/login",
