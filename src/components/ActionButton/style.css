@@ -1,0 +1,10 @@
+.actionButton {
+  background-color: #6eca9f !important;
+  color: #000 !important;
+  width: 100%;
+  box-shadow: 5px 5px 5px #00000033;
+}
+.actionButton:hover {
+  background-color: #4affab !important;
+  transition: 0.4s;
+}

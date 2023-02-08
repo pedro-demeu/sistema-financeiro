@@ -8,49 +8,17 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import {
+  ActionButton,
+  AppContainer,
+  CustomLink,
+  FormPattern,
+} from "../../../components";
 
 export const ForgotPassword: React.FC = () => {
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        width: "100vw",
-        background: "#0D0D0D",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <form
-        style={{
-          borderRadius: "5px",
-          padding: "3rem",
-          width: "400px",
-          height: "600px",
-          backgroundColor: "#585858",
-        }}
-      >
-        <Typography
-          variant="h1"
-          color="white"
-          sx={{
-            fontSize: "1.5rem",
-            marginBottom: "2rem",
-          }}
-        >
-          Recuperação de senha!
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{
-            marginBottom: "2rem",
-          }}
-          color="white"
-        >
-          Digite seu e-mail cadastrado, nós enviaremos um e-mail de recuperação
-          para trocar a senha
-        </Typography>
-
+    <AppContainer>
+      <FormPattern title="Recuperação de conta">
         <FormControl
           sx={{
             display: "block",
@@ -63,7 +31,7 @@ export const ForgotPassword: React.FC = () => {
             }}
             htmlFor="email"
           >
-            E-mail principal
+            Digite seu e-mail da conta
           </InputLabel>
           <Input
             sx={{
@@ -82,21 +50,10 @@ export const ForgotPassword: React.FC = () => {
             margin: "2rem 0",
           }}
         >
-          <FormControl
-            sx={{
-              flexDirection: "row",
-              display: "flex",
-              justifyContent: "space-between",
-              gap: "1rem",
-            }}
-          >
-            <Button variant="contained">Voltar</Button>
-            <Button variant="contained" color="error">
-              Recuperar
-            </Button>
-          </FormControl>
+          <ActionButton title="Recuperar" />
         </FormControl>
-      </form>
-    </Box>
+        <CustomLink title="Voltar" to="/login" />
+      </FormPattern>
+    </AppContainer>
   );
 };

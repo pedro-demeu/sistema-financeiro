@@ -8,10 +8,13 @@ import "@fontsource/roboto/700.css";
 import { CssBaseline } from "@mui/material";
 import { RouterProvider } from "react-router-dom";
 import { routes } from "./routes";
+import { AppContainer } from "./components";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <CssBaseline />
-    <RouterProvider router={routes} />
+    <AppContainer>
+      <RouterProvider router={routes} />
+    </AppContainer>
   </React.StrictMode>
 );
