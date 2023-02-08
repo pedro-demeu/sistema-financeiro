@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { TabelaDeFinancas } from "./TabelaDeFinancas";
-import { LoginForm } from "./pages/Account";
+import { ForgotPassword, LoginForm, CreateAccountForm } from "./pages/Account";
 
 export const routes = createBrowserRouter([
   {
@@ -14,5 +14,13 @@ export const routes = createBrowserRouter([
   {
     path: "/login",
     element: <LoginForm />,
+  },
+  {
+    path: "/create-account",
+    element: <CreateAccountForm />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
   },
 ]);
