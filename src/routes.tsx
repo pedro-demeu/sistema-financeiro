@@ -5,15 +5,11 @@ import { ForgotPassword, LoginForm, CreateAccountForm } from "./pages/Account";
 export const routes = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello world!</div>,
+    element: <LoginForm />,
   },
   {
     path: "/dashboard",
     element: <Dashboard />,
-  },
-  {
-    path: "/login",
-    element: <LoginForm />,
   },
   {
     path: "/create-account",

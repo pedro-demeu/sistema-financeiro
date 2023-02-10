@@ -10,9 +10,6 @@ export const AppContainer: React.FC<Props> = ({ children }) => {
         height: "100vh",
         width: "100vw",
         background: "#211f27",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
       }}
     >
       {children}

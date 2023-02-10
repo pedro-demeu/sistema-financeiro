@@ -52,7 +52,7 @@ export const ForgotPassword: React.FC = () => {
         >
           <ActionButton title="Recuperar" />
         </FormControl>
-        <CustomLink title="Voltar" to="/login" />
+        <CustomLink title="Voltar" to="/" />
       </FormPattern>
     </AppContainer>
   );

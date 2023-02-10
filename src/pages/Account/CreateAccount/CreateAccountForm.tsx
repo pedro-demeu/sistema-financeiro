@@ -129,7 +129,7 @@ export const CreateAccountForm: React.FC = () => {
             <ActionButton title="Criar" />
           </FormControl>
         </FormControl>
-        <CustomLink title="Voltar" to="/login" />
+        <CustomLink title="Voltar" to="/" />
       </FormPattern>
     </AppContainer>
   );
