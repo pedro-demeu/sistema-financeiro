@@ -5,15 +5,20 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { CssBaseline } from "@mui/material";
-import { RouterProvider } from "react-router-dom";
-import { routes } from "./routes";
+import { BrowserRouter } from "react-router-dom";
+import { Routes } from "./routes";
 import { AppContainer } from "./components";
+import { RecoilRoot } from "recoil";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <CssBaseline />
-    <AppContainer>
-      <RouterProvider router={routes} />
-    </AppContainer>
+    <RecoilRoot>
+      <AppContainer>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </AppContainer>
+    </RecoilRoot>
   </React.StrictMode>
 );

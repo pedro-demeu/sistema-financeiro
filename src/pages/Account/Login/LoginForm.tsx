@@ -6,20 +6,45 @@ import {
   FormControlLabel,
   Input,
   InputLabel,
-  Link,
   Typography,
 } from "@mui/material";
+import { useFormik } from "formik";
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
-import { ActionButton, CustomLink, FormPattern } from "../../../components";
+import { boolean, date, number, object, string } from "yup";
+import { CustomLink, FormPattern } from "../../../components";
+import {
+  LoginSchema,
+  DEFAULT_VALUES,
+  UserLoggedAtom,
+} from "../../../atoms/login";
+import { useSetRecoilState } from "recoil";
 
 export const LoginForm: React.FC = () => {
-  const [checked, setChecked] = React.useState(false);
+  const setLoggedUser = useSetRecoilState(UserLoggedAtom);
+  const navigate = useNavigate();
+  const loginValidations = object({
+    username: string().required().min(4).max(50),
+    password: string().required().min(4).max(8),
+    rememberMe: boolean(),
+  });
 
-  function handleChange() {
-    setChecked(!checked);
-  }
+  const formik = useFormik({
+    initialValues: DEFAULT_VALUES,
+    validationSchema: loginValidations,
+    onSubmit: (values, { setSubmitting }) => {
+      setSubmitting(true);
+      setLoggedUser(values);
+      navigate("/home");
+      setSubmitting(false);
+    },
+  });
+
   return (
-    <FormPattern title="Faça login para continuar">
+    <FormPattern
+      onSubmit={formik.handleSubmit}
+      title="Faça login para continuar"
+    >
       <FormControl
         sx={{
           display: "block",
@@ -40,7 +65,12 @@ export const LoginForm: React.FC = () => {
             color: "white",
           }}
           fullWidth
-          id="user"
+          id="username"
+          name="username"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={!!formik.errors.username}
+          value={formik.values.username}
         />
       </FormControl>
       <FormControl
@@ -63,6 +93,11 @@ export const LoginForm: React.FC = () => {
           }}
           fullWidth
           id="password"
+          name="password"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={!!formik.errors.password}
+          value={formik.values.password}
         />
       </FormControl>
       <FormControl
@@ -77,8 +112,11 @@ export const LoginForm: React.FC = () => {
               sx={{
                 color: "white",
               }}
-              checked={checked}
-              onChange={handleChange}
+              checked={formik.values.rememberMe}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              id="rememberMe"
+              name="rememberMe"
             />
           }
           label="Lembrar-me"
@@ -93,7 +131,13 @@ export const LoginForm: React.FC = () => {
             margin: "2rem 0 1rem",
           }}
         >
-          <ActionButton title="Entrar" />
+          <Button
+            type="submit"
+            disabled={formik.isSubmitting}
+            className="actionButton"
+          >
+            Entrar
+          </Button>
         </FormControl>
       </FormControl>
       <FormControl

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,9 +12,15 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-const settings = ["Meu Perfil", "Contato", "Sobre", "Compartilhar", "Logout"];
+import { useRecoilValue } from "recoil";
+import { UserLoggedAtom } from "../../atoms/login";
+import { useNavigate } from "react-router-dom";
+import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 
 export function TopBar() {
+  const settings = ["Meu Perfil", "Contato", "Sobre", "Compartilhar", "Logout"];
+  const loggedUser = useRecoilValue(UserLoggedAtom);
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -37,6 +43,15 @@ export function TopBar() {
     setAnchorElUser(null);
   };
 
+  React.useEffect(
+    function handleUserLoggedVerification() {
+      if (!!!loggedUser.username || loggedUser.username === "") {
+        navigate("/");
+      }
+    },
+    [loggedUser]
+  );
+
   return (
     <AppBar
       sx={{
@@ -46,30 +61,33 @@ export function TopBar() {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AttachMoneyIcon
-            sx={{
-              display: { xs: "none", md: "flex" },
-              marginRight: 0.5,
-              color: "#6eca9f",
-            }}
-          />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "#6eca9f",
-              textDecoration: "none",
-            }}
-          >
-            FINANCEIRO
-          </Typography>
+          <Box display="flex" alignItems="center">
+            <AttachMoneyIcon
+              sx={{
+                display: { xs: "none", md: "flex" },
+                marginRight: 0.5,
+                color: "#6eca9f",
+              }}
+            />
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "#6eca9f",
+                textDecoration: "none",
+              }}
+            >
+              FINANCEIRO
+            </Typography>
+          </Box>
+
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -119,14 +137,28 @@ export function TopBar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            FINANCEIRO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}></Box>
+          <Typography
+            sx={{
+              marginRight: "0.5rem",
+              color: "white",
+              textTransform: "uppercase",
+              fontWeight: "500",
+              fontSize: "0.95rem",
+            }}
+          >
+            {loggedUser.username}
+          </Typography>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <AccountCircleRoundedIcon
+                  fontSize="large"
+                  sx={{ color: "white" }}
+                />
               </IconButton>
             </Tooltip>
             <Menu
