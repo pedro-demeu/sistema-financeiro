@@ -15,9 +15,12 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.6",
     "@mui/x-data-grid": "^5.17.21",
+    "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "recoil": "^0.7.6"
+    "react-router-dom": "^6.8.1",
+    "recoil": "^0.7.6",
+    "yup": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",
