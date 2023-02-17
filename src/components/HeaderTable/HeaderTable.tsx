@@ -6,11 +6,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
+import { useRecoilState } from "recoil";
+import { finantialTransactionModalAtom } from "../../atoms/finantial";
 
 export const HeaderTable: React.FC = () => {
-  const [open, setOpen] = React.useState(false);
-
-  const handleOpen = () => setOpen(!open);
+  const [isModalOpen, setIsModalOpen] = useRecoilState(
+    finantialTransactionModalAtom
+  );
+  const handleModalState = () => setIsModalOpen(!isModalOpen);
 
   return (
     <Box
@@ -23,21 +26,17 @@ export const HeaderTable: React.FC = () => {
       }}
     >
       <Button>
-        <DownloadRoundedIcon fontSize="medium" sx={{ color: "#7D9DBD" }} />
+        <DownloadRoundedIcon fontSize="small" sx={{ color: "white" }} />
       </Button>
-      <Button onClick={handleOpen}>
-        <DeleteIcon fontSize="medium" sx={{ color: "#DE1F53" }} />
+      <Button onClick={handleModalState}>
+        <DeleteIcon fontSize="small" sx={{ color: "white" }} />
       </Button>
       <Button>
-        <EditRoundedIcon fontSize="medium" sx={{ color: "#FACA41" }} />
+        <EditRoundedIcon fontSize="small" sx={{ color: "white" }} />
       </Button>
-      <Button onClick={handleOpen}>
-        <AddCircleRoundedIcon fontSize="medium" sx={{ color: "#6eca9f" }} />
+      <Button onClick={handleModalState}>
+        <AddCircleRoundedIcon fontSize="small" sx={{ color: "white" }} />
       </Button>
-
-      <CustomModal open={open} setOpen={handleOpen}>
-        <FinantialForm />
-      </CustomModal>
     </Box>
   );
 };

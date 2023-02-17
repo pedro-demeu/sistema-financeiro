@@ -1,23 +1,10 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  Input,
-  InputLabel,
-  Typography,
-} from "@mui/material";
+import { Button, Checkbox, FormControl, FormControlLabel } from "@mui/material";
 import { useFormik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React from "react";
-import { boolean, date, number, object, string } from "yup";
-import { CustomLink, FormPattern } from "../../../components";
-import {
-  LoginSchema,
-  DEFAULT_VALUES,
-  UserLoggedAtom,
-} from "../../../atoms/login";
+import { boolean, object, string } from "yup";
+import { CustomLink, CustomTextField, FormPattern } from "../../../components";
+import { DEFAULT_VALUES, UserLoggedAtom } from "../../../atoms/login";
 import { useSetRecoilState } from "recoil";
 
 export const LoginForm: React.FC = () => {
@@ -51,19 +38,18 @@ export const LoginForm: React.FC = () => {
           marginBottom: "1rem",
         }}
       >
-        <InputLabel
-          sx={{
-            color: "white",
+        <CustomTextField
+          InputLabelProps={{
+            style: {
+              color: "#DDD",
+            },
           }}
-          htmlFor="user"
-        >
-          Usuário
-        </InputLabel>
-        <Input
-          sx={{
-            borderColor: "white",
-            color: "white",
+          InputProps={{
+            style: {
+              color: "white",
+            },
           }}
+          autoComplete="off"
           fullWidth
           id="username"
           name="username"
@@ -71,6 +57,7 @@ export const LoginForm: React.FC = () => {
           onBlur={formik.handleBlur}
           error={!!formik.errors.username}
           value={formik.values.username}
+          label="Usuário"
         />
       </FormControl>
       <FormControl
@@ -78,26 +65,27 @@ export const LoginForm: React.FC = () => {
           display: "block",
         }}
       >
-        <InputLabel
-          sx={{
-            color: "white",
+        <CustomTextField
+          InputLabelProps={{
+            style: {
+              color: "#DDD",
+            },
           }}
-          htmlFor="password"
-        >
-          Senha
-        </InputLabel>
-        <Input
-          sx={{
-            borderColor: "white",
-            color: "white",
+          InputProps={{
+            style: {
+              color: "white",
+            },
           }}
           fullWidth
           id="password"
           name="password"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
+          autoComplete="off"
           error={!!formik.errors.password}
           value={formik.values.password}
+          type="password"
+          label="Senha"
         />
       </FormControl>
       <FormControl

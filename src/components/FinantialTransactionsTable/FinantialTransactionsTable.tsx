@@ -7,13 +7,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Box, Checkbox, Typography } from "@mui/material";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 import {
   FinancialTransaction,
+  financialTransactionsAtom,
   FinancialTransactionType,
+  finantialTransactionModalAtom,
 } from "../../atoms/finantial";
-import { HeaderTable } from "..";
+import { EmptyState, HeaderTable } from "..";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 function createData(
   name: string,
@@ -25,13 +26,54 @@ function createData(
   return { name, value, type, createdAt, isDone };
 }
 
-const rows = [
-  createData("Aluguel", 850, "SPENDING", new Date(), true),
-  createData("Condomínio", 75, "SPENDING", new Date(), false),
-  createData("Internet", 70, "SPENDING", new Date(), true),
+// const rows = [
+//   createData("Aluguel", 850, "SPENDING", new Date(), true),
+//   createData("Condomínio", 75, "SPENDING", new Date(), false),
+//   createData("Internet", 70, "SPENDING", new Date(), true),
+// ];
+
+const columns = [
+  {
+    label: "Está pago?",
+    dataKey: "isDone",
+  },
+  {
+    label: "Apelido",
+    dataKey: "name",
+  },
+  {
+    label: "Tipo de despesa",
+    dataKey: "type",
+    renderValue: (e: FinancialTransactionType) =>
+      e === "INCOME" ? "ENTRADA" : "SAÍDA",
+  },
+  {
+    label: "Valor (R$)",
+    dataKey: "value",
+    renderValue: (e: number) =>
+      Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      }).format(e),
+  },
+  {
+    label: "Criado em",
+    dataKey: "created_at",
+  },
 ];
 
-function BasicTable() {
+function renderFormatedDate(date: Date) {
+  const dayToFormat = date.getDate().toString();
+  const day = dayToFormat.length === 1 ? "0" + dayToFormat : dayToFormat;
+  const monthToFormat = (date.getMonth() + 1).toString();
+  const month =
+    monthToFormat.length === 1 ? "0" + monthToFormat : monthToFormat;
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+}
+
+function BasicTable(finantialList: FinancialTransaction[]) {
   return (
     <Box>
       <TableContainer
@@ -43,62 +85,44 @@ function BasicTable() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell color="white">
-                <Checkbox />
-              </TableCell>
-              <TableCell color="white">
-                <Typography sx={{ color: "white" }}>Nome</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography sx={{ color: "white" }}>Valor</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography sx={{ color: "white" }}>Tipo</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography sx={{ color: "white" }}>Está pago?</Typography>
-              </TableCell>
-              <TableCell align="right">
-                <Typography sx={{ color: "white" }}>Criado em</Typography>
-              </TableCell>
+              {columns.map((column) => (
+                <TableCell id={column.dataKey}>
+                  <Typography color="white" align="left">
+                    {column.label}
+                  </Typography>
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {finantialList.map((row) => (
               <TableRow
                 key={row.name}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  <Checkbox />
+                <TableCell align="left" component="th" scope="row">
+                  <Checkbox checked={row.isDone} />
                 </TableCell>
-                <TableCell component="th" scope="row">
+                <TableCell align="left" component="th" scope="row">
                   <Typography sx={{ color: "white" }}>{row.name}</Typography>
                 </TableCell>
-                <TableCell align="right">
-                  <Typography sx={{ color: "white" }}>{row.value}</Typography>
-                </TableCell>
-                <TableCell align="right">
-                  <Typography sx={{ color: "white" }}>{row.type}</Typography>
-                </TableCell>
-                <TableCell align="right">
-                  {row.isDone ? (
-                    <CheckBoxIcon
-                      sx={{
-                        color: "#4affab",
-                      }}
-                    />
-                  ) : (
-                    <IndeterminateCheckBoxIcon
-                      sx={{
-                        color: "#994A5E",
-                      }}
-                    />
-                  )}
-                </TableCell>
-                <TableCell align="right">
+                <TableCell align="left">
                   <Typography sx={{ color: "white" }}>
-                    {row.createdAt.toDateString()}
+                    {Intl.NumberFormat("pt-BR", {
+                      style: "currency",
+                      currency: "BRL",
+                    }).format(row.value)}
+                  </Typography>
+                </TableCell>
+                <TableCell align="left">
+                  <Typography sx={{ color: "white" }}>
+                    {row.type === "INCOME" ? "ENTRADA" : "SAÍDA"}
+                  </Typography>
+                </TableCell>
+
+                <TableCell align="left">
+                  <Typography sx={{ color: "white" }}>
+                    {renderFormatedDate(row.createdAt)}
                   </Typography>
                 </TableCell>
               </TableRow>
@@ -110,11 +134,25 @@ function BasicTable() {
   );
 }
 export function FinantialTransactionsTable() {
+  const finantialList = useRecoilValue(financialTransactionsAtom);
+  const [isModalOpen, setIsModalOpen] = useRecoilState(
+    finantialTransactionModalAtom
+  );
+  const handleModalState = () => setIsModalOpen(!isModalOpen);
+
+  if (finantialList.length === 0)
+    return (
+      <EmptyState
+        title="Crie sua primeira finança"
+        description="Não há finanças cadastradas, clique no ícone a baixo:"
+        onClick={handleModalState}
+      />
+    );
   return (
     <Box
       sx={{
-        height: "100vh",
         width: "80%",
+        maxWidth: "1200px",
         margin: "0 auto",
         display: "flex",
         alignItems: "center",
@@ -123,7 +161,7 @@ export function FinantialTransactionsTable() {
     >
       <Box width="100%">
         <HeaderTable />
-        {BasicTable()}
+        {BasicTable(finantialList)}
       </Box>
     </Box>
   );
