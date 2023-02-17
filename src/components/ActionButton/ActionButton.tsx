@@ -4,34 +4,10 @@ import "./style.css";
 
 interface ActionButtonProps {
   title: string;
-  onClick?: () => void;
-  color?:
-    | "inherit"
-    | "primary"
-    | "secondary"
-    | "success"
-    | "error"
-    | "info"
-    | "warning"
-    | undefined;
 }
 
-export const ActionButton: React.FC<ActionButtonProps> = ({
+export const ActionButton: React.FC<ActionButtonProps | HTMLButtonElement> = ({
   title,
-  onClick,
-  color,
 }) => {
-  return (
-    <Button onClick={onClick} className="actionButton">
-      <Link
-        href="/dashboard"
-        sx={{
-          textDecoration: "none",
-          color: "white",
-        }}
-      >
-        {title}
-      </Link>
-    </Button>
-  );
+  return <Button className="actionButton">{title}</Button>;
 };

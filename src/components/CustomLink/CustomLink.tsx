@@ -1,6 +1,6 @@
-import { Link } from "@mui/material";
 import React from "react";
 import "./style.css";
+import { Link, redirect } from "react-router-dom";
 interface CustomLinkProps {
   title: string;
   to: string;
@@ -8,14 +8,7 @@ interface CustomLinkProps {
 
 export const CustomLink: React.FC<CustomLinkProps> = ({ title, to }) => {
   return (
-    <Link
-      className="customLink"
-      sx={{
-        color: "white",
-        textDecoration: "none",
-      }}
-      href={to}
-    >
+    <Link className="customLink" to={to}>
       {title}
     </Link>
   );
