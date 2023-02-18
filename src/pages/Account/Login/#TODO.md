@@ -12,3 +12,7 @@
 - Função donwload, crud das finanças
 - filtros
 - melhorar a validação dos erros (adicionar helper text)
+- organizar cores num arquivo certinho
+- configurar para usar '@/...' nas importações
+- configurar eslint
+- configurar i18n para PT-BR/EN-US

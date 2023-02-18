@@ -1,45 +1,57 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  Input,
-  InputLabel,
-  Link,
-  Typography,
-} from "@mui/material";
+import { Box, Button, FormControl, Typography } from "@mui/material";
 import React from "react";
+import { useFormik } from "formik";
 import {
-  ActionButton,
   AppContainer,
   CustomLink,
+  CustomTextField,
   FormPattern,
 } from "../../../components";
+import { object, string } from "yup";
 
 export const ForgotPassword: React.FC = () => {
+  const [feedbackMessage, setFeedbackMessage] = React.useState("");
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: object({
+      email: string().required().email(),
+    }),
+    onSubmit: (values) => {
+      setFeedbackMessage(`Enviamos um e-mail para ${values.email}`);
+    },
+  });
   return (
     <AppContainer>
-      <FormPattern title="Recuperação de conta">
+      <FormPattern onSubmit={formik.handleSubmit} title="Recuperação de conta">
         <FormControl
           sx={{
             display: "block",
             marginBottom: "1rem",
           }}
         >
-          <InputLabel
-            sx={{
-              color: "white",
-            }}
-            htmlFor="email"
-          >
-            Digite seu e-mail da conta
-          </InputLabel>
-          <Input
-            sx={{
-              borderColor: "white",
-              color: "white",
-            }}
+          <CustomTextField
+            variant="outlined"
+            label="E-mail"
             fullWidth
+            autoComplete="off"
+            InputProps={{
+              style: {
+                color: "white",
+              },
+            }}
+            InputLabelProps={{
+              style: {
+                color: "white",
+              },
+            }}
             id="email"
+            name="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={!!formik.errors.email}
             type="email"
           />
         </FormControl>
@@ -50,8 +62,24 @@ export const ForgotPassword: React.FC = () => {
             margin: "2rem 0",
           }}
         >
-          <ActionButton title="Recuperar" />
+          <Button
+            type="submit"
+            disabled={!!formik.errors.email}
+            variant="contained"
+            sx={{
+              width: "100%",
+              bgcolor: "#289E71",
+              "&:hover": {
+                bgcolor: "#2FBA85",
+              },
+            }}
+          >
+            Recuperar
+          </Button>
         </FormControl>
+        <Box mt={2} mb={2} width="100%">
+          <Typography align="center" sx={{color: 'white'}}>{feedbackMessage}</Typography>
+        </Box>
         <CustomLink title="Voltar" to="/" />
       </FormPattern>
     </AppContainer>
