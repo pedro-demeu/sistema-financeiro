@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "name": "Aluguel",
+      "value": 830,
+      "type": "SPENDING",
+      "isDone": false,
+      "createdAt": "19/02/2023",
+      "id": 1
+    },
+    {
+      "name": "Conta de Luz",
+      "value": 130,
+      "type": "SPENDING",
+      "isDone": false,
+      "createdAt": "19/02/2023",
+      "id": 2
+    }
+  ],
+  "users": []
+}

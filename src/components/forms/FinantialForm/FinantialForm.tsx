@@ -1,8 +1,6 @@
 import React from "react";
 import {
   FormControl,
-  InputLabel,
-  Input,
   Box,
   Button,
   TextField,
@@ -10,15 +8,19 @@ import {
   InputAdornment,
   Typography,
 } from "@mui/material";
-import { ActionButton, FormPattern, SelectTypeFinantial } from "../..";
-import { useSetRecoilState } from "recoil";
+import { FormPattern, SelectTypeFinantial } from "../..";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   DEFAULT_VALUES,
+  FinancialTransaction,
   financialTransactionsAtom,
   finantialTransactionModalAtom,
 } from "../../../atoms/finantial";
 import { useFormik } from "formik";
 import { boolean, number, object, string } from "yup";
+import fs from "fs";
+import axios from "axios";
+import { transformDate } from "../../../utils/transformDate";
 
 const CustomTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
@@ -35,7 +37,6 @@ const CustomTextField = styled(TextField)({
 });
 
 export const FinantialForm: React.FC = () => {
-  const setFinantialItems = useSetRecoilState(financialTransactionsAtom);
   const setModalClose = useSetRecoilState(finantialTransactionModalAtom);
   const loginValidations = object({
     name: string().required().min(3).max(55),
@@ -43,19 +44,27 @@ export const FinantialForm: React.FC = () => {
     type: string().required(),
     isDone: boolean(),
   });
-
+  async function handleSubmit(data: FinancialTransaction) {
+    try {
+      await axios.post("http://localhost:3000/items", {
+        ...data,
+        createdAt: transformDate(new Date()),
+      });
+    } catch (error: any) {
+      alert(`error: ${error}`);
+    }
+  }
   const formik = useFormik({
     initialValues: DEFAULT_VALUES,
     validationSchema: loginValidations,
     onSubmit: async (values, { setSubmitting }) => {
       setSubmitting(true);
-      await setFinantialItems((e) => {
-        return [...e, values];
-      });
+      await handleSubmit(values);
       setModalClose(false);
       setSubmitting(false);
     },
   });
+
   return (
     <FormPattern
       onSubmit={formik.handleSubmit}

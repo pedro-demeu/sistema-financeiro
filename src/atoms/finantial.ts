@@ -5,8 +5,9 @@ export interface FinancialTransaction {
   name: string;
   value: number;
   type: FinancialTransactionType;
-  createdAt: Date;
+  createdAt: string;
   isDone: boolean;
+  id?: number;
 }
 
 export const DEFAULT_VALUES: FinancialTransaction = {
@@ -14,7 +15,7 @@ export const DEFAULT_VALUES: FinancialTransaction = {
   value: 0,
   type: "SPENDING",
   isDone: false,
-  createdAt: new Date(),
+  createdAt: "",
 };
 
 export const financialTransactionsAtom = atom<FinancialTransaction[]>({

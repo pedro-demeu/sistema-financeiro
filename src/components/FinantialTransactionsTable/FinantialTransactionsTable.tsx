@@ -14,23 +14,8 @@ import {
   finantialTransactionModalAtom,
 } from "../../atoms/finantial";
 import { EmptyState, HeaderTable } from "..";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-
-function createData(
-  name: string,
-  value: number,
-  type: FinancialTransactionType,
-  createdAt: Date,
-  isDone: boolean
-): FinancialTransaction {
-  return { name, value, type, createdAt, isDone };
-}
-
-// const rows = [
-//   createData("Aluguel", 850, "SPENDING", new Date(), true),
-//   createData("Condomínio", 75, "SPENDING", new Date(), false),
-//   createData("Internet", 70, "SPENDING", new Date(), true),
-// ];
+import { useRecoilState, useRecoilValue } from "recoil";
+import axios from "axios";
 
 const columns = [
   {
@@ -62,17 +47,6 @@ const columns = [
   },
 ];
 
-function renderFormatedDate(date: Date) {
-  const dayToFormat = date.getDate().toString();
-  const day = dayToFormat.length === 1 ? "0" + dayToFormat : dayToFormat;
-  const monthToFormat = (date.getMonth() + 1).toString();
-  const month =
-    monthToFormat.length === 1 ? "0" + monthToFormat : monthToFormat;
-  const year = date.getFullYear();
-
-  return `${day}/${month}/${year}`;
-}
-
 function BasicTable(finantialList: FinancialTransaction[]) {
   return (
     <Box>
@@ -97,7 +71,7 @@ function BasicTable(finantialList: FinancialTransaction[]) {
           <TableBody>
             {finantialList.map((row) => (
               <TableRow
-                key={row.name}
+                key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell align="left" component="th" scope="row">
@@ -122,7 +96,7 @@ function BasicTable(finantialList: FinancialTransaction[]) {
 
                 <TableCell align="left">
                   <Typography sx={{ color: "white" }}>
-                    {renderFormatedDate(row.createdAt)}
+                    {row.createdAt}
                   </Typography>
                 </TableCell>
               </TableRow>
@@ -134,11 +108,24 @@ function BasicTable(finantialList: FinancialTransaction[]) {
   );
 }
 export function FinantialTransactionsTable() {
-  const finantialList = useRecoilValue(financialTransactionsAtom);
   const [isModalOpen, setIsModalOpen] = useRecoilState(
     finantialTransactionModalAtom
   );
+  const [finantialList, setFinantialList] = React.useState([]);
+
   const handleModalState = () => setIsModalOpen(!isModalOpen);
+
+  const getData = async () => {
+    const { data } = await axios.get("http://localhost:3000/items");
+    setFinantialList(data);
+  };
+
+  React.useEffect(
+    function getList() {
+      getData();
+    },
+    [isModalOpen]
+  );
 
   if (finantialList.length === 0)
     return (
