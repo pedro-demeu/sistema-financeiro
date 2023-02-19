@@ -12,3 +12,10 @@
 - Função donwload, crud das finanças
 - filtros
 - melhorar a validação dos erros (adicionar helper text)
+
+- fazer crud completinho
+- começa a modificar e refatorar o projeto (eslint, testes unitários ou cypress, refatorar lógicas, melhorar validações errors e otimizar components)
+- [x] create
+- [x] read
+- [x] delete
+- [ ] edit

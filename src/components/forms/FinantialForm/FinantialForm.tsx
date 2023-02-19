@@ -36,33 +36,30 @@ const CustomTextField = styled(TextField)({
   },
 });
 
-export const FinantialForm: React.FC = () => {
+interface FinantialFormProps {
+  initialValues: FinancialTransaction;
+  onSubmit: (data: FinancialTransaction) => void;
+}
+
+export const FinantialForm: React.FC<FinantialFormProps> = ({
+  initialValues,
+  onSubmit,
+}) => {
   const setModalClose = useSetRecoilState(finantialTransactionModalAtom);
-  const loginValidations = object({
-    name: string().required().min(3).max(55),
-    value: number().required().min(0),
-    type: string().required(),
-    isDone: boolean(),
-  });
-  async function handleSubmit(data: FinancialTransaction) {
-    try {
-      await axios.post("http://localhost:3000/items", {
-        ...data,
-        createdAt: transformDate(new Date()),
-      });
-    } catch (error: any) {
-      alert(`error: ${error}`);
-    }
-  }
   const formik = useFormik({
-    initialValues: DEFAULT_VALUES,
-    validationSchema: loginValidations,
+    initialValues,
+    validationSchema: object({
+      name: string().required().min(3).max(55),
+      value: number().required().min(0),
+      type: string().required(),
+      isDone: boolean(),
+    }),
     onSubmit: async (values, { setSubmitting }) => {
       setSubmitting(true);
-      await handleSubmit(values);
+      await onSubmit(values);
       setModalClose(false);
-      setSubmitting(false);
     },
+    enableReinitialize: true,
   });
 
   return (
@@ -146,11 +143,7 @@ export const FinantialForm: React.FC = () => {
         <Box display="flex" justifyContent="end" width="100%" marginTop="1rem">
           <Button
             type="submit"
-            disabled={
-              !!formik.errors.name ||
-              !!formik.errors.value ||
-              !!(formik.values.name === "")
-            }
+            disabled={!!formik.errors.name || !!formik.errors.value}
             variant="contained"
             sx={{
               width: "100%",
@@ -160,7 +153,7 @@ export const FinantialForm: React.FC = () => {
               },
             }}
           >
-            Adicionar
+            {formik.values.id ? "Editar" : "Adicionar"}
           </Button>
         </Box>
       </FormControl>
