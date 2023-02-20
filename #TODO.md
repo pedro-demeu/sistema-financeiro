@@ -24,7 +24,8 @@
 - [x] delete
 - [x] edit
 
-- instalar eslint + configurar
+- instalar eslint + configurar [x]
+- configurar i18n en + pt-br [x]
 - refatorar validações
 - melhorar componentizações e tipagens
 - instalar cypress + coverage e buscar 100%

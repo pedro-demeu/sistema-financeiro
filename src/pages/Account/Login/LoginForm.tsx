@@ -6,6 +6,7 @@ import { boolean, object, string } from 'yup'
 import { CustomLink, CustomTextField, FormPattern } from '../../../components'
 import { DEFAULT_VALUES, UserLoggedAtom } from '../../../atoms/login'
 import { useSetRecoilState } from 'recoil'
+import { t } from 'i18next'
 
 export const LoginForm: React.FC = () => {
   const setLoggedUser = useSetRecoilState(UserLoggedAtom)
@@ -30,7 +31,7 @@ export const LoginForm: React.FC = () => {
   return (
     <FormPattern
       onSubmit={formik.handleSubmit}
-      title="Faça login para continuar"
+      title={t('login:login_to_continue')}
     >
       <FormControl
         sx={{
