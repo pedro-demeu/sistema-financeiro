@@ -7,12 +7,14 @@ import {
   type SelectChangeEvent
 } from '@mui/material'
 import { type FinancialTransactionType } from '../../atoms/finantial'
+import { useTranslation } from 'react-i18next'
 
 interface SelectTypeProps {
   currentValue: FinancialTransactionType
   onChange: (value: SelectChangeEvent<FinancialTransactionType>) => void
   id: string
   name: string
+  label: string
 }
 
 interface MenuValue {
@@ -20,29 +22,32 @@ interface MenuValue {
   id: number
   value: FinancialTransactionType
 }
-const menuItemValues: MenuValue[] = [
-  {
-    label: 'RECEITA',
-    id: Math.random(),
-    value: 'INCOME'
-  },
-  {
-    label: 'SAÍDA',
-    id: Math.random(),
-    value: 'SPENDING'
-  }
-]
 
 export const SelectTypeFinantial: React.FC<SelectTypeProps> = ({
   currentValue,
   onChange,
   id,
-  name
+  name,
+  label
 }) => {
+  const { t } = useTranslation()
+
+  const menuItemValues: MenuValue[] = [
+    {
+      label: t('_common:spending'),
+      id: Math.random(),
+      value: 'SPENDING'
+    },
+    {
+      label: t('_common:income'),
+      id: Math.random(),
+      value: 'INCOME'
+    }
+  ]
   return (
     <FormControl fullWidth>
       <InputLabel sx={{ color: 'white' }} id="FinantialSelectID">
-        Selecione o tipo
+        {label}
       </InputLabel>
       <Select
         variant="outlined"
@@ -65,7 +70,7 @@ export const SelectTypeFinantial: React.FC<SelectTypeProps> = ({
       >
         {menuItemValues.map((item) => (
           <MenuItem key={item.id} id={String(item.id)} value={item.value}>
-            {item.label}
+            {String(item.label).toUpperCase()}
           </MenuItem>
         ))}
       </Select>

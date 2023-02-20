@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from '@mui/material'
 import axios from 'axios'
 import { useFormik } from 'formik'
+import { t } from 'i18next'
 import React from 'react'
 import { useSetRecoilState } from 'recoil'
 import { FormPattern } from '../..'
@@ -31,11 +32,11 @@ export const DeleteForm: React.FC<DeleteFormProps> = ({ name, id }) => {
   return (
     <FormPattern
       onSubmit={formik.handleSubmit}
-      title="Exclusão"
+      title={t('forms_actions:exclude')}
       borderColor="#DE1F53"
     >
       <Typography sx={{ color: 'white' }}>
-        Atenção, você está prestes a deletar a finança:
+        {t('_common:delete_alert')}
       </Typography>
       <Box paddingTop="3rem" paddingBottom="5rem" width="100%">
         <Typography align="left" sx={{ color: 'white' }}>
@@ -53,7 +54,7 @@ export const DeleteForm: React.FC<DeleteFormProps> = ({ name, id }) => {
           }
         }}
       >
-        Confirmar
+        {t('forms_actions:confirm')}
       </Button>
     </FormPattern>
   )

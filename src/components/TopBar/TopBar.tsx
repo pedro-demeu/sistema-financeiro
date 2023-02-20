@@ -14,11 +14,13 @@ import { useRecoilValue } from 'recoil'
 import { UserLoggedAtom } from '../../atoms/login'
 import { useNavigate } from 'react-router-dom'
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded'
+import { useTranslation } from 'react-i18next'
 
 export const TopBar: React.FC = () => {
   const settings = ['Meu Perfil', 'Contato', 'Sobre', 'Compartilhar', 'Logout']
   const loggedUser = useRecoilValue(UserLoggedAtom)
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   )
@@ -86,7 +88,7 @@ export const TopBar: React.FC = () => {
                 textDecoration: 'none'
               }}
             >
-              FINANCEIRO
+              {t('_common:finantial').toUpperCase()}
             </Typography>
           </Box>
 

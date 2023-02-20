@@ -17,6 +17,7 @@ import {
 } from '../../../atoms/finantial'
 import { useFormik } from 'formik'
 import { boolean, number, object, string } from 'yup'
+import { useTranslation } from 'react-i18next'
 
 const CustomTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
@@ -41,6 +42,7 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
   initialValues,
   onSubmit
 }) => {
+  const { t } = useTranslation()
   const setModalClose = useSetRecoilState(finantialTransactionModalAtom)
   const setEditModalClose = useSetRecoilState(editTransactionModalAtom)
   const formik = useFormik({
@@ -67,9 +69,9 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
     <FormPattern
       onSubmit={formik.handleSubmit}
       title={
-        (initialValues.id !== 0) ? 'Altere suas finanças' : 'Cadastre uma nova finança'
+        (initialValues.id !== 0) ? t('_common:change_your_finances') : t('_common:create_your_finance')
       }
-      borderColor={(initialValues.id !== 0) ? '#E3BA40' : ''}
+      borderColor={(initialValues.id !== 0) ? '#E3BA40' : '#6eca9f'}
     >
       <FormControl
         sx={{
@@ -78,7 +80,7 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
         }}
       >
         <CustomTextField
-          label="Apelido"
+          label={t('columns:name')}
           autoComplete="off"
           variant="outlined"
           fullWidth
@@ -108,7 +110,7 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
         }}
       >
         <CustomTextField
-          label="Valor"
+          label={t('columns:value')}
           variant="outlined"
           fullWidth
           id="value"
@@ -145,6 +147,7 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
         <SelectTypeFinantial
           id="type"
           name="type"
+          label={t('_common:select_type')}
           currentValue={formik.values.type}
           onChange={(event) => {
             formik.handleChange(event)
@@ -164,7 +167,7 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
               }
             }}
           >
-            {(formik.values.id !== 0) ? 'Alterar' : 'Adicionar'}
+            {(formik.values.id !== 0) ? t('forms_actions:edit') : t('forms_actions:add')}
           </Button>
         </Box>
       </FormControl>

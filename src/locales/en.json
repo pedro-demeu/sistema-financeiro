@@ -16,12 +16,27 @@
     "confirm": "Confirm",
     "edit": "Edit",
     "delete": "Delete",
-    "add": "Add"
+    "add": "Add",
+    "exclude": "Exclusion"
   },
   "_common": {
     "name": "Name",
-    "email": "E-mail",
+    "email": "E-mail",  
     "confirm_pass": "Confirm the password",
-    "create_account": "Register in plataform"
+    "create_account": "Register in plataform",
+    "change_your_finances": "Change your finances",
+    "create_your_finance": "Create a new finance",
+    "delete_alert": "Attention, you are about to delete the finance:",
+    "select_type": "Select the type",
+    "income": "Income",
+    "spending": "Spending",
+    "finantial": "Finantial"
+  },
+  "columns": {
+    "is_done": "is Done?",
+    "name": "Name",
+    "type": "Finantial Type",
+    "value": "Value",
+    "create_at": "Created at"
   }
 }

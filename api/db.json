@@ -1,12 +1,12 @@
 {
   "items": [
     {
-      "name": "Teste",
-      "value": 500,
-      "type": "SPENDING",
+      "name": "Conta de luz",
+      "value": 75,
+      "type": "INCOME",
       "isDone": false,
       "createdAt": "20/02/2023",
-      "id": 1
+      "id": 2
     }
   ],
   "users": []

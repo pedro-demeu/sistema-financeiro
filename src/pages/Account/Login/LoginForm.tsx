@@ -40,6 +40,7 @@ export const LoginForm: React.FC = () => {
         }}
       >
         <CustomTextField
+          autoFocus
           InputLabelProps={{
             style: {
               color: '#DDD'

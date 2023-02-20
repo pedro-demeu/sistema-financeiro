@@ -14,14 +14,29 @@
     "back": "Voltar",
     "create": "Criar",
     "confirm": "Confirmar",
-    "edit": "Editar",
+    "edit": "Alterar",
     "delete": "Deletar",
-    "add": "Adicionar"
+    "add": "Adicionar",
+    "exclude": "Exclusão"
   },
   "_common": {
     "name": "Nome",
     "email": "E-mail",
     "confirm_pass": "Confirme sua senha",
-    "create_account": "Cadastre-se na plataforma"
+    "create_account": "Cadastre-se na plataforma",
+    "change_your_finances": "Altere suas finanças",
+    "create_your_finance": "Cadastre uma nova finança",
+    "delete_alert": "Atenção, você está prestes a deletar a finança:",
+    "select_type": "Selecione o tipo",
+    "income": "Receitas",
+    "spending": "Despesas",
+    "finantial": "Financeiro"
+  },
+  "columns": {
+    "is_done": "Está pago",
+    "name": "Apelido",
+    "type": "Tipo de despesa",
+    "value": "Valor",
+    "create_at": "Criado em"
   }
 }

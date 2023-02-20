@@ -22,6 +22,7 @@ import axios from 'axios'
 import { DeleteForm, FinantialForm } from '../forms'
 import EditRoundedIcon from '@mui/icons-material/EditRounded'
 import { transformDate } from '../../utils/transformDate'
+import { useTranslation } from 'react-i18next'
 
 interface ColumnObject {
   label: string
@@ -29,44 +30,6 @@ interface ColumnObject {
   align?: 'left' | 'center' | 'right' | 'inherit' | 'justify' | undefined
   renderValue?: (e: any) => string
 }
-const columns: ColumnObject[] = [
-  {
-    label: 'Está pago?',
-    dataKey: 'isDone',
-    align: 'left'
-  },
-  {
-    label: 'Apelido',
-    dataKey: 'name',
-    align: 'left'
-  },
-  {
-    label: 'Tipo de despesa',
-    dataKey: 'type',
-    renderValue: (e: FinancialTransactionType) =>
-      e === 'INCOME' ? 'ENTRADA' : 'SAÍDA',
-    align: 'left'
-  },
-  {
-    label: 'Valor (R$)',
-    dataKey: 'value',
-    renderValue: (e: number) =>
-      Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-      }).format(e),
-    align: 'left'
-  },
-  {
-    label: 'Criado em',
-    dataKey: 'created_at',
-    align: 'left'
-  },
-  {
-    label: '#',
-    align: 'center'
-  }
-]
 
 interface BasicTableProps {
   finantialList: FinancialTransaction[]
@@ -79,6 +42,46 @@ const BasicTable: React.FC<BasicTableProps> = ({
     deleteTransactionModalAtom
   )
   const [editModal, setEditModal] = useRecoilState(editTransactionModalAtom)
+  const { t } = useTranslation()
+
+  const columns: ColumnObject[] = [
+    {
+      label: 'columns:is_done',
+      dataKey: 'isDone',
+      align: 'left'
+    },
+    {
+      label: 'columns:name',
+      dataKey: 'name',
+      align: 'left'
+    },
+    {
+      label: 'columns:value',
+      dataKey: 'value',
+      renderValue: (e: number) =>
+        Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL'
+        }).format(e),
+      align: 'left'
+    },
+    {
+      label: 'columns:type',
+      dataKey: 'type',
+      renderValue: (e: FinancialTransactionType) =>
+        e === 'INCOME' ? t('_common:income') : t('spending'),
+      align: 'left'
+    },
+    {
+      label: 'columns:create_at',
+      dataKey: 'created_at',
+      align: 'left'
+    },
+    {
+      label: '#',
+      align: 'center'
+    }
+  ]
 
   const [finantialSelected, setFinantialSelected] =
     React.useState<FinancialTransaction>(DEFAULT_VALUES)
@@ -118,7 +121,7 @@ const BasicTable: React.FC<BasicTableProps> = ({
               {columns.map((column) => (
                 <TableCell id={column.dataKey} key={column.dataKey}>
                   <Typography color="white" align={column.align}>
-                    {column.label}
+                    {t(`${column.label}`)}
                   </Typography>
                 </TableCell>
               ))}
@@ -146,7 +149,7 @@ const BasicTable: React.FC<BasicTableProps> = ({
                 </TableCell>
                 <TableCell align="left">
                   <Typography sx={{ color: 'white' }}>
-                    {row.type === 'INCOME' ? 'ENTRADA' : 'SAÍDA'}
+                    {row.type === 'INCOME' ? t('_common:income').toUpperCase() : t('_common:spending').toUpperCase()}
                   </Typography>
                 </TableCell>
 
