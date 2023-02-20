@@ -22,4 +22,11 @@
 - [x] create
 - [x] read
 - [x] delete
-- [ ] edit
+- [x] edit
+
+- instalar eslint + configurar
+- refatorar validações
+- melhorar componentizações e tipagens
+- instalar cypress + coverage e buscar 100%
+- melhorar o README do projeto + planejar como deve ficar
+- melhorar backend + adicionar opções avançadas e adicionar check pra marcar is done
