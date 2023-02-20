@@ -5,17 +5,41 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
-  styled,
+  SelectProps,
 } from "@mui/material";
 import { FinancialTransactionType } from "../../atoms/finantial";
 
-export const SelectTypeFinantial: React.FC = () => {
-  const [finantialType, setFinantialType] =
-    React.useState<FinancialTransactionType>("SPENDING");
+interface SelectTypeProps {
+  currentValue: FinancialTransactionType;
+  onChange: (value: SelectChangeEvent<FinancialTransactionType>) => void;
+  id: string;
+  name: string;
+}
 
-  const handleChange = (event: SelectChangeEvent<unknown>) => {
-    setFinantialType(event.target.value as FinancialTransactionType);
-  };
+interface MenuValue {
+  label: string;
+  id: number;
+  value: FinancialTransactionType;
+}
+const menuItemValues: MenuValue[] = [
+  {
+    label: "RECEITA",
+    id: Math.random(),
+    value: "INCOME",
+  },
+  {
+    label: "SAÍDA",
+    id: Math.random(),
+    value: "SPENDING",
+  },
+];
+
+export const SelectTypeFinantial: React.FC<SelectTypeProps> = ({
+  currentValue,
+  onChange,
+  id,
+  name,
+}) => {
   return (
     <FormControl fullWidth>
       <InputLabel sx={{ color: "white" }} id="FinantialSelectID">
@@ -34,13 +58,17 @@ export const SelectTypeFinantial: React.FC = () => {
           },
         }}
         labelId="FinantialSelectID"
-        id="SelectID"
-        value={finantialType}
+        id={id}
+        name={name}
+        value={currentValue}
         label="Selecione o tipo"
-        onChange={handleChange}
+        onChange={onChange}
       >
-        <MenuItem value="INCOME">RECEITA</MenuItem>
-        <MenuItem value="SPENDING">DESPESA</MenuItem>
+        {menuItemValues.map((item) => (
+          <MenuItem id={String(item.id)} value={item.value}>
+            {item.label}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

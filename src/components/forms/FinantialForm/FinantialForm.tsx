@@ -9,8 +9,9 @@ import {
   Typography,
 } from "@mui/material";
 import { FormPattern, SelectTypeFinantial } from "../..";
-import {  useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import {
+  editTransactionModalAtom,
   FinancialTransaction,
   finantialTransactionModalAtom,
 } from "../../../atoms/finantial";
@@ -41,6 +42,7 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
   onSubmit,
 }) => {
   const setModalClose = useSetRecoilState(finantialTransactionModalAtom);
+  const setEditModalClose = useSetRecoilState(editTransactionModalAtom);
   const formik = useFormik({
     initialValues,
     validationSchema: object({
@@ -51,8 +53,12 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
     }),
     onSubmit: async (values, { setSubmitting }) => {
       setSubmitting(true);
-      await onSubmit(values);
-      setModalClose(false);
+      await onSubmit({
+        ...values,
+        createdAt: initialValues.createdAt,
+      });
+      setSubmitting(false);
+      initialValues.id ? setEditModalClose(false) : setModalClose(false);
     },
     enableReinitialize: true,
   });
@@ -60,7 +66,10 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
   return (
     <FormPattern
       onSubmit={formik.handleSubmit}
-      title="Cadastre uma nova finança"
+      title={
+        initialValues.id ? "Altere suas finanças" : "Cadastre uma nova finança"
+      }
+      borderColor={initialValues.id ? "#E3BA40" : ""}
     >
       <FormControl
         sx={{
@@ -133,7 +142,14 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
           marginBottom: "1rem",
         }}
       >
-        <SelectTypeFinantial />
+        <SelectTypeFinantial
+          id="type"
+          name="type"
+          currentValue={formik.values.type}
+          onChange={(event) => {
+            formik.handleChange(event);
+          }}
+        />
 
         <Box display="flex" justifyContent="end" width="100%" marginTop="1rem">
           <Button
@@ -142,13 +158,13 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
             variant="contained"
             sx={{
               width: "100%",
-              bgcolor: "#289E71",
+              bgcolor: initialValues.id ? "#E3BA40" : "#289E71",
               "&:hover": {
-                bgcolor: "#2FBA85",
+                bgcolor: initialValues.id ? "#AB8338" : "#E0AC4A",
               },
             }}
           >
-            {formik.values.id ? "Editar" : "Adicionar"}
+            {formik.values.id ? "Alterar" : "Adicionar"}
           </Button>
         </Box>
       </FormControl>

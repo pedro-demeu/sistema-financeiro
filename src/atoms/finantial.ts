@@ -35,6 +35,6 @@ export const deleteTransactionModalAtom = atom({
 });
 
 export const editTransactionModalAtom = atom({
-  key: "finantialTransactionModalAtom",
+  key: "editTransactionModalAtom",
   default: false,
 });

@@ -92,6 +92,14 @@ function BasicTable({
     }
   }
 
+  async function handleEdit(data: FinancialTransaction) {
+    try {
+      await axios.put(`http://localhost:3000/items/${data.id}`, data);
+    } catch (error: any) {
+      alert(`Erro na edição: ${error}`);
+    }
+  }
+
   return (
     <Box>
       <TableContainer
@@ -174,7 +182,7 @@ function BasicTable({
         <FinantialForm
           key={finantialSelected.id || Math.random()}
           initialValues={finantialSelected}
-          onSubmit={handleSubmit}
+          onSubmit={finantialSelected.id ? handleEdit : handleSubmit}
         />
       </CustomModal>
     </Box>
@@ -185,6 +193,7 @@ export function FinantialTransactionsTable() {
     finantialTransactionModalAtom
   );
   const isDeleteModalOpen = useRecoilValue(deleteTransactionModalAtom);
+  const isEditModalOpen = useRecoilValue(editTransactionModalAtom);
   const [finantialList, setFinantialList] = React.useState([]);
 
   const handleModalState = () => setIsModalOpen(!isModalOpen);
@@ -198,7 +207,7 @@ export function FinantialTransactionsTable() {
     function getList() {
       getData();
     },
-    [isModalOpen, isDeleteModalOpen]
+    [isModalOpen, isDeleteModalOpen, isEditModalOpen]
   );
 
   if (finantialList.length === 0)

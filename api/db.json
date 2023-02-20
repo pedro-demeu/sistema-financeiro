@@ -1,29 +1,4 @@
 {
-  "items": [
-    {
-      "name": "AKuguel",
-      "value": 820,
-      "type": "SPENDING",
-      "isDone": false,
-      "createdAt": "19/02/2023",
-      "id": 1
-    },
-    {
-      "name": "ewewe",
-      "value": 333,
-      "type": "SPENDING",
-      "isDone": false,
-      "createdAt": "19/02/2023",
-      "id": 2
-    },
-    {
-      "name": "teste",
-      "value": 0,
-      "type": "SPENDING",
-      "isDone": false,
-      "createdAt": "19/02/2023",
-      "id": 3
-    }
-  ],
+  "items": [],
   "users": []
 }
