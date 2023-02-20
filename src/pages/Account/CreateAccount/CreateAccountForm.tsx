@@ -2,6 +2,7 @@ import { Button, FormControl } from '@mui/material'
 import { useFormik } from 'formik'
 import React from 'react'
 import { object, string } from 'yup'
+import { useTranslation } from 'react-i18next'
 import {
   AppContainer,
   CustomLink,
@@ -10,6 +11,7 @@ import {
 } from '../../../components'
 
 export const CreateAccountForm: React.FC = () => {
+  const { t } = useTranslation()
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -27,7 +29,7 @@ export const CreateAccountForm: React.FC = () => {
   })
   return (
     <AppContainer>
-      <FormPattern title="Criar uma conta" onSubmit={formik.handleSubmit}>
+      <FormPattern title={t('_common:create_account')} onSubmit={formik.handleSubmit}>
         <FormControl
           sx={{
             display: 'block',
@@ -47,7 +49,7 @@ export const CreateAccountForm: React.FC = () => {
               }
             }}
             autoComplete="off"
-            label="Nome"
+            label={t('_common:name')}
             value={formik.values.username}
             name="username"
             onChange={formik.handleChange}
@@ -79,7 +81,7 @@ export const CreateAccountForm: React.FC = () => {
               }
             }}
             autoComplete="off"
-            label="Email"
+            label={t('_common:email')}
             value={formik.values.email}
             name="email"
             onChange={formik.handleChange}
@@ -112,7 +114,7 @@ export const CreateAccountForm: React.FC = () => {
               }
             }}
             autoComplete="off"
-            label="Password"
+            label={t('login:password')}
             value={formik.values.password}
             name="password"
             onChange={formik.handleChange}
@@ -145,7 +147,7 @@ export const CreateAccountForm: React.FC = () => {
               }
             }}
             autoComplete="off"
-            label="Confirme o password"
+            label={t('_common:confirm_pass')}
             value={formik.values.confirmPassword}
             name="confirmPassword"
             onChange={formik.handleChange}
@@ -181,11 +183,11 @@ export const CreateAccountForm: React.FC = () => {
               }
               className="actionButton"
             >
-              Criar
+              {t('forms_actions:create')}
             </Button>
           </FormControl>
         </FormControl>
-        <CustomLink title="Voltar" to="/" />
+        <CustomLink title={t('forms_actions:back')} to="/" />
       </FormPattern>
     </AppContainer>
   )

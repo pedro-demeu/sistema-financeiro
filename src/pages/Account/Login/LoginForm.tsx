@@ -58,7 +58,7 @@ export const LoginForm: React.FC = () => {
           onBlur={formik.handleBlur}
           error={!(formik.errors.username == null)}
           value={formik.values.username}
-          label="Usuário"
+          label={t('login:username')}
         />
       </FormControl>
       <FormControl
@@ -86,7 +86,7 @@ export const LoginForm: React.FC = () => {
           error={Boolean(formik.errors.password)}
           value={formik.values.password}
           type="password"
-          label="Senha"
+          label={t('login:password')}
         />
       </FormControl>
       <FormControl
@@ -108,7 +108,7 @@ export const LoginForm: React.FC = () => {
               name="rememberMe"
             />
           }
-          label="Lembrar-me"
+          label={t('login:rememberme')}
           sx={{
             color: 'white'
           }}
@@ -125,7 +125,7 @@ export const LoginForm: React.FC = () => {
             disabled={formik.isSubmitting}
             className="actionButton"
           >
-            Entrar
+            {t('forms_actions:login')}
           </Button>
         </FormControl>
       </FormControl>
@@ -136,8 +136,8 @@ export const LoginForm: React.FC = () => {
           justifyContent: 'center'
         }}
       >
-        <CustomLink title="Criar uma conta" to="/create-account" />
-        <CustomLink title="Esqueci minha senha" to="/forgot-password" />
+        <CustomLink title={t('login:create_an_account')} to="/create-account" />
+        <CustomLink title={t('login:forgot_password')} to="/forgot-password" />
       </FormControl>
     </FormPattern>
   )

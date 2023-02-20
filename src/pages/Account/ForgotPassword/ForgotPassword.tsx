@@ -8,9 +8,12 @@ import {
   FormPattern
 } from '../../../components'
 import { object, string } from 'yup'
+import { useTranslation } from 'react-i18next'
 
 export const ForgotPassword: React.FC = () => {
   const [feedbackMessage, setFeedbackMessage] = React.useState('')
+  const { t } = useTranslation()
+
   const formik = useFormik({
     initialValues: {
       email: ''
@@ -24,7 +27,7 @@ export const ForgotPassword: React.FC = () => {
   })
   return (
     <AppContainer>
-      <FormPattern onSubmit={formik.handleSubmit} title="Recuperação de conta">
+      <FormPattern onSubmit={formik.handleSubmit} title={t('login:recovery_account')}>
         <FormControl
           sx={{
             display: 'block',
@@ -74,13 +77,13 @@ export const ForgotPassword: React.FC = () => {
               }
             }}
           >
-            Recuperar
+            {t('forms_actions:recovery')}
           </Button>
         </FormControl>
         <Box mt={2} mb={2} width="100%">
           <Typography align="center" sx={{ color: 'white' }}>{feedbackMessage}</Typography>
         </Box>
-        <CustomLink title="Voltar" to="/" />
+        <CustomLink title={t('forms_actions:back')} to="/" />
       </FormPattern>
     </AppContainer>
   )

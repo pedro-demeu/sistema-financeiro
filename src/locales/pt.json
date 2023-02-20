@@ -1,5 +1,27 @@
 {
   "login": {
-    "login_to_continue": "Faça login para continuar"
+    "login_to_continue": "Faça login para continuar",
+    "username": "Usuário",
+    "password": "Senha",
+    "rememberme": "Lembre-me",
+    "create_an_account": "Criar uma conta",
+    "forgot_password": "Esqueci minha senha",
+    "recovery_account": "Recuperação de conta"
+  },
+  "forms_actions": {
+    "login": "Acessar",
+    "recovery": "Recuperar",
+    "back": "Voltar",
+    "create": "Criar",
+    "confirm": "Confirmar",
+    "edit": "Editar",
+    "delete": "Deletar",
+    "add": "Adicionar"
+  },
+  "_common": {
+    "name": "Nome",
+    "email": "E-mail",
+    "confirm_pass": "Confirme sua senha",
+    "create_account": "Cadastre-se na plataforma"
   }
 }

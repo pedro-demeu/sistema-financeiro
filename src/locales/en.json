@@ -1,5 +1,27 @@
 {
   "login": {
-    "login_to_continue": "Log in to continue"
+    "login_to_continue": "Log in to continue",
+    "username": "Username",
+    "password": "Password",
+    "rememberme": "Remember me",
+    "create_an_account": "Create an account",
+    "forgot_password": "Forgot password",
+    "recovery_account": "Retrieve account"
+  },
+  "forms_actions": {
+    "login": "Login",
+    "recovery": "Retrieve",
+    "back":"Go back",
+    "create": "Create",
+    "confirm": "Confirm",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add"
+  },
+  "_common": {
+    "name": "Name",
+    "email": "E-mail",
+    "confirm_pass": "Confirm the password",
+    "create_account": "Register in plataform"
   }
 }
