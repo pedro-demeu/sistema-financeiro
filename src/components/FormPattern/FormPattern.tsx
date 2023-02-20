@@ -4,10 +4,12 @@ import React from "react";
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   children: React.ReactNode;
   title: string;
+  borderColor?: string;
 }
 export const FormPattern: React.FC<FormProps> = ({
   children,
   title,
+  borderColor,
   ...props
 }) => {
   return (
@@ -28,7 +30,7 @@ export const FormPattern: React.FC<FormProps> = ({
         }}
         {...props}
       >
-        <Box display="flex" alignItems="center" justifyContent="center">
+        <Box display="flex" alignItems="center">
           <Box>
             <Typography
               variant="h1"
@@ -45,7 +47,7 @@ export const FormPattern: React.FC<FormProps> = ({
             </Typography>
             <Box
               sx={{
-                borderBottom: "2px solid #6eca9f",
+                borderBottom: `2px solid ${borderColor || "#6eca9f"}`,
                 width: "50px",
                 marginBottom: "2rem",
               }}

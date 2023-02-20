@@ -5,8 +5,9 @@ export interface FinancialTransaction {
   name: string;
   value: number;
   type: FinancialTransactionType;
-  createdAt: Date;
+  createdAt: string;
   isDone: boolean;
+  id: number;
 }
 
 export const DEFAULT_VALUES: FinancialTransaction = {
@@ -14,7 +15,8 @@ export const DEFAULT_VALUES: FinancialTransaction = {
   value: 0,
   type: "SPENDING",
   isDone: false,
-  createdAt: new Date(),
+  createdAt: "",
+  id: 0,
 };
 
 export const financialTransactionsAtom = atom<FinancialTransaction[]>({
@@ -23,6 +25,16 @@ export const financialTransactionsAtom = atom<FinancialTransaction[]>({
 });
 
 export const finantialTransactionModalAtom = atom({
+  key: "finantialTransactionModalAtom",
+  default: false,
+});
+
+export const deleteTransactionModalAtom = atom({
+  key: "deleteTransactionModalAtom",
+  default: false,
+});
+
+export const editTransactionModalAtom = atom({
   key: "finantialTransactionModalAtom",
   default: false,
 });

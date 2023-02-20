@@ -7,14 +7,16 @@ interface EmptyStateProps {
   title: string;
   description: string;
   onClick: () => void;
+  mt?: string | number;
 }
 export const EmptyState: React.FC<EmptyStateProps> = ({
   title,
   onClick,
   description,
+  mt,
 }) => {
   return (
-    <Box width="500px" padding="2rem">
+    <Box width="500px" padding="2rem" marginTop={mt}>
       <Typography
         component="h1"
         color="white"

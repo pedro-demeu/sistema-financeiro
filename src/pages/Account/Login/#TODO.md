@@ -16,3 +16,10 @@
 - configurar para usar '@/...' nas importações
 - configurar eslint
 - configurar i18n para PT-BR/EN-US
+
+- fazer crud completinho
+- começa a modificar e refatorar o projeto (eslint, testes unitários ou cypress, refatorar lógicas, melhorar validações errors e otimizar components)
+- [x] create
+- [x] read
+- [x] delete
+- [ ] edit
