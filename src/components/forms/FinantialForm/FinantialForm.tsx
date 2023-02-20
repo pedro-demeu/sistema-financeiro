@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   FormControl,
   Box,
@@ -6,75 +6,75 @@ import {
   TextField,
   styled,
   InputAdornment,
-  Typography,
-} from "@mui/material";
-import { FormPattern, SelectTypeFinantial } from "../..";
-import { useSetRecoilState } from "recoil";
+  Typography
+} from '@mui/material'
+import { FormPattern, SelectTypeFinantial } from '../..'
+import { useSetRecoilState } from 'recoil'
 import {
   editTransactionModalAtom,
-  FinancialTransaction,
-  finantialTransactionModalAtom,
-} from "../../../atoms/finantial";
-import { useFormik } from "formik";
-import { boolean, number, object, string } from "yup";
+  type FinancialTransaction,
+  finantialTransactionModalAtom
+} from '../../../atoms/finantial'
+import { useFormik } from 'formik'
+import { boolean, number, object, string } from 'yup'
 
 const CustomTextField = styled(TextField)({
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "#888",
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: '#888'
     },
-    "&:hover fieldset": {
-      borderColor: "#888",
+    '&:hover fieldset': {
+      borderColor: '#888'
     },
-    "&.Mui-focused fieldset": {
-      borderColor: "#888",
-    },
-  },
-});
+    '&.Mui-focused fieldset': {
+      borderColor: '#888'
+    }
+  }
+})
 
 interface FinantialFormProps {
-  initialValues: FinancialTransaction;
-  onSubmit: (data: FinancialTransaction) => void;
+  initialValues: FinancialTransaction
+  onSubmit: (data: FinancialTransaction) => Promise<void>
 }
 
 export const FinantialForm: React.FC<FinantialFormProps> = ({
   initialValues,
-  onSubmit,
+  onSubmit
 }) => {
-  const setModalClose = useSetRecoilState(finantialTransactionModalAtom);
-  const setEditModalClose = useSetRecoilState(editTransactionModalAtom);
+  const setModalClose = useSetRecoilState(finantialTransactionModalAtom)
+  const setEditModalClose = useSetRecoilState(editTransactionModalAtom)
   const formik = useFormik({
     initialValues,
     validationSchema: object({
       name: string().required().min(3).max(55),
       value: number().required().min(0),
       type: string().required(),
-      isDone: boolean(),
+      isDone: boolean()
     }),
     onSubmit: async (values, { setSubmitting }) => {
-      setSubmitting(true);
+      setSubmitting(true)
       await onSubmit({
         ...values,
-        createdAt: initialValues.createdAt,
-      });
-      setSubmitting(false);
-      initialValues.id ? setEditModalClose(false) : setModalClose(false);
+        createdAt: initialValues.createdAt
+      })
+      setSubmitting(false)
+      ;(initialValues.id !== 0) ? setEditModalClose(false) : setModalClose(false)
     },
-    enableReinitialize: true,
-  });
+    enableReinitialize: true
+  })
 
   return (
     <FormPattern
       onSubmit={formik.handleSubmit}
       title={
-        initialValues.id ? "Altere suas finanças" : "Cadastre uma nova finança"
+        (initialValues.id !== 0) ? 'Altere suas finanças' : 'Cadastre uma nova finança'
       }
-      borderColor={initialValues.id ? "#E3BA40" : ""}
+      borderColor={(initialValues.id !== 0) ? '#E3BA40' : ''}
     >
       <FormControl
         sx={{
-          display: "block",
-          marginBottom: "1rem",
+          display: 'block',
+          marginBottom: '1rem'
         }}
       >
         <CustomTextField
@@ -86,25 +86,25 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
           name="name"
           value={formik.values.name}
           onChange={formik.handleChange}
-          error={!!formik.errors.name}
+          error={!(formik.errors.name == null)}
           onBlur={formik.handleBlur}
           type="text"
           InputLabelProps={{
             style: {
-              color: "#DDD",
-            },
+              color: '#DDD'
+            }
           }}
           InputProps={{
             style: {
-              color: "white",
-            },
+              color: 'white'
+            }
           }}
         />
       </FormControl>
       <FormControl
         sx={{
-          display: "block",
-          marginBottom: "1rem",
+          display: 'block',
+          marginBottom: '1rem'
         }}
       >
         <CustomTextField
@@ -116,13 +116,13 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
           name="value"
           value={formik.values.value}
           onChange={formik.handleChange}
-          error={!!formik.errors.value}
+          error={!(formik.errors.value == null)}
           onBlur={formik.handleBlur}
           type="number"
           InputLabelProps={{
             style: {
-              color: "#DDD",
-            },
+              color: '#DDD'
+            }
           }}
           InputProps={{
             startAdornment: (
@@ -131,15 +131,15 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
               </InputAdornment>
             ),
             style: {
-              color: "white",
-            },
+              color: 'white'
+            }
           }}
         />
       </FormControl>
       <FormControl
         sx={{
-          display: "block",
-          marginBottom: "1rem",
+          display: 'block',
+          marginBottom: '1rem'
         }}
       >
         <SelectTypeFinantial
@@ -147,27 +147,27 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
           name="type"
           currentValue={formik.values.type}
           onChange={(event) => {
-            formik.handleChange(event);
+            formik.handleChange(event)
           }}
         />
 
         <Box display="flex" justifyContent="end" width="100%" marginTop="1rem">
           <Button
             type="submit"
-            disabled={!!formik.errors.name || !!formik.errors.value}
+            disabled={!(formik.errors.name == null) || !(formik.errors.value == null)}
             variant="contained"
             sx={{
-              width: "100%",
-              bgcolor: initialValues.id ? "#E3BA40" : "#289E71",
-              "&:hover": {
-                bgcolor: initialValues.id ? "#AB8338" : "#E0AC4A",
-              },
+              width: '100%',
+              bgcolor: (initialValues.id !== 0) ? '#E3BA40' : '#289E71',
+              '&:hover': {
+                bgcolor: (initialValues.id !== 0) ? '#AB8338' : '#E0AC4A'
+              }
             }}
           >
-            {formik.values.id ? "Alterar" : "Adicionar"}
+            {(formik.values.id !== 0) ? 'Alterar' : 'Adicionar'}
           </Button>
         </Box>
       </FormControl>
     </FormPattern>
-  );
-};
+  )
+}

@@ -1,102 +1,106 @@
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Box, Button, Checkbox, Typography } from "@mui/material";
+import * as React from 'react'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
+import { Box, Button, Checkbox, Typography } from '@mui/material'
 import {
   DEFAULT_VALUES,
   deleteTransactionModalAtom,
   editTransactionModalAtom,
-  FinancialTransaction,
-  FinancialTransactionType,
-  finantialTransactionModalAtom,
-} from "../../atoms/finantial";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { CustomModal, EmptyState, HeaderTable } from "..";
-import { useRecoilState, useRecoilValue } from "recoil";
-import axios from "axios";
-import { DeleteForm, FinantialForm } from "../forms";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import { transformDate } from "../../utils/transformDate";
+  type FinancialTransaction,
+  type FinancialTransactionType,
+  finantialTransactionModalAtom
+} from '../../atoms/finantial'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { CustomModal, EmptyState, HeaderTable } from '..'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import axios from 'axios'
+import { DeleteForm, FinantialForm } from '../forms'
+import EditRoundedIcon from '@mui/icons-material/EditRounded'
+import { transformDate } from '../../utils/transformDate'
 
-type ColumnObject = {
-  label: string;
-  dataKey?: string;
-  align?: "left" | "center" | "right" | "inherit" | "justify" | undefined;
-  renderValue?: (e: any) => string;
-};
+interface ColumnObject {
+  label: string
+  dataKey?: string
+  align?: 'left' | 'center' | 'right' | 'inherit' | 'justify' | undefined
+  renderValue?: (e: any) => string
+}
 const columns: ColumnObject[] = [
   {
-    label: "Está pago?",
-    dataKey: "isDone",
-    align: "left",
+    label: 'Está pago?',
+    dataKey: 'isDone',
+    align: 'left'
   },
   {
-    label: "Apelido",
-    dataKey: "name",
-    align: "left",
+    label: 'Apelido',
+    dataKey: 'name',
+    align: 'left'
   },
   {
-    label: "Tipo de despesa",
-    dataKey: "type",
+    label: 'Tipo de despesa',
+    dataKey: 'type',
     renderValue: (e: FinancialTransactionType) =>
-      e === "INCOME" ? "ENTRADA" : "SAÍDA",
-    align: "left",
+      e === 'INCOME' ? 'ENTRADA' : 'SAÍDA',
+    align: 'left'
   },
   {
-    label: "Valor (R$)",
-    dataKey: "value",
+    label: 'Valor (R$)',
+    dataKey: 'value',
     renderValue: (e: number) =>
-      Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
+      Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
       }).format(e),
-    align: "left",
+    align: 'left'
   },
   {
-    label: "Criado em",
-    dataKey: "created_at",
-    align: "left",
+    label: 'Criado em',
+    dataKey: 'created_at',
+    align: 'left'
   },
   {
-    label: "#",
-    align: "center",
-  },
-];
+    label: '#',
+    align: 'center'
+  }
+]
 
-function BasicTable({
-  finantialList,
-}: {
-  finantialList: FinancialTransaction[];
-}) {
+interface BasicTableProps {
+  finantialList: FinancialTransaction[]
+}
+
+const BasicTable: React.FC<BasicTableProps> = ({
+  finantialList
+}) => {
   const [openDeleteModal, setOpenDeleteModal] = useRecoilState(
     deleteTransactionModalAtom
-  );
-  const [editModal, setEditModal] = useRecoilState(editTransactionModalAtom);
+  )
+  const [editModal, setEditModal] = useRecoilState(editTransactionModalAtom)
 
   const [finantialSelected, setFinantialSelected] =
-    React.useState<FinancialTransaction>(DEFAULT_VALUES);
+    React.useState<FinancialTransaction>(DEFAULT_VALUES)
 
-  async function handleSubmit(data: FinancialTransaction) {
+  async function handleSubmit (data: FinancialTransaction): Promise<void> {
     try {
-      await axios.post("http://localhost:3000/items", {
+      await axios.post('http://localhost:3000/items', {
         ...data,
-        createdAt: transformDate(new Date()),
-      });
+        createdAt: transformDate(new Date())
+      })
     } catch (error: any) {
-      alert(`error: ${error}`);
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      alert(`error: ${error}`)
     }
   }
 
-  async function handleEdit(data: FinancialTransaction) {
+  async function handleEdit (data: FinancialTransaction): Promise<void> {
     try {
-      await axios.put(`http://localhost:3000/items/${data.id}`, data);
+      await axios.put(`http://localhost:3000/items/${data.id}`, data)
     } catch (error: any) {
-      alert(`Erro na edição: ${error}`);
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      alert(`Erro na edição: ${error}`)
     }
   }
 
@@ -105,7 +109,7 @@ function BasicTable({
       <TableContainer
         component={Paper}
         sx={{
-          bgcolor: "#3A3844",
+          bgcolor: '#3A3844'
         }}
       >
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -124,49 +128,49 @@ function BasicTable({
             {finantialList.map((row) => (
               <TableRow
                 key={row.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell align="left" component="th" scope="row">
                   <Checkbox checked={row.isDone} />
                 </TableCell>
                 <TableCell align="left" component="th" scope="row">
-                  <Typography sx={{ color: "white" }}>{row.name}</Typography>
+                  <Typography sx={{ color: 'white' }}>{row.name}</Typography>
                 </TableCell>
                 <TableCell align="left">
-                  <Typography sx={{ color: "white" }}>
-                    {Intl.NumberFormat("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
+                  <Typography sx={{ color: 'white' }}>
+                    {Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL'
                     }).format(row.value)}
                   </Typography>
                 </TableCell>
                 <TableCell align="left">
-                  <Typography sx={{ color: "white" }}>
-                    {row.type === "INCOME" ? "ENTRADA" : "SAÍDA"}
+                  <Typography sx={{ color: 'white' }}>
+                    {row.type === 'INCOME' ? 'ENTRADA' : 'SAÍDA'}
                   </Typography>
                 </TableCell>
 
                 <TableCell align="left">
-                  <Typography sx={{ color: "white" }}>
+                  <Typography sx={{ color: 'white' }}>
                     {row.createdAt}
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
                   <Button
                     onClick={() => {
-                      setFinantialSelected(row);
-                      setEditModal(!editModal);
+                      setFinantialSelected(row)
+                      setEditModal(!editModal)
                     }}
                   >
-                    <EditRoundedIcon fontSize="small" sx={{ color: "white" }} />
+                    <EditRoundedIcon fontSize="small" sx={{ color: 'white' }} />
                   </Button>
                   <Button
                     onClick={() => {
-                      setFinantialSelected(row);
-                      setOpenDeleteModal(!openDeleteModal);
+                      setFinantialSelected(row)
+                      setOpenDeleteModal(!openDeleteModal)
                     }}
                   >
-                    <DeleteIcon fontSize="small" sx={{ color: "white" }} />
+                    <DeleteIcon fontSize="small" sx={{ color: 'white' }} />
                   </Button>
                 </TableCell>
               </TableRow>
@@ -180,37 +184,37 @@ function BasicTable({
       </CustomModal>
       <CustomModal open={editModal} setOpen={setEditModal}>
         <FinantialForm
-          key={finantialSelected.id || Math.random()}
+          key={finantialSelected.id ?? Math.random()}
           initialValues={finantialSelected}
-          onSubmit={finantialSelected.id ? handleEdit : handleSubmit}
+          onSubmit={(finantialSelected.id !== 0) ? handleEdit : handleSubmit}
         />
       </CustomModal>
     </Box>
-  );
+  )
 }
-export function FinantialTransactionsTable() {
+export const FinantialTransactionsTable: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
     finantialTransactionModalAtom
-  );
-  const isDeleteModalOpen = useRecoilValue(deleteTransactionModalAtom);
-  const isEditModalOpen = useRecoilValue(editTransactionModalAtom);
-  const [finantialList, setFinantialList] = React.useState([]);
+  )
+  const isDeleteModalOpen = useRecoilValue(deleteTransactionModalAtom)
+  const isEditModalOpen = useRecoilValue(editTransactionModalAtom)
+  const [finantialList, setFinantialList] = React.useState([])
 
-  const handleModalState = () => setIsModalOpen(!isModalOpen);
+  const handleModalState = (): void => { setIsModalOpen(!isModalOpen) }
 
-  const getData = async () => {
-    const { data } = await axios.get("http://localhost:3000/items");
-    setFinantialList(data);
-  };
+  const getData = async (): Promise<void> => {
+    const { data } = await axios.get('http://localhost:3000/items')
+    setFinantialList(data)
+  }
 
   React.useEffect(
-    function getList() {
-      getData();
+    function getList () {
+      void getData()
     },
     [isModalOpen, isDeleteModalOpen, isEditModalOpen]
-  );
+  )
 
-  if (finantialList.length === 0)
+  if (finantialList.length === 0) {
     return (
       <EmptyState
         mt="15rem"
@@ -218,13 +222,14 @@ export function FinantialTransactionsTable() {
         description="Não há finanças cadastradas, clique no ícone a baixo:"
         onClick={handleModalState}
       />
-    );
+    )
+  }
   return (
     <Box
       sx={{
-        width: "80%",
-        maxWidth: "1200px",
-        marginTop: "10rem",
+        width: '80%',
+        maxWidth: '1200px',
+        marginTop: '10rem'
       }}
     >
       <Box width="100%">
@@ -232,5 +237,5 @@ export function FinantialTransactionsTable() {
         <BasicTable finantialList={finantialList} />
       </Box>
     </Box>
-  );
+  )
 }

@@ -1,4 +1,13 @@
 {
-  "items": [],
+  "items": [
+    {
+      "name": "Teste",
+      "value": 500,
+      "type": "SPENDING",
+      "isDone": false,
+      "createdAt": "20/02/2023",
+      "id": 1
+    }
+  ],
   "users": []
 }

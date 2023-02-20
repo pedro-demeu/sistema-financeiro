@@ -1,51 +1,50 @@
-import { Button, FormControl } from "@mui/material";
-import { useFormik } from "formik";
-import React from "react";
-import { object, string } from "yup";
+import { Button, FormControl } from '@mui/material'
+import { useFormik } from 'formik'
+import React from 'react'
+import { object, string } from 'yup'
 import {
-  ActionButton,
   AppContainer,
   CustomLink,
   CustomTextField,
-  FormPattern,
-} from "../../../components";
+  FormPattern
+} from '../../../components'
 
 export const CreateAccountForm: React.FC = () => {
   const formik = useFormik({
     initialValues: {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
     },
     validationSchema: object({
       username: string().required().min(5),
       email: string().email().required(),
       password: string().required().min(4),
-      confirmPassword: string().required().min(4),
+      confirmPassword: string().required().min(4)
     }),
-    onSubmit: (values) => console.log(values),
-  });
+    onSubmit: (values) => { console.log(values) }
+  })
   return (
     <AppContainer>
       <FormPattern title="Criar uma conta" onSubmit={formik.handleSubmit}>
         <FormControl
           sx={{
-            display: "block",
-            marginBottom: "1rem",
+            display: 'block',
+            marginBottom: '1rem'
           }}
         >
           <CustomTextField
-            error={!!formik.errors.username}
+            error={Boolean(formik.errors.username)}
             InputLabelProps={{
               style: {
-                color: "#DDD",
-              },
+                color: '#DDD'
+              }
             }}
             InputProps={{
               style: {
-                color: "white",
-              },
+                color: 'white'
+              }
             }}
             autoComplete="off"
             label="Nome"
@@ -54,8 +53,8 @@ export const CreateAccountForm: React.FC = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             sx={{
-              borderColor: "white",
-              color: "white",
+              borderColor: 'white',
+              color: 'white'
             }}
             fullWidth
             id="fullname"
@@ -63,21 +62,21 @@ export const CreateAccountForm: React.FC = () => {
         </FormControl>
         <FormControl
           sx={{
-            display: "block",
-            marginBottom: "1rem",
+            display: 'block',
+            marginBottom: '1rem'
           }}
         >
           <CustomTextField
-            error={!!formik.errors.email}
+            error={Boolean(formik.errors.email)}
             InputLabelProps={{
               style: {
-                color: "#DDD",
-              },
+                color: '#DDD'
+              }
             }}
             InputProps={{
               style: {
-                color: "white",
-              },
+                color: 'white'
+              }
             }}
             autoComplete="off"
             label="Email"
@@ -86,8 +85,8 @@ export const CreateAccountForm: React.FC = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             sx={{
-              borderColor: "white",
-              color: "white",
+              borderColor: 'white',
+              color: 'white'
             }}
             fullWidth
             id="email"
@@ -96,21 +95,21 @@ export const CreateAccountForm: React.FC = () => {
         </FormControl>
         <FormControl
           sx={{
-            display: "block",
-            marginBottom: "1rem",
+            display: 'block',
+            marginBottom: '1rem'
           }}
         >
           <CustomTextField
-            error={!!formik.errors.password}
+            error={Boolean(formik.errors.password)}
             InputLabelProps={{
               style: {
-                color: "#DDD",
-              },
+                color: '#DDD'
+              }
             }}
             InputProps={{
               style: {
-                color: "white",
-              },
+                color: 'white'
+              }
             }}
             autoComplete="off"
             label="Password"
@@ -119,8 +118,8 @@ export const CreateAccountForm: React.FC = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             sx={{
-              borderColor: "white",
-              color: "white",
+              borderColor: 'white',
+              color: 'white'
             }}
             fullWidth
             id="password"
@@ -129,21 +128,21 @@ export const CreateAccountForm: React.FC = () => {
         </FormControl>
         <FormControl
           sx={{
-            display: "block",
-            marginBottom: "1rem",
+            display: 'block',
+            marginBottom: '1rem'
           }}
         >
           <CustomTextField
-            error={!!formik.errors.confirmPassword}
+            error={Boolean(formik.errors.confirmPassword)}
             InputLabelProps={{
               style: {
-                color: "#DDD",
-              },
+                color: '#DDD'
+              }
             }}
             InputProps={{
               style: {
-                color: "white",
-              },
+                color: 'white'
+              }
             }}
             autoComplete="off"
             label="Confirme o password"
@@ -152,8 +151,8 @@ export const CreateAccountForm: React.FC = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             sx={{
-              borderColor: "white",
-              color: "white",
+              borderColor: 'white',
+              color: 'white'
             }}
             fullWidth
             id="password-repeat"
@@ -162,23 +161,23 @@ export const CreateAccountForm: React.FC = () => {
         </FormControl>
         <FormControl
           sx={{
-            display: "block",
-            margin: "2rem 0",
+            display: 'block',
+            margin: '2rem 0'
           }}
         >
           <FormControl
             sx={{
-              display: "flex",
-              alignItems: "end",
+              display: 'flex',
+              alignItems: 'end'
             }}
           >
             <Button
               type="submit"
               disabled={
-                !!formik.errors.username ||
-                !!formik.errors.password ||
-                !!formik.errors.confirmPassword ||
-                !!formik.errors.email
+                Boolean(formik.errors.username) ||
+                Boolean(formik.errors.password) ||
+                Boolean(formik.errors.confirmPassword) ||
+                Boolean(formik.errors.email)
               }
               className="actionButton"
             >
@@ -189,5 +188,5 @@ export const CreateAccountForm: React.FC = () => {
         <CustomLink title="Voltar" to="/" />
       </FormPattern>
     </AppContainer>
-  );
-};
+  )
+}

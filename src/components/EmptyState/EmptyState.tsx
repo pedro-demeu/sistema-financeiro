@@ -1,19 +1,18 @@
-import React from "react";
-import { Box, Button, Paper, Typography } from "@mui/material";
-import PaidIcon from "@mui/icons-material/Paid";
-import { useRecoilValue } from "recoil";
-import { finantialTransactionModalAtom } from "../../atoms/finantial";
+import React from 'react'
+import { Box, Button, Typography } from '@mui/material'
+import PaidIcon from '@mui/icons-material/Paid'
+
 interface EmptyStateProps {
-  title: string;
-  description: string;
-  onClick: () => void;
-  mt?: string | number;
+  title: string
+  description: string
+  onClick: () => void
+  mt?: string | number
 }
 export const EmptyState: React.FC<EmptyStateProps> = ({
   title,
   onClick,
   description,
-  mt,
+  mt
 }) => {
   return (
     <Box width="500px" padding="2rem" marginTop={mt}>
@@ -33,14 +32,14 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       <Box display="flex" marginTop="2rem" justifyContent="center" width="100%">
         <Box
           sx={{
-            borderBottom: "2px solid #F6D325",
+            borderBottom: '2px solid #F6D325'
           }}
         >
           <Button onClick={onClick}>
-            <PaidIcon fontSize="large" sx={{ color: "#F6D325" }} />
+            <PaidIcon fontSize="large" sx={{ color: '#F6D325' }} />
           </Button>
         </Box>
       </Box>
     </Box>
-  );
-};
+  )
+}

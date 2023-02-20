@@ -1,10 +1,10 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
+import { Box, Typography } from '@mui/material'
+import React from 'react'
 
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
-  children: React.ReactNode;
-  title: string;
-  borderColor?: string;
+  children: React.ReactNode
+  title: string
+  borderColor?: string
 }
 export const FormPattern: React.FC<FormProps> = ({
   children,
@@ -22,11 +22,11 @@ export const FormPattern: React.FC<FormProps> = ({
     >
       <form
         style={{
-          borderRadius: "5px",
-          padding: "3rem",
-          width: "400px",
-          minHeight: "470px",
-          backgroundColor: "#3A3844",
+          borderRadius: '5px',
+          padding: '3rem',
+          width: '400px',
+          minHeight: '470px',
+          backgroundColor: '#3A3844'
         }}
         {...props}
       >
@@ -36,20 +36,20 @@ export const FormPattern: React.FC<FormProps> = ({
               variant="h1"
               color="white"
               sx={{
-                fontSize: "1.5rem",
-                marginBottom: "0.5rem",
-                fontWeight: "bold",
-                width: "100%",
-                textAlign: "left",
+                fontSize: '1.5rem',
+                marginBottom: '0.5rem',
+                fontWeight: 'bold',
+                width: '100%',
+                textAlign: 'left'
               }}
             >
               {title}
             </Typography>
             <Box
               sx={{
-                borderBottom: `2px solid ${borderColor || "#6eca9f"}`,
-                width: "50px",
-                marginBottom: "2rem",
+                borderBottom: `2px solid ${borderColor ?? '#6eca9f'}`,
+                width: '50px',
+                marginBottom: '2rem'
               }}
             />
           </Box>
@@ -58,5 +58,5 @@ export const FormPattern: React.FC<FormProps> = ({
         {children}
       </form>
     </Box>
-  );
-};
+  )
+}

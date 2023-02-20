@@ -1,35 +1,39 @@
-import { Box } from "@mui/material";
-import axios from "axios";
-import React from "react";
-import { useRecoilState } from "recoil";
+import { Box } from '@mui/material'
+import axios from 'axios'
+import React from 'react'
+import { useRecoilState } from 'recoil'
 import {
   DEFAULT_VALUES,
-  FinancialTransaction,
-  finantialTransactionModalAtom,
-} from "../../atoms/finantial";
+  type FinancialTransaction,
+  finantialTransactionModalAtom
+} from '../../atoms/finantial'
 import {
   CustomModal,
   FinantialTransactionsTable,
-  TopBar,
-} from "../../components";
-import { FinantialForm } from "../../components/forms";
-import { transformDate } from "../../utils/transformDate";
+  TopBar
+} from '../../components'
+import { FinantialForm } from '../../components/forms'
+import { transformDate } from '../../utils/transformDate'
 
-export const Dashboard: React.FC = () => {
+export const Dashboard: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
     finantialTransactionModalAtom
-  );
-  const handleModalState = () => setIsModalOpen(!isModalOpen);
-  async function handleSubmit(data: FinancialTransaction) {
+  )
+  const handleModalState = (): void => {
+    setIsModalOpen(!isModalOpen)
+  }
+  async function handleSubmit (data: FinancialTransaction): Promise<void> {
     try {
-      await axios.post("http://localhost:3000/items", {
+      await axios.post('http://localhost:3000/items', {
         ...data,
-        createdAt: transformDate(new Date()),
-      });
+        createdAt: transformDate(new Date())
+      })
     } catch (error: any) {
-      alert(`error: ${error}`);
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      alert(`error: ${error}`)
     }
   }
+
   return (
     <Box display="flex" alignItems="center" flexDirection="column">
       <TopBar />
@@ -39,5 +43,5 @@ export const Dashboard: React.FC = () => {
         <FinantialForm onSubmit={handleSubmit} initialValues={DEFAULT_VALUES} />
       </CustomModal>
     </Box>
-  );
-};
+  )
+}

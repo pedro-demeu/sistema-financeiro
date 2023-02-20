@@ -1,31 +1,31 @@
-import { Button, Checkbox, FormControl, FormControlLabel } from "@mui/material";
-import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
-import React from "react";
-import { boolean, object, string } from "yup";
-import { CustomLink, CustomTextField, FormPattern } from "../../../components";
-import { DEFAULT_VALUES, UserLoggedAtom } from "../../../atoms/login";
-import { useSetRecoilState } from "recoil";
+import { Button, Checkbox, FormControl, FormControlLabel } from '@mui/material'
+import { useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
+import React from 'react'
+import { boolean, object, string } from 'yup'
+import { CustomLink, CustomTextField, FormPattern } from '../../../components'
+import { DEFAULT_VALUES, UserLoggedAtom } from '../../../atoms/login'
+import { useSetRecoilState } from 'recoil'
 
 export const LoginForm: React.FC = () => {
-  const setLoggedUser = useSetRecoilState(UserLoggedAtom);
-  const navigate = useNavigate();
+  const setLoggedUser = useSetRecoilState(UserLoggedAtom)
+  const navigate = useNavigate()
   const loginValidations = object({
     username: string().required().min(4).max(50),
     password: string().required().min(4).max(8),
-    rememberMe: boolean(),
-  });
+    rememberMe: boolean()
+  })
 
   const formik = useFormik({
     initialValues: DEFAULT_VALUES,
     validationSchema: loginValidations,
     onSubmit: (values, { setSubmitting }) => {
-      setSubmitting(true);
-      setLoggedUser(values);
-      navigate("/home");
-      setSubmitting(false);
-    },
-  });
+      setSubmitting(true)
+      setLoggedUser(values)
+      navigate('/home')
+      setSubmitting(false)
+    }
+  })
 
   return (
     <FormPattern
@@ -34,20 +34,20 @@ export const LoginForm: React.FC = () => {
     >
       <FormControl
         sx={{
-          display: "block",
-          marginBottom: "1rem",
+          display: 'block',
+          marginBottom: '1rem'
         }}
       >
         <CustomTextField
           InputLabelProps={{
             style: {
-              color: "#DDD",
-            },
+              color: '#DDD'
+            }
           }}
           InputProps={{
             style: {
-              color: "white",
-            },
+              color: 'white'
+            }
           }}
           autoComplete="off"
           fullWidth
@@ -55,26 +55,26 @@ export const LoginForm: React.FC = () => {
           name="username"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={!!formik.errors.username}
+          error={!(formik.errors.username == null)}
           value={formik.values.username}
           label="Usuário"
         />
       </FormControl>
       <FormControl
         sx={{
-          display: "block",
+          display: 'block'
         }}
       >
         <CustomTextField
           InputLabelProps={{
             style: {
-              color: "#DDD",
-            },
+              color: '#DDD'
+            }
           }}
           InputProps={{
             style: {
-              color: "white",
-            },
+              color: 'white'
+            }
           }}
           fullWidth
           id="password"
@@ -82,7 +82,7 @@ export const LoginForm: React.FC = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           autoComplete="off"
-          error={!!formik.errors.password}
+          error={Boolean(formik.errors.password)}
           value={formik.values.password}
           type="password"
           label="Senha"
@@ -90,15 +90,15 @@ export const LoginForm: React.FC = () => {
       </FormControl>
       <FormControl
         sx={{
-          display: "block",
-          margin: "1rem 0 0",
+          display: 'block',
+          margin: '1rem 0 0'
         }}
       >
         <FormControlLabel
           control={
             <Checkbox
               sx={{
-                color: "white",
+                color: 'white'
               }}
               checked={formik.values.rememberMe}
               onChange={formik.handleChange}
@@ -109,14 +109,14 @@ export const LoginForm: React.FC = () => {
           }
           label="Lembrar-me"
           sx={{
-            color: "white",
+            color: 'white'
           }}
         />
         <FormControl
           sx={{
-            display: "flex",
-            alignItems: "end",
-            margin: "2rem 0 1rem",
+            display: 'flex',
+            alignItems: 'end',
+            margin: '2rem 0 1rem'
           }}
         >
           <Button
@@ -130,14 +130,14 @@ export const LoginForm: React.FC = () => {
       </FormControl>
       <FormControl
         sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center'
         }}
       >
         <CustomLink title="Criar uma conta" to="/create-account" />
         <CustomLink title="Esqueci minha senha" to="/forgot-password" />
       </FormControl>
     </FormPattern>
-  );
-};
+  )
+}

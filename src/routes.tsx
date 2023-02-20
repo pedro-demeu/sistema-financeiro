@@ -1,26 +1,31 @@
-import { Home } from "@mui/icons-material";
-import { Route, useRoutes } from "react-router-dom";
-import { Dashboard } from "./pages";
-import { ForgotPassword, LoginForm, CreateAccountForm } from "./pages/Account";
+import React, { type ReactElement } from 'react'
+import { useRoutes, Outlet } from 'react-router-dom'
+import { Dashboard } from './pages'
+import { ForgotPassword, LoginForm, CreateAccountForm } from './pages/Account'
 
-export const Routes = () => {
+export const Routes: React.FC = (): ReactElement => {
   const routes = useRoutes([
     {
-      path: "/",
-      element: <LoginForm />,
+      path: '/',
+      element: <LoginForm />
     },
     {
-      path: "/home",
-      element: <Dashboard />,
+      path: '/home',
+      element: <Dashboard />
     },
     {
-      path: "/create-account",
-      element: <CreateAccountForm />,
+      path: '/create-account',
+      element: <CreateAccountForm />
     },
     {
-      path: "/forgot-password",
-      element: <ForgotPassword />,
-    },
-  ]);
-  return routes;
-};
+      path: '/forgot-password',
+      element: <ForgotPassword />
+    }
+  ])
+  return (
+    <>
+      {routes}
+      <Outlet />
+    </>
+  )
+}

@@ -1,34 +1,34 @@
-import { Box, Button, FormControl, Typography } from "@mui/material";
-import React from "react";
-import { useFormik } from "formik";
+import { Box, Button, FormControl, Typography } from '@mui/material'
+import React from 'react'
+import { useFormik } from 'formik'
 import {
   AppContainer,
   CustomLink,
   CustomTextField,
-  FormPattern,
-} from "../../../components";
-import { object, string } from "yup";
+  FormPattern
+} from '../../../components'
+import { object, string } from 'yup'
 
 export const ForgotPassword: React.FC = () => {
-  const [feedbackMessage, setFeedbackMessage] = React.useState("");
+  const [feedbackMessage, setFeedbackMessage] = React.useState('')
   const formik = useFormik({
     initialValues: {
-      email: "",
+      email: ''
     },
     validationSchema: object({
-      email: string().required().email(),
+      email: string().required().email()
     }),
     onSubmit: (values) => {
-      setFeedbackMessage(`Enviamos um e-mail para ${values.email}`);
-    },
-  });
+      setFeedbackMessage(`Enviamos um e-mail para ${values.email}`)
+    }
+  })
   return (
     <AppContainer>
       <FormPattern onSubmit={formik.handleSubmit} title="Recuperação de conta">
         <FormControl
           sx={{
-            display: "block",
-            marginBottom: "1rem",
+            display: 'block',
+            marginBottom: '1rem'
           }}
         >
           <CustomTextField
@@ -38,50 +38,50 @@ export const ForgotPassword: React.FC = () => {
             autoComplete="off"
             InputProps={{
               style: {
-                color: "white",
-              },
+                color: 'white'
+              }
             }}
             InputLabelProps={{
               style: {
-                color: "white",
-              },
+                color: 'white'
+              }
             }}
             id="email"
             name="email"
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={!!formik.errors.email}
+            error={Boolean(formik.errors.email)}
             type="email"
           />
         </FormControl>
 
         <FormControl
           sx={{
-            display: "block",
-            margin: "2rem 0",
+            display: 'block',
+            margin: '2rem 0'
           }}
         >
           <Button
             type="submit"
-            disabled={!!formik.errors.email}
+            disabled={Boolean(formik.errors.email)}
             variant="contained"
             sx={{
-              width: "100%",
-              bgcolor: "#289E71",
-              "&:hover": {
-                bgcolor: "#2FBA85",
-              },
+              width: '100%',
+              bgcolor: '#289E71',
+              '&:hover': {
+                bgcolor: '#2FBA85'
+              }
             }}
           >
             Recuperar
           </Button>
         </FormControl>
         <Box mt={2} mb={2} width="100%">
-          <Typography align="center" sx={{color: 'white'}}>{feedbackMessage}</Typography>
+          <Typography align="center" sx={{ color: 'white' }}>{feedbackMessage}</Typography>
         </Box>
         <CustomLink title="Voltar" to="/" />
       </FormPattern>
     </AppContainer>
-  );
-};
+  )
+}

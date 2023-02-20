@@ -1,2 +1,2 @@
-export { FinantialForm } from "./FinantialForm/FinantialForm";
-export { DeleteForm } from "./DeleteForm/DeleteForm";
+export { FinantialForm } from './FinantialForm/FinantialForm'
+export { DeleteForm } from './DeleteForm/DeleteForm'
