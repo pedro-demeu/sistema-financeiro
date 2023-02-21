@@ -6,9 +6,10 @@ import { boolean, object, string } from 'yup'
 import { CustomLink, CustomTextField, FormPattern } from '../../../components'
 import { DEFAULT_VALUES, UserLoggedAtom } from '../../../atoms/login'
 import { useSetRecoilState } from 'recoil'
-import { t } from 'i18next'
+import { useYupObject } from '../../../hooks'
 
 export const LoginForm: React.FC = () => {
+  const { t } = useYupObject()
   const setLoggedUser = useSetRecoilState(UserLoggedAtom)
   const navigate = useNavigate()
   const loginValidations = object({
@@ -58,6 +59,7 @@ export const LoginForm: React.FC = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={!(formik.errors.username == null)}
+          helperText={formik.errors.username}
           value={formik.values.username}
           label={t('login:username')}
         />

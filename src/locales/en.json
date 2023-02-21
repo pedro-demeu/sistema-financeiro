@@ -38,5 +38,24 @@
     "type": "Finantial Type",
     "value": "Value",
     "create_at": "Created at"
+  },
+  "forms": {
+    "optional": "optional",
+    "number_max": "Must be less than or equal to ${max}",
+    "number_min": "Must be greater than or equal to ${min}",
+    "string_email": "Must be a valid email",
+    "string_url": "Must be a valid URL",
+    "mixed_required": "Required field",
+    "mixed_notType": "Must be a '${type}' type",
+    "string_max": "Must be at most {{max}} character",
+    "number_helper_text_between_values": "Enter a value between {{min}} and {{max}}",
+    "string_rtsp": "Must be a valid RTSP",
+    "number_integer": "Must be an integer",
+    "date_min": "Must be later than {{min}}",
+    "date_max": "Must be at earlier than {{max}}",
+    "number_moreThan": "Must be greater than ${more}",
+    "number_positive": "Must be a positive number",
+    "string_noSpecialCharacters": "Special characters are not allowed",
+    "only_numbers": "Only numbers are allowed"
   }
 }

@@ -38,5 +38,24 @@
     "type": "Tipo de despesa",
     "value": "Valor",
     "create_at": "Criado em"
+  },
+  "forms": {
+    "optional": "opcional",
+    "number_max": "Deve ser menor ou igual a ${max}",
+    "number_min": "Deve ser maior ou igual a ${min}",
+    "string_email": "Deve ser um email válido",
+    "string_url": "Deve ser uma URL válida",
+    "mixed_required": "Campo obrigatório",
+    "mixed_notType": "Deve ser do tipo '${type}'",
+    "string_max": "Deve ter no máximo {{max}} caracteres",
+    "number_helper_text_between_values": "Informe um valor entre {{min}} e {{max}}",
+    "string_rtsp": "Deve ser uma RTSP válida",
+    "number_integer": "Deve ser um inteiro",
+    "date_min": "Deve ser posterior a {{min}}",
+    "date_max": "Deve ser anterior a {{max}}",
+    "number_moreThan": "Deve ser maior que ${more}",
+    "number_positive": "Deve ser um número positivo",
+    "string_noSpecialCharacters": "Caracteres especiais não são permitidos",
+    "only_numbers": "Apenas números são permitidos"
   }
 }

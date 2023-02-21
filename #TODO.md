@@ -31,3 +31,7 @@
 - instalar cypress + coverage e buscar 100%
 - melhorar o README do projeto + planejar como deve ficar
 - melhorar backend + adicionar opções avançadas e adicionar check pra marcar is done
+- responsividade
+
+
+- no README uma lista de tecnologias
