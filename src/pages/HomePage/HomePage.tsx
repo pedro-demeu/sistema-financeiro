@@ -15,7 +15,7 @@ import {
 import { FinantialForm } from '../../components/forms'
 import { transformDate } from '../../utils/transformDate'
 
-export const Dashboard: React.FC = (): JSX.Element => {
+export const HomePage: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
     finantialTransactionModalAtom
   )

@@ -6,7 +6,7 @@ import {
   CustomLink,
   CustomTextField,
   FormPattern
-} from '../../../components'
+} from '../../components'
 import { object, string } from 'yup'
 import { useTranslation } from 'react-i18next'
 

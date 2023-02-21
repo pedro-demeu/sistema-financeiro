@@ -35,3 +35,4 @@
 
 
 - no README uma lista de tecnologias
+- criar uma landingpage para inicio antes de login e criar

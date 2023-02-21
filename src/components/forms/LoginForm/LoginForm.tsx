@@ -1,7 +1,7 @@
+import React from 'react'
 import { Button, Checkbox, FormControl, FormControlLabel } from '@mui/material'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
-import React from 'react'
 import { boolean, object, string } from 'yup'
 import { CustomLink, CustomTextField, FormPattern } from '../../../components'
 import { DEFAULT_VALUES, UserLoggedAtom } from '../../../atoms/login'

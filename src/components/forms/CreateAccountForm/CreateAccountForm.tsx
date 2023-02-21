@@ -8,7 +8,7 @@ import {
   CustomLink,
   CustomTextField,
   FormPattern
-} from '../../../components'
+} from '../..'
 
 export const CreateAccountForm: React.FC = () => {
   const { t } = useTranslation()

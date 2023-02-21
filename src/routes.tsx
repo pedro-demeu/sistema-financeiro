@@ -1,25 +1,24 @@
 import React, { type ReactElement } from 'react'
 import { useRoutes, Outlet } from 'react-router-dom'
-import { Dashboard } from './pages'
-import { ForgotPassword, LoginForm, CreateAccountForm } from './pages/Account'
+import { HomePage, LoginPage, AccountPage, RecoveryPage } from './pages'
 
 export const Routes: React.FC = (): ReactElement => {
   const routes = useRoutes([
     {
       path: '/',
-      element: <LoginForm />
+      element: <LoginPage />
     },
     {
       path: '/home',
-      element: <Dashboard />
+      element: <HomePage />
     },
     {
       path: '/create-account',
-      element: <CreateAccountForm />
+      element: <AccountPage />
     },
     {
       path: '/forgot-password',
-      element: <ForgotPassword />
+      element: <RecoveryPage />
     }
   ])
   return (
