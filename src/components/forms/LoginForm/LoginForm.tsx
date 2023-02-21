@@ -2,28 +2,27 @@ import React from 'react'
 import { Button, Checkbox, FormControl, FormControlLabel } from '@mui/material'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
-import { boolean, object, string } from 'yup'
 import { CustomLink, CustomTextField, FormPattern } from '../../../components'
-import { DEFAULT_VALUES, UserLoggedAtom } from '../../../atoms/login'
-import { useSetRecoilState } from 'recoil'
+import { DEFAULT_VALUES, type LoginSchema } from '../../../atoms/login'
 import { useYupObject } from '../../../hooks'
+import { loginValidations } from './validations'
 
-export const LoginForm: React.FC = () => {
+interface LoginFormProps {
+  onSubmit: (data: LoginSchema) => void
+}
+
+export const LoginForm: React.FC<LoginFormProps> = ({
+  onSubmit
+}) => {
   const { t } = useYupObject()
-  const setLoggedUser = useSetRecoilState(UserLoggedAtom)
   const navigate = useNavigate()
-  const loginValidations = object({
-    username: string().required().min(4).max(50),
-    password: string().required().min(4).max(8),
-    rememberMe: boolean()
-  })
 
   const formik = useFormik({
     initialValues: DEFAULT_VALUES,
     validationSchema: loginValidations,
-    onSubmit: (values, { setSubmitting }) => {
+    onSubmit: (receivedValues, { setSubmitting }) => {
       setSubmitting(true)
-      setLoggedUser(values)
+      onSubmit(receivedValues)
       navigate('/home')
       setSubmitting(false)
     }
