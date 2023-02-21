@@ -4,8 +4,8 @@ import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import { CustomLink, CustomTextField, FormPattern } from '../../../components'
 import { DEFAULT_VALUES, type LoginSchema } from '../../../atoms/login'
+import { useTranslation } from 'react-i18next'
 import { useYupObject } from '../../../hooks'
-import { loginValidations } from './validations'
 
 interface LoginFormProps {
   onSubmit: (data: LoginSchema) => void
@@ -14,8 +14,15 @@ interface LoginFormProps {
 export const LoginForm: React.FC<LoginFormProps> = ({
   onSubmit
 }) => {
-  const { t } = useYupObject()
+  const { t } = useTranslation()
   const navigate = useNavigate()
+  const yup = useYupObject()
+
+  const loginValidations = yup.object({
+    username: yup.string().required().max(50),
+    password: yup.string().required().max(8),
+    rememberMe: yup.boolean()
+  })
 
   const formik = useFormik({
     initialValues: DEFAULT_VALUES,
@@ -40,17 +47,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         }}
       >
         <CustomTextField
-          autoFocus
-          InputLabelProps={{
-            style: {
-              color: '#DDD'
-            }
-          }}
-          InputProps={{
-            style: {
-              color: 'white'
-            }
-          }}
           autoComplete="off"
           fullWidth
           id="username"
@@ -61,6 +57,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           helperText={formik.errors.username}
           value={formik.values.username}
           label={t('login:username')}
+          InputLabelProps={{
+            color: 'info'
+          }}
         />
       </FormControl>
       <FormControl
@@ -69,23 +68,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         }}
       >
         <CustomTextField
-          InputLabelProps={{
-            style: {
-              color: '#DDD'
-            }
-          }}
-          InputProps={{
-            style: {
-              color: 'white'
-            }
-          }}
-          fullWidth
+        fullWidth
           id="password"
           name="password"
           onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
           autoComplete="off"
           error={Boolean(formik.errors.password)}
+          helperText={formik.errors.password}
           value={formik.values.password}
           type="password"
           label={t('login:password')}
@@ -100,9 +89,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         <FormControlLabel
           control={
             <Checkbox
-              sx={{
-                color: 'white'
-              }}
               checked={formik.values.rememberMe}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

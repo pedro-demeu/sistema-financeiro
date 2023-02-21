@@ -23,8 +23,5 @@ export default function useYupObject() {
     },
   });
 
-  return {
-    ...yup,
-    t
-  };
+  return yup
 }
