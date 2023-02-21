@@ -2,13 +2,9 @@ import React from 'react'
 import {
   FormControl,
   Box,
-  Button,
-  TextField,
-  styled,
-  InputAdornment,
-  Typography
+  Button
 } from '@mui/material'
-import { FormPattern, SelectTypeFinantial } from '../..'
+import { CustomTextField, FormPattern, SelectTypeFinantial } from '../..'
 import { useSetRecoilState } from 'recoil'
 import {
   editTransactionModalAtom,
@@ -16,22 +12,8 @@ import {
   finantialTransactionModalAtom
 } from '../../../atoms/finantial'
 import { useFormik } from 'formik'
-import { boolean, number, object, string } from 'yup'
 import { useTranslation } from 'react-i18next'
-
-const CustomTextField = styled(TextField)({
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: '#888'
-    },
-    '&:hover fieldset': {
-      borderColor: '#888'
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: '#888'
-    }
-  }
-})
+import { useYupObject } from '../../../hooks'
 
 interface FinantialFormProps {
   initialValues: FinancialTransaction
@@ -43,15 +25,16 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
   onSubmit
 }) => {
   const { t } = useTranslation()
+  const yup = useYupObject()
   const setModalClose = useSetRecoilState(finantialTransactionModalAtom)
   const setEditModalClose = useSetRecoilState(editTransactionModalAtom)
   const formik = useFormik({
     initialValues,
-    validationSchema: object({
-      name: string().required().min(3).max(55),
-      value: number().required().min(0),
-      type: string().required(),
-      isDone: boolean()
+    validationSchema: yup.object({
+      name: yup.string().required().max(55),
+      value: yup.number().required().positive(),
+      type: yup.string().required(),
+      isDone: yup.boolean()
     }),
     onSubmit: async (values, { setSubmitting }) => {
       setSubmitting(true)
@@ -82,25 +65,14 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
         <CustomTextField
           label={t('columns:name')}
           autoComplete="off"
-          variant="outlined"
           fullWidth
           id="name"
           name="name"
           value={formik.values.name}
           onChange={formik.handleChange}
-          error={!(formik.errors.name == null)}
-          onBlur={formik.handleBlur}
+          error={Boolean(formik.errors.name)}
           type="text"
-          InputLabelProps={{
-            style: {
-              color: '#DDD'
-            }
-          }}
-          InputProps={{
-            style: {
-              color: 'white'
-            }
-          }}
+          helperText={formik.errors.name}
         />
       </FormControl>
       <FormControl
@@ -111,31 +83,16 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
       >
         <CustomTextField
           label={t('columns:value')}
-          variant="outlined"
           fullWidth
           id="value"
           autoComplete="off"
           name="value"
           value={formik.values.value}
           onChange={formik.handleChange}
-          error={!(formik.errors.value == null)}
+          error={Boolean(formik.errors.value)}
           onBlur={formik.handleBlur}
           type="number"
-          InputLabelProps={{
-            style: {
-              color: '#DDD'
-            }
-          }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Typography color="white">R$</Typography>
-              </InputAdornment>
-            ),
-            style: {
-              color: 'white'
-            }
-          }}
+          helperText={formik.errors.value}
         />
       </FormControl>
       <FormControl
@@ -163,7 +120,7 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
               width: '100%',
               bgcolor: (initialValues.id !== 0) ? '#E3BA40' : '#289E71',
               '&:hover': {
-                bgcolor: (initialValues.id !== 0) ? '#AB8338' : '#E0AC4A'
+                bgcolor: initialValues.id <= 1 ? '#E0AC4A' : '#AB8338'
               }
             }}
           >

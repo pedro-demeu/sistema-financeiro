@@ -41,8 +41,8 @@
   },
   "forms": {
     "optional": "opcional",
-    "number_max": "Deve ser menor ou igual a ${max}",
-    "number_min": "Deve ser maior ou igual a ${min}",
+    "number_max": "Deve ser menor",
+    "number_min": "Deve ser maior",
     "string_email": "Deve ser um email válido",
     "string_url": "Deve ser uma URL válida",
     "mixed_required": "Campo obrigatório",
