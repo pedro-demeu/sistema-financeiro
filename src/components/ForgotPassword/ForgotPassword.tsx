@@ -7,19 +7,20 @@ import {
   CustomTextField,
   FormPattern
 } from '../../components'
-import { object, string } from 'yup'
 import { useTranslation } from 'react-i18next'
+import { useYupObject } from '../../hooks'
 
 export const ForgotPassword: React.FC = () => {
   const [feedbackMessage, setFeedbackMessage] = React.useState('')
   const { t } = useTranslation()
+  const yup = useYupObject()
 
   const formik = useFormik({
     initialValues: {
       email: ''
     },
-    validationSchema: object({
-      email: string().required().email()
+    validationSchema: yup.object({
+      email: yup.string().required().email()
     }),
     onSubmit: (values) => {
       setFeedbackMessage(`Enviamos um e-mail para ${values.email}`)
@@ -39,18 +40,9 @@ export const ForgotPassword: React.FC = () => {
             label="E-mail"
             fullWidth
             autoComplete="off"
-            InputProps={{
-              style: {
-                color: 'white'
-              }
-            }}
-            InputLabelProps={{
-              style: {
-                color: 'white'
-              }
-            }}
             id="email"
             name="email"
+            helperText={formik.errors.email}
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -67,7 +59,6 @@ export const ForgotPassword: React.FC = () => {
         >
           <Button
             type="submit"
-            disabled={Boolean(formik.errors.email)}
             variant="contained"
             sx={{
               width: '100%',

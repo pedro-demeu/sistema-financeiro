@@ -52,14 +52,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           id="username"
           name="username"
           onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={!(formik.errors.username == null)}
+          error={Boolean(formik.errors.username)}
           helperText={formik.errors.username}
           value={formik.values.username}
           label={t('login:username')}
-          InputLabelProps={{
-            color: 'info'
-          }}
         />
       </FormControl>
       <FormControl

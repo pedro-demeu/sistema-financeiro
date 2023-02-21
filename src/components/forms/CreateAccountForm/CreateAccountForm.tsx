@@ -1,7 +1,6 @@
 import { Button, FormControl } from '@mui/material'
 import { useFormik } from 'formik'
 import React from 'react'
-import { object, string } from 'yup'
 import { useTranslation } from 'react-i18next'
 import {
   AppContainer,
@@ -9,9 +8,11 @@ import {
   CustomTextField,
   FormPattern
 } from '../..'
+import { useYupObject } from '../../../hooks'
 
 export const CreateAccountForm: React.FC = () => {
   const { t } = useTranslation()
+  const yup = useYupObject()
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -19,11 +20,11 @@ export const CreateAccountForm: React.FC = () => {
       password: '',
       confirmPassword: ''
     },
-    validationSchema: object({
-      username: string().required().min(5),
-      email: string().email().required(),
-      password: string().required().min(4),
-      confirmPassword: string().required().min(4)
+    validationSchema: yup.object({
+      username: yup.string().required(),
+      email: yup.string().email().required(),
+      password: yup.string().required(),
+      confirmPassword: yup.string().required()
     }),
     onSubmit: (values) => { console.log(values) }
   })
@@ -38,22 +39,12 @@ export const CreateAccountForm: React.FC = () => {
         >
           <CustomTextField
             error={Boolean(formik.errors.username)}
-            InputLabelProps={{
-              style: {
-                color: '#DDD'
-              }
-            }}
-            InputProps={{
-              style: {
-                color: 'white'
-              }
-            }}
             autoComplete="off"
             label={t('_common:name')}
             value={formik.values.username}
+            helperText={formik.errors.username}
             name="username"
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             sx={{
               borderColor: 'white',
               color: 'white'
@@ -70,22 +61,12 @@ export const CreateAccountForm: React.FC = () => {
         >
           <CustomTextField
             error={Boolean(formik.errors.email)}
-            InputLabelProps={{
-              style: {
-                color: '#DDD'
-              }
-            }}
-            InputProps={{
-              style: {
-                color: 'white'
-              }
-            }}
+            helperText={formik.errors.email}
             autoComplete="off"
             label={t('_common:email')}
             value={formik.values.email}
             name="email"
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             sx={{
               borderColor: 'white',
               color: 'white'
@@ -103,22 +84,12 @@ export const CreateAccountForm: React.FC = () => {
         >
           <CustomTextField
             error={Boolean(formik.errors.password)}
-            InputLabelProps={{
-              style: {
-                color: '#DDD'
-              }
-            }}
-            InputProps={{
-              style: {
-                color: 'white'
-              }
-            }}
+            helperText={formik.errors.password}
             autoComplete="off"
             label={t('login:password')}
             value={formik.values.password}
             name="password"
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             sx={{
               borderColor: 'white',
               color: 'white'
@@ -136,22 +107,12 @@ export const CreateAccountForm: React.FC = () => {
         >
           <CustomTextField
             error={Boolean(formik.errors.confirmPassword)}
-            InputLabelProps={{
-              style: {
-                color: '#DDD'
-              }
-            }}
-            InputProps={{
-              style: {
-                color: 'white'
-              }
-            }}
+            helperText={formik.errors.confirmPassword}
             autoComplete="off"
             label={t('_common:confirm_pass')}
             value={formik.values.confirmPassword}
             name="confirmPassword"
             onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             sx={{
               borderColor: 'white',
               color: 'white'

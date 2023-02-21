@@ -47,10 +47,6 @@ const theme = createTheme({
       },
     },
   },
-  typography: {
-    fontSize: 16,
-    fontFamily: 'Roboto',
-  },
   shape: {
     borderRadius: 8,
   },
