@@ -21,15 +21,15 @@
 
 ##Funcionalidades em desenvolvimento
 
-[] - Permitir que o usuário Busque pelas finanças
+[] - Buscar 100% de coverage do cypress
+[] - Padronizar cores no theme.js
+[] - Configurar para que as importações comecem com "@" ao inves de ficar buscando com ..
 [] - Adicionar uma paginação a tabela
+[] - Permitir que o usuário Busque pelas finanças
 [] - Permitir Download da tabela em seu estado atual (jsPDF)
 [] - Permitir que o usuário possa filtrar por (valor maior/menor, data, tipo e filtros múltiplos)
-[] - Configurar para que as importações comecem com "@" ao inves de ficar buscando com ..
-[] - Buscar 100% de coverage do cypress
 [] - Melhorar o Readme com fotos, vídeos, documentação de qualidade
 [] - Pente fino no projeto, migrar para localstorage ou usar algum outro banco
 [] - Adicionar responsividade
 [] - Desenvolver Landing Page para este sistema
-[] - Padronizar cores no theme.js
 [] - Criar um microserviço que será relacionado ao login deste sistema
