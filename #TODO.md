@@ -26,8 +26,8 @@
 
 - instalar eslint + configurar [x]
 - configurar i18n en + pt-br [x]
-- refatorar validações
-- melhorar componentizações e tipagens
+- refatorar validações [x]
+- melhorar componentizações e tipagens [x]
 - instalar cypress + coverage e buscar 100%
 - melhorar o README do projeto + planejar como deve ficar
 - melhorar backend + adicionar opções avançadas e adicionar check pra marcar is done
