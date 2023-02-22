@@ -4,10 +4,12 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  type SelectChangeEvent
+  type SelectChangeEvent,
+  Typography
 } from '@mui/material'
 import { type FinancialTransactionType } from '../../atoms/finantial'
 import { useTranslation } from 'react-i18next'
+import './styles.css'
 
 interface SelectTypeProps {
   currentValue: FinancialTransactionType
@@ -51,26 +53,23 @@ export const SelectTypeFinantial: React.FC<SelectTypeProps> = ({
       </InputLabel>
       <Select
         variant="outlined"
-        sx={{
-          color: 'white',
-          borderColor: '#888',
-          '& fieldset': {
-            borderColor: '#888'
-          },
-          '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#888'
-          }
-        }}
         labelId="FinantialSelectID"
         id={id}
         name={name}
         value={currentValue}
         label="Selecione o tipo"
         onChange={onChange}
+        MenuProps={{
+          classes: {
+            paper: 'custom-modal'
+          }
+        }}
       >
         {menuItemValues.map((item) => (
           <MenuItem key={item.id} id={String(item.id)} value={item.value}>
-            {String(item.label).toUpperCase()}
+            <Typography color="white">
+              {String(item.label).toUpperCase()}
+            </Typography>
           </MenuItem>
         ))}
       </Select>

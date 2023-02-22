@@ -114,13 +114,12 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
         <Box display="flex" justifyContent="end" width="100%" marginTop="1rem">
           <Button
             type="submit"
-            disabled={!(formik.errors.name == null) || !(formik.errors.value == null)}
             variant="contained"
             sx={{
               width: '100%',
               bgcolor: (initialValues.id !== 0) ? '#E3BA40' : '#289E71',
               '&:hover': {
-                bgcolor: initialValues.id <= 1 ? '#E0AC4A' : '#AB8338'
+                bgcolor: !(initialValues.id >= 1) ? '#3d825b  ' : '#AB8338'
               }
             }}
           >
