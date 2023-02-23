@@ -21,6 +21,7 @@
 
 ##Funcionalidades em desenvolvimento
 
+[] - Criar um contador e total das despesas
 [] - Buscar 100% de coverage do cypress
 [] - Padronizar cores no theme.js
 [] - Configurar para que as importações comecem com "@" ao inves de ficar buscando com ..
@@ -33,3 +34,4 @@
 [] - Adicionar responsividade
 [] - Desenvolver Landing Page para este sistema
 [] - Criar um microserviço que será relacionado ao login deste sistema
+[] - Implementar um ErrorBoundary
