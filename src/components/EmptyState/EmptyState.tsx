@@ -1,6 +1,6 @@
-import React from 'react'
-import { Box, Button, Typography } from '@mui/material'
-import PaidIcon from '@mui/icons-material/Paid'
+import React from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import PaidIcon from '@mui/icons-material/Paid';
 
 interface EmptyStateProps {
   title: string
@@ -41,5 +41,5 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
         </Box>
       </Box>
     </Box>
-  )
-}
+  );
+};

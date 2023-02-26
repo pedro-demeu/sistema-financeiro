@@ -1,33 +1,88 @@
-import { Button, FormControl } from '@mui/material'
-import { useFormik } from 'formik'
-import React from 'react'
-import { useTranslation } from 'react-i18next'
+import { Box, Button, FormControl, TextField, Typography } from '@mui/material';
+import { useFormik } from 'formik';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   AppContainer,
   CustomLink,
-  CustomTextField,
   FormPattern
-} from '../..'
-import { useYupObject } from '../../../hooks'
+} from '../..';
+import { FeedbackType, UserType } from '../../../atoms/login';
+import { useYupObject } from '../../../hooks';
+import * as CryptoJS from 'crypto-js';
+import * as uuid from 'uuid';
+
 
 export const CreateAccountForm: React.FC = () => {
-  const { t } = useTranslation()
-  const yup = useYupObject()
+  const [feedbackMessage, setFeedbackMessage] = React.useState<FeedbackType>({
+    color: undefined,
+    message: ''
+  });
+  const usernameInputRef = React.useRef(null);
+
+  const { t } = useTranslation();
+  const yup = useYupObject();
   const formik = useFormik({
     initialValues: {
       username: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      id: '',
     },
     validationSchema: yup.object({
       username: yup.string().required(),
       email: yup.string().email().required(),
       password: yup.string().required(),
-      confirmPassword: yup.string().required()
+      // @ts-ignore
+      confirmPassword: yup.string().oneOf([yup.ref('password'), null], t('_common:password_must_match')).required()
     }),
-    onSubmit: (values) => { console.log(values) }
-  })
+    onSubmit: (data) => {
+      const { id, email, username } = data;
+
+      // @ts-ignore
+      const users: UserType[] = JSON.parse(localStorage.getItem('users')) || [];
+      const isDuplicate = users.some(user => user.id === id || user.email === email);
+      if (isDuplicate) {
+        setFeedbackMessage({
+          color: '#DE1F53',
+          message: t('_common:email_already_exists'),
+        });
+        formik.resetForm();
+        return;
+      }
+
+      const transformedData: UserType = {
+        email,
+        username,
+        id: uuid.v4(),
+        password: CryptoJS.SHA256(data.password).toString(),
+        finances: []
+      };
+
+      const updatedUsers = [...users, transformedData];
+      localStorage.setItem('users', JSON.stringify(updatedUsers));
+      setFeedbackMessage({
+        color: '#4affab',
+        message: t('_common:new_user_created')
+      });
+      formik.resetForm();
+    }
+  });
+
+  React.useEffect(function cleanupFeedbackMessage(){
+    if (feedbackMessage){
+      const timeoutId = setTimeout(() => {
+        setFeedbackMessage({
+          color: undefined,
+          message: null
+        });
+      }, 5000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [feedbackMessage]);
+
   return (
     <AppContainer>
       <FormPattern title={t('_common:create_account')} onSubmit={formik.handleSubmit}>
@@ -37,20 +92,19 @@ export const CreateAccountForm: React.FC = () => {
             marginBottom: '1rem'
           }}
         >
-          <CustomTextField
-            error={Boolean(formik.errors.username)}
+          <TextField
+            ref={usernameInputRef}
+            autoFocus
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.username && Boolean(formik.errors.username)}
+            helperText={formik.touched.username && formik.errors.username}
             autoComplete="off"
             label={t('_common:name')}
             value={formik.values.username}
-            helperText={formik.errors.username}
             name="username"
-            onChange={formik.handleChange}
-            sx={{
-              borderColor: 'white',
-              color: 'white'
-            }}
             fullWidth
-            id="fullname"
+            id="username"
           />
         </FormControl>
         <FormControl
@@ -59,18 +113,15 @@ export const CreateAccountForm: React.FC = () => {
             marginBottom: '1rem'
           }}
         >
-          <CustomTextField
-            error={Boolean(formik.errors.email)}
-            helperText={formik.errors.email}
+          <TextField
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
             autoComplete="off"
             label={t('_common:email')}
             value={formik.values.email}
             name="email"
-            onChange={formik.handleChange}
-            sx={{
-              borderColor: 'white',
-              color: 'white'
-            }}
             fullWidth
             id="email"
             type="email"
@@ -82,18 +133,15 @@ export const CreateAccountForm: React.FC = () => {
             marginBottom: '1rem'
           }}
         >
-          <CustomTextField
-            error={Boolean(formik.errors.password)}
-            helperText={formik.errors.password}
+          <TextField
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
             autoComplete="off"
             label={t('login:password')}
             value={formik.values.password}
             name="password"
-            onChange={formik.handleChange}
-            sx={{
-              borderColor: 'white',
-              color: 'white'
-            }}
             fullWidth
             id="password"
             type="password"
@@ -105,22 +153,26 @@ export const CreateAccountForm: React.FC = () => {
             marginBottom: '1rem'
           }}
         >
-          <CustomTextField
-            error={Boolean(formik.errors.confirmPassword)}
-            helperText={formik.errors.confirmPassword}
+          <TextField
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+            helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
             autoComplete="off"
             label={t('_common:confirm_pass')}
             value={formik.values.confirmPassword}
             name="confirmPassword"
-            onChange={formik.handleChange}
-            sx={{
-              borderColor: 'white',
-              color: 'white'
-            }}
             fullWidth
-            id="password-repeat"
+            id="confirmPassword"
             type="password"
           />
+        </FormControl>
+        <FormControl
+          sx={{
+            display: 'block',
+            marginBottom: '1rem'
+          }}
+        >
         </FormControl>
         <FormControl
           sx={{
@@ -136,20 +188,21 @@ export const CreateAccountForm: React.FC = () => {
           >
             <Button
               type="submit"
-              disabled={
-                Boolean(formik.errors.username) ||
-                Boolean(formik.errors.password) ||
-                Boolean(formik.errors.confirmPassword) ||
-                Boolean(formik.errors.email)
-              }
               className="actionButton"
             >
               {t('forms_actions:create')}
             </Button>
           </FormControl>
+          <Box mt={4} mb={4} display="flex" width="100%" justifyContent="center" alignItems="center">
+            <Typography align='center' sx={{
+              color: feedbackMessage.color
+            }}>
+              {feedbackMessage.message}
+            </Typography>
+          </Box>
         </FormControl>
         <CustomLink title={t('forms_actions:back')} to="/" />
       </FormPattern>
     </AppContainer>
-  )
-}
+  );
+};

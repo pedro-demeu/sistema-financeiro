@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   FormControl,
   InputLabel,
@@ -6,10 +6,10 @@ import {
   MenuItem,
   type SelectChangeEvent,
   Typography
-} from '@mui/material'
-import { type FinancialTransactionType } from '../../atoms/finantial'
-import { useTranslation } from 'react-i18next'
-import './styles.css'
+} from '@mui/material';
+import { type FinancialTransactionType } from '../../atoms/finantial';
+import { useTranslation } from 'react-i18next';
+import './styles.css';
 
 interface SelectTypeProps {
   currentValue: FinancialTransactionType
@@ -32,7 +32,7 @@ export const SelectTypeFinantial: React.FC<SelectTypeProps> = ({
   name,
   label
 }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const menuItemValues: MenuValue[] = [
     {
@@ -45,7 +45,7 @@ export const SelectTypeFinantial: React.FC<SelectTypeProps> = ({
       id: Math.random(),
       value: 'INCOME'
     }
-  ]
+  ];
   return (
     <FormControl fullWidth>
       <InputLabel sx={{ color: 'white' }} id="FinantialSelectID">
@@ -74,5 +74,5 @@ export const SelectTypeFinantial: React.FC<SelectTypeProps> = ({
         ))}
       </Select>
     </FormControl>
-  )
-}
+  );
+};

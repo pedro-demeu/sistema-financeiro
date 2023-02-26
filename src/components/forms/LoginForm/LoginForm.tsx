@@ -1,11 +1,12 @@
-import React from 'react'
-import { Button, Checkbox, FormControl, FormControlLabel } from '@mui/material'
-import { useFormik } from 'formik'
-import { useNavigate } from 'react-router-dom'
-import { CustomLink, CustomTextField, FormPattern } from '../../../components'
-import { DEFAULT_VALUES, type LoginSchema } from '../../../atoms/login'
-import { useTranslation } from 'react-i18next'
-import { useYupObject } from '../../../hooks'
+import React from 'react';
+import { Box, Button, Checkbox, FormControl, FormControlLabel, Typography, TextField } from '@mui/material';
+import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { CustomLink, FormPattern } from '../../../components';
+import { DEFAULT_VALUES, FeedbackLoginMessageAtom, type LoginSchema } from '../../../atoms/login';
+import { useTranslation } from 'react-i18next';
+import { useYupObject } from '../../../hooks';
+import { useRecoilState } from 'recoil';
 
 interface LoginFormProps {
   onSubmit: (data: LoginSchema) => void
@@ -14,26 +15,39 @@ interface LoginFormProps {
 export const LoginForm: React.FC<LoginFormProps> = ({
   onSubmit
 }) => {
-  const { t } = useTranslation()
-  const navigate = useNavigate()
-  const yup = useYupObject()
+  const { t } = useTranslation();
+  const yup = useYupObject();
+  const [feedbackMessage, setFeedbackMessage] = useRecoilState(FeedbackLoginMessageAtom);
 
   const loginValidations = yup.object({
-    username: yup.string().required().max(50),
-    password: yup.string().required().max(8),
+    email: yup.string().email().required(),
+    password: yup.string().required(),
     rememberMe: yup.boolean()
-  })
+  });
 
   const formik = useFormik({
     initialValues: DEFAULT_VALUES,
     validationSchema: loginValidations,
     onSubmit: (receivedValues, { setSubmitting }) => {
-      setSubmitting(true)
-      onSubmit(receivedValues)
-      navigate('/home')
-      setSubmitting(false)
+      setSubmitting(true);
+      onSubmit(receivedValues);
+      setSubmitting(false);
     }
-  })
+  });
+
+  React.useEffect(function cleanupFeedbackMessage() {
+    if (feedbackMessage) {
+      const timeoutId = setTimeout(() => {
+        setFeedbackMessage({
+          color: undefined,
+          message: null
+        });
+      }, 3000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [feedbackMessage, setFeedbackMessage]);
+
 
   return (
     <FormPattern
@@ -46,16 +60,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           marginBottom: '1rem'
         }}
       >
-        <CustomTextField
+        <TextField
+          onBlur={formik.handleBlur}
           autoComplete="off"
           fullWidth
-          id="username"
-          name="username"
+          id="email"
+          name="email"
           onChange={formik.handleChange}
-          error={Boolean(formik.errors.username)}
-          helperText={formik.errors.username}
-          value={formik.values.username}
-          label={t('login:username')}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
+          value={formik.values.email}
+          label={t('_common:email')}
         />
       </FormControl>
       <FormControl
@@ -63,14 +78,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           display: 'block'
         }}
       >
-        <CustomTextField
-        fullWidth
+        <TextField
+          onBlur={formik.handleBlur}
+          fullWidth
           id="password"
           name="password"
           onChange={formik.handleChange}
           autoComplete="off"
-          error={Boolean(formik.errors.password)}
-          helperText={formik.errors.password}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
           value={formik.values.password}
           type="password"
           label={t('login:password')}
@@ -97,6 +113,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             color: 'white'
           }}
         />
+        <Box mt={2} mb={2} display="flex" width="100%" justifyContent="center" alignItems="center">
+          <Typography align='center' sx={{
+            color: feedbackMessage.color
+          }}>
+            {feedbackMessage.message}
+          </Typography>
+        </Box>
         <FormControl
           sx={{
             display: 'flex',
@@ -124,5 +147,5 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         <CustomLink title={t('login:forgot_password')} to="/forgot-password" />
       </FormControl>
     </FormPattern>
-  )
-}
+  );
+};

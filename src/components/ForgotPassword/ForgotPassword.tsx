@@ -1,19 +1,19 @@
-import { Box, Button, FormControl, Typography } from '@mui/material'
-import React from 'react'
-import { useFormik } from 'formik'
+import { Box, Button, FormControl, Typography } from '@mui/material';
+import React from 'react';
+import { useFormik } from 'formik';
 import {
   AppContainer,
   CustomLink,
   CustomTextField,
   FormPattern
-} from '../../components'
-import { useTranslation } from 'react-i18next'
-import { useYupObject } from '../../hooks'
+} from '../../components';
+import { useTranslation } from 'react-i18next';
+import { useYupObject } from '../../hooks';
 
 export const ForgotPassword: React.FC = () => {
-  const [feedbackMessage, setFeedbackMessage] = React.useState('')
-  const { t } = useTranslation()
-  const yup = useYupObject()
+  const [feedbackMessage, setFeedbackMessage] = React.useState('');
+  const { t } = useTranslation();
+  const yup = useYupObject();
 
   const formik = useFormik({
     initialValues: {
@@ -23,9 +23,9 @@ export const ForgotPassword: React.FC = () => {
       email: yup.string().required().email()
     }),
     onSubmit: (values) => {
-      setFeedbackMessage(`Enviamos um e-mail para ${values.email}`)
+      setFeedbackMessage(`Enviamos um e-mail para ${values.email}`);
     }
-  })
+  });
   return (
     <AppContainer>
       <FormPattern onSubmit={formik.handleSubmit} title={t('login:recovery_account')}>
@@ -77,5 +77,5 @@ export const ForgotPassword: React.FC = () => {
         <CustomLink title={t('forms_actions:back')} to="/" />
       </FormPattern>
     </AppContainer>
-  )
-}
+  );
+};

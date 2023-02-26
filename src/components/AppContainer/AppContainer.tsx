@@ -1,5 +1,5 @@
-import React from 'react'
-import { Box } from '@mui/material'
+import React from 'react';
+import { Box } from '@mui/material';
 
 interface Props {
   children: JSX.Element
@@ -15,5 +15,5 @@ export const AppContainer: React.FC<Props> = ({ children }) => {
     >
       {children}
     </Box>
-  )
-}
+  );
+};

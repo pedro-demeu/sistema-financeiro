@@ -1,34 +1,49 @@
-import { Box, Button, Typography } from '@mui/material'
-import axios from 'axios'
-import { useFormik } from 'formik'
-import { t } from 'i18next'
-import React from 'react'
-import { useSetRecoilState } from 'recoil'
-import { FormPattern } from '../..'
-import { deleteTransactionModalAtom } from '../../../atoms/finantial'
+import { Box, Button, Typography } from '@mui/material';
+import { useFormik } from 'formik';
+import { t } from 'i18next';
+import React from 'react';
+import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
+import { FormPattern } from '../..';
+import { deleteTransactionModalAtom, Finance, financialTransactionsAtom } from '../../../atoms/finantial';
+import { UserLoggedAtom, UserType } from '../../../atoms/login';
 
 interface DeleteFormProps {
   name: string
-  id: number
+  id: string
 }
 export const DeleteForm: React.FC<DeleteFormProps> = ({ name, id }) => {
-  const setOpenDeleteModal = useSetRecoilState(deleteTransactionModalAtom)
-  const handleClose = (): void => { setOpenDeleteModal(false) }
+  const setOpenDeleteModal = useSetRecoilState(deleteTransactionModalAtom);
+  const handleClose = (): void => { setOpenDeleteModal(false); };
+  const [loggedUser, setLoggedUser] = useRecoilState(UserLoggedAtom);
+  
+  const deleteItem = (itemId: string) => {
+    if (loggedUser) {
+      const users: UserType[] = JSON.parse(localStorage.getItem('users') || '[]');
+      const updatedItems = loggedUser.finances.filter(item => item.id !== itemId);
+      const updatedUser: UserType = {
+        ...loggedUser,
+        finances: updatedItems
+      };
 
+      const currentUserIndex = users.findIndex(user => user.id === loggedUser.id);
+      if (currentUserIndex !== -1) {
+        users[currentUserIndex] = updatedUser;
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+        setLoggedUser({
+          ...loggedUser,
+          finances: updatedItems
+        })
+        handleClose()
+      }
+    }
+  }
   const formik = useFormik({
     initialValues: {
       id: 0
     },
-    onSubmit: async () => {
-      try {
-        await axios.delete(`http://localhost:3000/items/${id}`)
-        handleClose()
-      } catch (error) {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        alert(`Error: ${error}`)
-      }
-    }
-  })
+    onSubmit: () => deleteItem(id)
+  });
   return (
     <FormPattern
       onSubmit={formik.handleSubmit}
@@ -57,7 +72,7 @@ export const DeleteForm: React.FC<DeleteFormProps> = ({ name, id }) => {
         {t('forms_actions:confirm')}
       </Button>
     </FormPattern>
-  )
-}
+  );
+};
 
-export default DeleteForm
+export default DeleteForm;

@@ -1,60 +1,94 @@
-import React from 'react'
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import Menu from '@mui/material/Menu'
-import MenuIcon from '@mui/icons-material/Menu'
-import Container from '@mui/material/Container'
-import Tooltip from '@mui/material/Tooltip'
-import MenuItem from '@mui/material/MenuItem'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import { useRecoilValue } from 'recoil'
-import { UserLoggedAtom } from '../../atoms/login'
-import { useNavigate } from 'react-router-dom'
-import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded'
-import { useTranslation } from 'react-i18next'
+import React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { useSetRecoilState } from 'recoil';
+import { UserLoggedAtom, UserType } from '../../atoms/login';
+import { useNavigate } from 'react-router-dom';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import { useTranslation } from 'react-i18next';
 
 export const TopBar: React.FC = () => {
-  const settings = ['Meu Perfil', 'Contato', 'Sobre', 'Compartilhar', 'Logout']
-  const loggedUser = useRecoilValue(UserLoggedAtom)
-  const navigate = useNavigate()
-  const { t } = useTranslation()
+  const { t } = useTranslation();
+  const [username, setUsername] = React.useState('');
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
-  )
+  );
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
-  )
+  );
+  const navigate = useNavigate();
+  const setLoggedUser = useSetRecoilState(UserLoggedAtom)
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget)
-  }
+    setAnchorElNav(event.currentTarget);
+  };
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget)
-  }
+    setAnchorElUser(event.currentTarget);
+  };
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null)
-  }
+    setAnchorElNav(null);
+  };
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null)
+    setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('currentUser');
+    setLoggedUser(null);
+    navigate('/');
   }
 
-  React.useEffect(
-    function handleUserLoggedVerification () {
-      if ((loggedUser.username.length === 0) || loggedUser.username === '') {
-        navigate('/')
-      }
+  const settings = [
+    {
+      name: 'Meu Perfil',
+      onClick: handleCloseUserMenu,
+      key: Math.random()
     },
-    [loggedUser]
-  )
+    {
+      name: 'Contato',
+      onClick: handleCloseUserMenu,
+      key: Math.random()
+    },
+    {
+      name: 'Sobre',
+      onClick: handleCloseUserMenu,
+      key: Math.random()
+    },
+    {
+      name: 'Compartilhar',
+      onClick: handleCloseUserMenu,
+      key: Math.random()
+    },
+    {
+      name: 'Logout',
+      onClick: handleLogout,
+      key: Math.random()
+    }
+  ];
+
+  React.useEffect(() => {
+    // @ts-ignore
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+
+    if (currentUser) {
+      setUsername(currentUser.username)
+    }
+  })
 
   return (
     <AppBar
@@ -77,7 +111,7 @@ export const TopBar: React.FC = () => {
               variant="h6"
               noWrap
               component="a"
-              href="/"
+              href="/home"
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -153,7 +187,7 @@ export const TopBar: React.FC = () => {
               fontSize: '0.95rem'
             }}
           >
-            {loggedUser.username}
+            {username}
           </Typography>
 
           <Box sx={{ flexGrow: 0 }}>
@@ -182,8 +216,8 @@ export const TopBar: React.FC = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.key} onClick={setting.onClick}>
+                  <Typography color="#222" textAlign="center">{setting.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -191,5 +225,5 @@ export const TopBar: React.FC = () => {
         </Toolbar>
       </Container>
     </AppBar>
-  )
-}
+  );
+};

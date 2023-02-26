@@ -1,4 +1,4 @@
-import styled from '@emotion/styled'
-import { TextField } from '@mui/material'
+import styled from '@emotion/styled';
+import { TextField } from '@mui/material';
 
-export const CustomTextField = styled(TextField)()
+export const CustomTextField = styled(TextField)();

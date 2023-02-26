@@ -1,15 +1,15 @@
-import React from 'react'
-import { Box, Button } from '@mui/material'
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded'
-import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded'
-import { useRecoilState } from 'recoil'
-import { finantialTransactionModalAtom } from '../../atoms/finantial'
+import React from 'react';
+import { Box, Button } from '@mui/material';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
+import { useRecoilState } from 'recoil';
+import { finantialTransactionModalAtom } from '../../atoms/finantial';
 
 export const HeaderTable: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
     finantialTransactionModalAtom
-  )
-  const handleModalState = (): void => { setIsModalOpen(!isModalOpen) }
+  );
+  const handleModalState = (): void => { setIsModalOpen(!isModalOpen); };
 
   return (
     <Box
@@ -28,5 +28,5 @@ export const HeaderTable: React.FC = () => {
         <AddCircleRoundedIcon fontSize="medium" sx={{ color: 'white' }} />
       </Button>
     </Box>
-  )
-}
+  );
+};

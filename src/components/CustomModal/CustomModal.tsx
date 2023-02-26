@@ -1,8 +1,8 @@
-import { Modal, Box } from '@mui/material'
-import React from 'react'
+import { Modal, Box } from '@mui/material';
+import React from 'react';
 
 const modalStyle = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute' as const,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -11,7 +11,7 @@ const modalStyle = {
   border: '2px solid #000',
   borderRadius: '25px',
   boxShadow: 24
-}
+};
 interface CustomModalProps {
   children: React.ReactNode
   open: boolean
@@ -22,11 +22,11 @@ export const CustomModal: React.FC<CustomModalProps> = ({
   open = false,
   setOpen
 }) => {
-  const handleClose = (): void => { setOpen(false) }
+  const handleClose = (): void => { setOpen(false); };
 
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={modalStyle}>{children}</Box>
     </Modal>
-  )
-}
+  );
+};

@@ -1,38 +1,42 @@
-import * as React from 'react'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper'
-import { Box, Button, Checkbox, Typography } from '@mui/material'
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import { Box, Button, Checkbox, Typography } from '@mui/material';
 import {
   DEFAULT_VALUES,
   deleteTransactionModalAtom,
   editTransactionModalAtom,
-  type FinancialTransaction,
+  type Finance,
   type FinancialTransactionType,
-  finantialTransactionModalAtom
-} from '../../atoms/finantial'
-import DeleteIcon from '@mui/icons-material/Delete'
-import { CustomModal, EmptyState, HeaderTable } from '..'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import axios from 'axios'
-import { DeleteForm, FinantialForm } from '../forms'
-import EditRoundedIcon from '@mui/icons-material/EditRounded'
-import { transformDate } from '../../utils/transformDate'
-import { useTranslation } from 'react-i18next'
+  finantialTransactionModalAtom,
+  financialTransactionsAtom
+} from '../../atoms/finantial';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { CustomModal, EmptyState, HeaderTable } from '..';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { DeleteForm, FinantialForm } from '../forms';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import { transformDate } from '../../utils/transformDate';
+import { useTranslation } from 'react-i18next';
+import * as uuid from 'uuid';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { UserLoggedAtom, UserType } from '../../atoms/login';
 
 interface ColumnObject {
   label: string
   dataKey?: string
   align?: 'left' | 'center' | 'right' | 'inherit' | 'justify' | undefined
-  renderValue?: (e: any) => string
+  renderValue?: (e: number | FinancialTransactionType) => string
 }
 
 interface BasicTableProps {
-  finantialList: FinancialTransaction[]
+  finantialList: Finance[]
 }
 
 const BasicTable: React.FC<BasicTableProps> = ({
@@ -40,9 +44,9 @@ const BasicTable: React.FC<BasicTableProps> = ({
 }) => {
   const [openDeleteModal, setOpenDeleteModal] = useRecoilState(
     deleteTransactionModalAtom
-  )
-  const [editModal, setEditModal] = useRecoilState(editTransactionModalAtom)
-  const { t } = useTranslation()
+  );
+  const [editModal, setEditModal] = useRecoilState(editTransactionModalAtom);
+  const { t } = useTranslation();
 
   const columns: ColumnObject[] = [
     {
@@ -58,18 +62,18 @@ const BasicTable: React.FC<BasicTableProps> = ({
     {
       label: 'columns:value',
       dataKey: 'value',
-      renderValue: (e: number) =>
+      renderValue: (e) =>
         Intl.NumberFormat('pt-BR', {
           style: 'currency',
           currency: 'BRL'
-        }).format(e),
+        }).format(e as number),
       align: 'left'
     },
     {
       label: 'columns:type',
       dataKey: 'type',
-      renderValue: (e: FinancialTransactionType) =>
-        e === 'INCOME' ? t('_common:income') : t('spending'),
+      renderValue: (e) =>
+        e as FinancialTransactionType === 'INCOME' ? t('_common:income') : t('spending'),
       align: 'left'
     },
     {
@@ -81,31 +85,60 @@ const BasicTable: React.FC<BasicTableProps> = ({
       label: '#',
       align: 'center'
     }
-  ]
+  ];
 
   const [finantialSelected, setFinantialSelected] =
-    React.useState<FinancialTransaction>(DEFAULT_VALUES)
-
-  async function handleSubmit (data: FinancialTransaction): Promise<void> {
+    React.useState<Finance>(DEFAULT_VALUES);
+  const [loggedUser, setLoggedUser] = useRecoilState(UserLoggedAtom)
+  function handleSubmit(data: Finance): void {
     try {
-      await axios.post('http://localhost:3000/items', {
+      const transformedData = {
         ...data,
-        createdAt: transformDate(new Date())
-      })
+        createdAt: transformDate(new Date()),
+        id: uuid.v4()
+      };
+      const oldFinances = JSON.parse(localStorage.getItem('finances') || '[]');
+
+      const newFinances = [...oldFinances, transformedData];
+      localStorage.setItem('finances', JSON.stringify(newFinances));
+
+
     } catch (error: any) {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      alert(`error: ${error}`)
+      alert(`error: ${error}`);
     }
   }
 
-  async function handleEdit (data: FinancialTransaction): Promise<void> {
+  function handleEdit(currentFinance: Finance): void {
     try {
-      await axios.put(`http://localhost:3000/items/${data.id}`, data)
+      const users: UserType[] = JSON.parse(localStorage.getItem('users') || '[]');
+      const oldFinances: Finance[] = loggedUser?.finances || []
+      const financeChanges = oldFinances.map(finance => finance.id === currentFinance.id ? currentFinance : finance);
+
+      if (loggedUser) {
+
+        const currentUserIndex = users.findIndex(user => user.id === loggedUser.id);
+
+        if (currentUserIndex !== -1) {
+          const updatedUser: UserType = {
+            ...loggedUser,
+            finances: financeChanges
+          };
+          const updatedUsers = [...users];
+          updatedUsers[currentUserIndex] = updatedUser;
+
+          localStorage.setItem('users', JSON.stringify(updatedUsers));
+          localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+
+          setLoggedUser(updatedUser);
+        }
+      }
+
     } catch (error: any) {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      alert(`Erro na edição: ${error}`)
+      alert(`Error: ${error}`);
     }
   }
+
 
   return (
     <Box>
@@ -148,9 +181,12 @@ const BasicTable: React.FC<BasicTableProps> = ({
                   </Typography>
                 </TableCell>
                 <TableCell align="left">
+                  <Box display="flex" alignItems="center" gap="1rem">
+                    {row.type === 'SPENDING' ? <ArrowDownwardIcon sx={{ color:'#DE1F53'}} /> : <ArrowUpwardIcon sx={{ color: '#4affab'}} />}
                   <Typography sx={{ color: 'white' }}>
                     {row.type === 'INCOME' ? t('_common:income').toUpperCase() : t('_common:spending').toUpperCase()}
                   </Typography>
+                  </Box>
                 </TableCell>
 
                 <TableCell align="left">
@@ -161,16 +197,16 @@ const BasicTable: React.FC<BasicTableProps> = ({
                 <TableCell align="center">
                   <Button
                     onClick={() => {
-                      setFinantialSelected(row)
-                      setEditModal(!editModal)
+                      setFinantialSelected(row);
+                      setEditModal(!editModal);
                     }}
                   >
                     <EditRoundedIcon fontSize="small" sx={{ color: 'white' }} />
                   </Button>
                   <Button
                     onClick={() => {
-                      setFinantialSelected(row)
-                      setOpenDeleteModal(!openDeleteModal)
+                      setFinantialSelected(row);
+                      setOpenDeleteModal(!openDeleteModal);
                     }}
                   >
                     <DeleteIcon fontSize="small" sx={{ color: 'white' }} />
@@ -189,33 +225,31 @@ const BasicTable: React.FC<BasicTableProps> = ({
         <FinantialForm
           key={finantialSelected.id ?? Math.random()}
           initialValues={finantialSelected}
-          onSubmit={(finantialSelected.id !== 0) ? handleEdit : handleSubmit}
+          onSubmit={(finantialSelected.id !== '') ? handleEdit : handleSubmit}
         />
       </CustomModal>
     </Box>
-  )
-}
+  );
+};
 export const FinantialTransactionsTable: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
     finantialTransactionModalAtom
-  )
-  const isDeleteModalOpen = useRecoilValue(deleteTransactionModalAtom)
-  const isEditModalOpen = useRecoilValue(editTransactionModalAtom)
-  const [finantialList, setFinantialList] = React.useState([])
+  );
+  const isDeleteModalOpen = useRecoilValue(deleteTransactionModalAtom);
+  const isEditModalOpen = useRecoilValue(editTransactionModalAtom);
+  const [finantialList, setFinantialList] = useRecoilState(financialTransactionsAtom)
+  const [loggedUser, setLoggedUser] = useRecoilState(UserLoggedAtom);
 
-  const handleModalState = (): void => { setIsModalOpen(!isModalOpen) }
+  const handleModalState = (): void => { setIsModalOpen(!isModalOpen); };
 
-  const getData = async (): Promise<void> => {
-    const { data } = await axios.get('http://localhost:3000/items')
-    setFinantialList(data)
-  }
 
-  React.useEffect(
-    function getList () {
-      void getData()
-    },
-    [isModalOpen, isDeleteModalOpen, isEditModalOpen]
-  )
+
+  React.useEffect(function updateListWhenChangeModalState(){
+    if (loggedUser){
+      setFinantialList(loggedUser.finances)
+    }
+  },[isModalOpen, isDeleteModalOpen, isEditModalOpen]
+  );
 
   if (finantialList.length === 0) {
     return (
@@ -225,7 +259,7 @@ export const FinantialTransactionsTable: React.FC = () => {
         description="Não há finanças cadastradas, clique no ícone a baixo:"
         onClick={handleModalState}
       />
-    )
+    );
   }
   return (
     <Box
@@ -240,5 +274,5 @@ export const FinantialTransactionsTable: React.FC = () => {
         <BasicTable finantialList={finantialList} />
       </Box>
     </Box>
-  )
-}
+  );
+};

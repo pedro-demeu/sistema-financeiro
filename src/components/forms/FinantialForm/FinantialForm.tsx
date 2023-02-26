@@ -1,33 +1,33 @@
-import React from 'react'
+import React from 'react';
 import {
   FormControl,
   Box,
   Button
-} from '@mui/material'
-import { CustomTextField, FormPattern, SelectTypeFinantial } from '../..'
-import { useSetRecoilState } from 'recoil'
+} from '@mui/material';
+import { CustomTextField, FormPattern, SelectTypeFinantial } from '../..';
+import { useSetRecoilState } from 'recoil';
 import {
   editTransactionModalAtom,
-  type FinancialTransaction,
+  type Finance,
   finantialTransactionModalAtom
-} from '../../../atoms/finantial'
-import { useFormik } from 'formik'
-import { useTranslation } from 'react-i18next'
-import { useYupObject } from '../../../hooks'
+} from '../../../atoms/finantial';
+import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { useYupObject } from '../../../hooks';
 
 interface FinantialFormProps {
-  initialValues: FinancialTransaction
-  onSubmit: (data: FinancialTransaction) => Promise<void>
+  initialValues: Finance
+  onSubmit: (data: Finance) => void
 }
 
 export const FinantialForm: React.FC<FinantialFormProps> = ({
   initialValues,
   onSubmit
 }) => {
-  const { t } = useTranslation()
-  const yup = useYupObject()
-  const setModalClose = useSetRecoilState(finantialTransactionModalAtom)
-  const setEditModalClose = useSetRecoilState(editTransactionModalAtom)
+  const { t } = useTranslation();
+  const yup = useYupObject();
+  const setModalClose = useSetRecoilState(finantialTransactionModalAtom);
+  const setEditModalClose = useSetRecoilState(editTransactionModalAtom);
   const formik = useFormik({
     initialValues,
     validationSchema: yup.object({
@@ -36,25 +36,25 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
       type: yup.string().required(),
       isDone: yup.boolean()
     }),
-    onSubmit: async (values, { setSubmitting }) => {
-      setSubmitting(true)
-      await onSubmit({
+    onSubmit: (values, { setSubmitting }) => {
+      setSubmitting(true);
+      onSubmit({
         ...values,
         createdAt: initialValues.createdAt
-      })
+      });
       setSubmitting(false)
-      ;(initialValues.id !== 0) ? setEditModalClose(false) : setModalClose(false)
+      ;(initialValues.id !== '') ? setEditModalClose(false) : setModalClose(false);
     },
     enableReinitialize: true
-  })
+  });
 
   return (
     <FormPattern
       onSubmit={formik.handleSubmit}
       title={
-        (initialValues.id !== 0) ? t('_common:change_your_finances') : t('_common:create_your_finance')
+        (initialValues.id !== '') ? t('_common:change_your_finances') : t('_common:create_your_finance')
       }
-      borderColor={(initialValues.id !== 0) ? '#E3BA40' : '#6eca9f'}
+      borderColor={(initialValues.id !== '') ? '#E3BA40' : '#6eca9f'}
     >
       <FormControl
         sx={{
@@ -107,7 +107,7 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
           label={t('_common:select_type')}
           currentValue={formik.values.type}
           onChange={(event) => {
-            formik.handleChange(event)
+            formik.handleChange(event);
           }}
         />
 
@@ -117,16 +117,16 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
             variant="contained"
             sx={{
               width: '100%',
-              bgcolor: (initialValues.id !== 0) ? '#E3BA40' : '#289E71',
+              bgcolor: (initialValues.id !== '') ? '#E3BA40' : '#289E71',
               '&:hover': {
-                bgcolor: !(initialValues.id >= 1) ? '#3d825b  ' : '#AB8338'
+                bgcolor: (initialValues.id !== '') ? '#AB8338': '#3d825b  '
               }
             }}
           >
-            {(formik.values.id !== 0) ? t('forms_actions:edit') : t('forms_actions:add')}
+            {(formik.values.id !== '') ? t('forms_actions:edit') : t('forms_actions:add')}
           </Button>
         </Box>
       </FormControl>
     </FormPattern>
-  )
-}
+  );
+};

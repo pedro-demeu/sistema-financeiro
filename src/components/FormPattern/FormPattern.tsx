@@ -1,5 +1,5 @@
-import { Box, Typography } from '@mui/material'
-import React from 'react'
+import { Box, Typography } from '@mui/material';
+import React from 'react';
 
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   children: React.ReactNode
@@ -58,5 +58,5 @@ export const FormPattern: React.FC<FormProps> = ({
         {children}
       </form>
     </Box>
-  )
-}
+  );
+};
