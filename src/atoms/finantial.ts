@@ -1,25 +1,26 @@
 import { atom } from "recoil";
 
 export type FinancialTransactionType = "INCOME" | "SPENDING";
-export interface FinancialTransaction {
+
+export interface Finance {
   name: string;
   value: number;
   type: FinancialTransactionType;
   createdAt: string;
   isDone: boolean;
-  id: number;
+  id: string;
 }
 
-export const DEFAULT_VALUES: FinancialTransaction = {
+export const DEFAULT_VALUES: Finance = {
   name: "",
   value: 0,
   type: "SPENDING",
   isDone: false,
   createdAt: "",
-  id: 0,
+  id: '',
 };
 
-export const financialTransactionsAtom = atom<FinancialTransaction[]>({
+export const financialTransactionsAtom = atom<Finance[]>({
   key: "financialTransactionsAtom",
   default: [],
 });

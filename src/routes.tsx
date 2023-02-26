@@ -1,6 +1,6 @@
-import React, { type ReactElement } from 'react'
-import { useRoutes, Outlet } from 'react-router-dom'
-import { HomePage, LoginPage, AccountPage, RecoveryPage } from './pages'
+import React, { type ReactElement } from 'react';
+import { useRoutes, Outlet } from 'react-router-dom';
+import { HomePage, LoginPage, AccountPage, RecoveryPage } from './pages';
 
 export const Routes: React.FC = (): ReactElement => {
   const routes = useRoutes([
@@ -20,11 +20,11 @@ export const Routes: React.FC = (): ReactElement => {
       path: '/forgot-password',
       element: <RecoveryPage />
     }
-  ])
+  ]);
   return (
     <>
       {routes}
       <Outlet />
     </>
-  )
-}
+  );
+};
