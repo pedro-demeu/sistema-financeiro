@@ -18,11 +18,12 @@
 [x] - Validações com Formik e Yup
 [x] - Tradução do Projeto para EN-US e PT-BR com (i18n)
 [x] - Configuração do Eslint
+[x] - Criar um contador e total das despesas
 
 
 ##Funcionalidades em desenvolvimento
 
-[] - Criar um contador e total das despesas
+[] - construir um CRUD bem feito para as ações em localstorage, como um useLogin useFinances
 [] - adicionar opções avançadas
 [] - Buscar 100% de coverage do cypress
 [] - Padronizar cores no theme.js
@@ -32,9 +33,8 @@
 [] - Permitir Download da tabela em seu estado atual (jsPDF)
 [] - Permitir que o usuário possa filtrar por (valor maior/menor, data, tipo e filtros múltiplos)
 [] - Melhorar o Readme com fotos, vídeos, documentação de qualidade
-[] - Pente fino no projeto, migrar para localstorage ou usar algum outro banco
 [] - Adicionar responsividade
-[] - Desenvolver Landing Page para este sistema
-[] - Criar um microserviço que será relacionado ao login deste sistema
 [] - Implementar um ErrorBoundary
 [] - Quando melhorar o README, adicionar um tutorial para criar componentes e melhorar a renderrização para o padrão da Segware
+[] - desenvolver edição de usuário e página de contato e opção de compartilhar
+[] - desenvolver um comando que abre um modal onde você digita expressões matemáticas e elas retornam a resposta
