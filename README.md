@@ -4,6 +4,7 @@
 (#4affab - Verde Florescente)
 (#4C735D - Verde Escuro)
 (#DE1F53 - Vermelho)
+(#F6D325 - Amarelo)
 
 ##Funcionalidades concluídas
 [x] - Desenvolver projeto em React e Typescript
@@ -22,6 +23,7 @@
 ##Funcionalidades em desenvolvimento
 
 [] - Criar um contador e total das despesas
+[] - adicionar opções avançadas
 [] - Buscar 100% de coverage do cypress
 [] - Padronizar cores no theme.js
 [] - Configurar para que as importações comecem com "@" ao inves de ficar buscando com ..
