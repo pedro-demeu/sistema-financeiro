@@ -12,7 +12,7 @@
     "login": "Acessar",
     "recovery": "Recuperar",
     "back": "Voltar",
-    "create": "Criar",
+    "create": "Salvar",
     "confirm": "Confirmar",
     "edit": "Alterar",
     "delete": "Deletar",
@@ -30,10 +30,14 @@
     "select_type": "Selecione o tipo",
     "income": "Receitas",
     "spending": "Despesas",
-    "finantial": "Financeiro"
+    "finantial": "Financeiro",
+    "password_must_match": "As senhas não coincidem",
+    "email_already_exists": "Este e-mail já existe no sistema!!",
+    "new_user_created": "Novo usuário criado com sucesso!!",
+    "login_fails": "E-mail ou senha incorretos!!"
   },
   "columns": {
-    "is_done": "Está pago",
+    "is_done": "Pago",
     "name": "Apelido",
     "type": "Tipo de despesa",
     "value": "Valor",

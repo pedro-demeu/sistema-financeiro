@@ -9,9 +9,6 @@ const resources = {
   en,
 };
 
-console.log(languageDetector);
-
-
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .use(languageDetector)
@@ -20,7 +17,7 @@ i18n
     fallbackLng: 'pt-BR',
     interpolation: {
       escapeValue: false, // react already safes from xss
-      format(value, format, lng) {
+      format(value, format) {
         if (format === 'uppercase') return value.toUpperCase();
         if (format === 'lowercase') return value.toLowerCase();
         return value;

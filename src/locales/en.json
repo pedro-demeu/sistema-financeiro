@@ -12,7 +12,7 @@
     "login": "Login",
     "recovery": "Retrieve",
     "back":"Go back",
-    "create": "Create",
+    "create": "Save",
     "confirm": "Confirm",
     "edit": "Edit",
     "delete": "Delete",
@@ -30,7 +30,11 @@
     "select_type": "Select the type",
     "income": "Income",
     "spending": "Spending",
-    "finantial": "Finantial"
+    "finantial": "Finantial",
+    "password_must_match": "Password must match",
+    "email_already_exists": "Email already exist!!",
+    "new_user_created": "New user was created with successful!!",
+    "login_fails": "Wrong E-mail or Password!!"
   },
   "columns": {
     "is_done": "is Done?",
