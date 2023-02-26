@@ -36,11 +36,16 @@ interface ColumnObject {
 }
 
 interface BasicTableProps {
-  finantialList: Finance[]
+  finantialList: Finance[],
+  handleChecked: (data: {
+    id: string;
+    isDone: boolean;
+  }) => void;
 }
 
 const BasicTable: React.FC<BasicTableProps> = ({
-  finantialList
+  finantialList,
+  handleChecked
 }) => {
   const [openDeleteModal, setOpenDeleteModal] = useRecoilState(
     deleteTransactionModalAtom
@@ -82,14 +87,15 @@ const BasicTable: React.FC<BasicTableProps> = ({
       align: 'left'
     },
     {
-      label: '#',
+      label: '_common:actions',
       align: 'center'
     }
   ];
 
-  const [finantialSelected, setFinantialSelected] =
-    React.useState<Finance>(DEFAULT_VALUES);
-  const [loggedUser, setLoggedUser] = useRecoilState(UserLoggedAtom)
+  const [finantialSelected, setFinantialSelected] = React.useState<Finance>(DEFAULT_VALUES);
+  const [loggedUser, setLoggedUser] = useRecoilState(UserLoggedAtom);
+  const [isChecked, setIsChecked] = React.useState(false);
+
   function handleSubmit(data: Finance): void {
     try {
       const transformedData = {
@@ -138,8 +144,6 @@ const BasicTable: React.FC<BasicTableProps> = ({
       alert(`Error: ${error}`);
     }
   }
-
-
   return (
     <Box>
       <TableContainer
@@ -167,7 +171,9 @@ const BasicTable: React.FC<BasicTableProps> = ({
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell align="left" component="th" scope="row">
-                  <Checkbox checked={row.isDone} />
+                  <Checkbox checked={isChecked} onChange={(e) => {
+                    setIsChecked(!row.isDone)                    
+                  }} />
                 </TableCell>
                 <TableCell align="left" component="th" scope="row">
                   <Typography sx={{ color: 'white' }}>{row.name}</Typography>
@@ -182,10 +188,10 @@ const BasicTable: React.FC<BasicTableProps> = ({
                 </TableCell>
                 <TableCell align="left">
                   <Box display="flex" alignItems="center" gap="1rem">
-                    {row.type === 'SPENDING' ? <ArrowDownwardIcon sx={{ color:'#DE1F53'}} /> : <ArrowUpwardIcon sx={{ color: '#4affab'}} />}
-                  <Typography sx={{ color: 'white' }}>
-                    {row.type === 'INCOME' ? t('_common:income').toUpperCase() : t('_common:spending').toUpperCase()}
-                  </Typography>
+                    {row.type === 'SPENDING' ? <ArrowDownwardIcon sx={{ color: '#DE1F53' }} /> : <ArrowUpwardIcon sx={{ color: '#4affab' }} />}
+                    <Typography sx={{ color: 'white' }}>
+                      {row.type === 'INCOME' ? t('_common:income').toUpperCase() : t('_common:spending').toUpperCase()}
+                    </Typography>
                   </Box>
                 </TableCell>
 
@@ -244,35 +250,54 @@ export const FinantialTransactionsTable: React.FC = () => {
 
 
 
-  React.useEffect(function updateListWhenChangeModalState(){
-    if (loggedUser){
+  React.useEffect(function updateListWhenChangeModalState() {
+    if (loggedUser) {
       setFinantialList(loggedUser.finances)
     }
-  },[isModalOpen, isDeleteModalOpen, isEditModalOpen]
+  }, [isModalOpen, isDeleteModalOpen, isEditModalOpen]
   );
 
-  if (finantialList.length === 0) {
-    return (
-      <EmptyState
-        mt="15rem"
-        title="Crie sua primeira finança"
-        description="Não há finanças cadastradas, clique no ícone a baixo:"
-        onClick={handleModalState}
-      />
-    );
+  function handleChecked({ id, isDone }: {
+    id: string;
+    isDone: boolean;
+  }) {
+
+    if (loggedUser) {
+
+      console.log(id, isDone);
+      
+      // const updatedUser = { ...loggedUser };
+      // const financeIndex = updatedUser.finances.findIndex(finance => finance.id === id);
+      // if (financeIndex >= 0) {
+      //   updatedUser.finances[financeIndex].isDone = isDone;
+      // }
+
+      // setLoggedUser(updatedUser);
+    }
   }
+
+if (finantialList.length === 0) {
   return (
-    <Box
-      sx={{
-        width: '80%',
-        maxWidth: '1200px',
-        marginTop: '10rem'
-      }}
-    >
-      <Box width="100%">
-        <HeaderTable />
-        <BasicTable finantialList={finantialList} />
-      </Box>
-    </Box>
+    <EmptyState
+      mt="15rem"
+      title="Crie sua primeira finança"
+      description="Não há finanças cadastradas, clique no ícone a baixo:"
+      onClick={handleModalState}
+    />
   );
+}
+return (
+  <Box
+    sx={{
+      width: '80%',
+      maxWidth: '1200px',
+      marginTop: '10rem'
+    }}
+  >
+    <Box width="100%">
+      <HeaderTable />
+      <BasicTable handleChecked={handleChecked} finantialList={finantialList} />
+    </Box>
+  </Box>
+);
 };

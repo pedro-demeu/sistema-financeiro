@@ -8,6 +8,7 @@ import {
 } from '../../atoms/finantial';
 import {
   CustomModal,
+  FinanceControls,
   FinantialTransactionsTable,
   TopBar
 } from '../../components';
@@ -32,29 +33,29 @@ export const HomePage: React.FC = (): JSX.Element => {
     try {
       const users: UserType[] = JSON.parse(localStorage.getItem('users') || '[]');
 
-      if (loggedUser){
+      if (loggedUser) {
 
-      const currentUserIndex = users.findIndex(user => user.id === loggedUser.id);
+        const currentUserIndex = users.findIndex(user => user.id === loggedUser.id);
 
-      if (currentUserIndex !== -1) {
-        const transformedData = {
-          ...data,
-          createdAt: transformDate(new Date()),
-          id: uuid.v4()
-        };
-        const newFinances = [...loggedUser.finances, transformedData];
-        const updatedUser: UserType = {
-          ...loggedUser,
-          finances: newFinances
-        };
-        const updatedUsers = [...users];
-        updatedUsers[currentUserIndex] = updatedUser;
+        if (currentUserIndex !== -1) {
+          const transformedData = {
+            ...data,
+            createdAt: transformDate(new Date()),
+            id: uuid.v4()
+          };
+          const newFinances = [...loggedUser.finances, transformedData];
+          const updatedUser: UserType = {
+            ...loggedUser,
+            finances: newFinances
+          };
+          const updatedUsers = [...users];
+          updatedUsers[currentUserIndex] = updatedUser;
 
-        localStorage.setItem('users', JSON.stringify(updatedUsers));
-        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+          localStorage.setItem('users', JSON.stringify(updatedUsers));
+          localStorage.setItem('currentUser', JSON.stringify(updatedUser));
 
-        setLoggedUser(updatedUser);
-      }
+          setLoggedUser(updatedUser);
+        }
       }
 
     } catch (error: any) {
@@ -62,6 +63,29 @@ export const HomePage: React.FC = (): JSX.Element => {
     }
   }
 
+  const { totalIncome, totalSpending, total } = React.useMemo(function Calculate() {
+    if (loggedUser) {
+
+      const totalIncome = loggedUser.finances
+        .filter((item) => item.type === "INCOME")
+        .reduce((accumulator, currentItem) => {
+          return accumulator + currentItem.value;
+        }, 0);
+
+      const totalSpending = loggedUser.finances
+        .filter((item) => item.type === "SPENDING")
+        .reduce((accumulator, currentItem) => {
+          return accumulator + currentItem.value;
+        }, 0);
+
+      const total = Number(totalIncome) - Number(totalSpending)
+
+      return { totalSpending, totalIncome, total }
+    }
+
+    return { totalSpending: 0, totalIncome: 0, total: 0 }
+
+  }, [loggedUser?.finances])
 
   React.useEffect(
     function handleUserLoggedVerification() {
@@ -74,6 +98,11 @@ export const HomePage: React.FC = (): JSX.Element => {
   return (
     <Box display="flex" alignItems="center" flexDirection="column">
       <TopBar />
+      <FinanceControls
+        totalIncome={totalIncome}
+        totalSpending={totalSpending}
+        total={total}
+      />
       <FinantialTransactionsTable />
 
       <CustomModal open={isModalOpen} setOpen={handleModalState}>

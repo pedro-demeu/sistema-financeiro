@@ -1,5 +1,5 @@
 ##CORES UTILIZADAS:
-(#150926 - Preto Opaco)
+(#150926 - Azul Opaco)
 (#363440 - Cinza Escuro Opaco)
 (#4affab - Verde Florescente)
 (#4C735D - Verde Escuro)
@@ -37,3 +37,4 @@
 [] - Desenvolver Landing Page para este sistema
 [] - Criar um microserviço que será relacionado ao login deste sistema
 [] - Implementar um ErrorBoundary
+[] - Quando melhorar o README, adicionar um tutorial para criar componentes e melhorar a renderrização para o padrão da Segware

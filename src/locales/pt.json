@@ -20,6 +20,7 @@
     "exclude": "Exclusão"
   },
   "_common": {
+    "actions": "Ações",
     "name": "Nome",
     "email": "E-mail",
     "confirm_pass": "Confirme sua senha",
@@ -34,7 +35,10 @@
     "password_must_match": "As senhas não coincidem",
     "email_already_exists": "Este e-mail já existe no sistema!!",
     "new_user_created": "Novo usuário criado com sucesso!!",
-    "login_fails": "E-mail ou senha incorretos!!"
+    "login_fails": "E-mail ou senha incorretos!!",
+    "total_income": "Total de receitas",
+    "total_spending": "Total de saídas",
+    "total": "Total disponível"
   },
   "columns": {
     "is_done": "Pago",

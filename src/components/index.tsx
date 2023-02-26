@@ -10,3 +10,4 @@ export { CustomModal } from './CustomModal/CustomModal';
 export { EmptyState } from './EmptyState/EmptyState';
 export { CustomTextField } from './CustomTextField/CustomTextField';
 export { ForgotPassword } from './ForgotPassword/ForgotPassword';
+export { FinanceControls } from './FinanceControls/FinanceControls'

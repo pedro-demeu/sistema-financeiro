@@ -20,6 +20,7 @@
     "exclude": "Exclusion"
   },
   "_common": {
+    "actions": "Actions",
     "name": "Name",
     "email": "E-mail",  
     "confirm_pass": "Confirm the password",
@@ -34,7 +35,10 @@
     "password_must_match": "Password must match",
     "email_already_exists": "Email already exist!!",
     "new_user_created": "New user was created with successful!!",
-    "login_fails": "Wrong E-mail or Password!!"
+    "login_fails": "Wrong E-mail or Password!!",
+    "total_income": "Total Income",
+    "total_spending": "Total Spending",
+    "total": "Total"
   },
   "columns": {
     "is_done": "is Done?",
