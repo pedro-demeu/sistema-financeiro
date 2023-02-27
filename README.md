@@ -38,3 +38,4 @@
 [] - Quando melhorar o README, adicionar um tutorial para criar componentes e melhorar a renderrização para o padrão da Segware
 [] - desenvolver edição de usuário e página de contato e opção de compartilhar
 [] - desenvolver um comando que abre um modal onde você digita expressões matemáticas e elas retornam a resposta
+[] - desenvolver um mecanismo de importação de arquivos JSON
