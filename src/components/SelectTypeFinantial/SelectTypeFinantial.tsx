@@ -7,13 +7,13 @@ import {
   type SelectChangeEvent,
   Typography
 } from '@mui/material';
-import { type FinancialTransactionType } from '../../atoms/finantial';
+import { type FinancialType } from '../../atoms/transactions';
 import { useTranslation } from 'react-i18next';
 import './styles.css';
 
 interface SelectTypeProps {
-  currentValue: FinancialTransactionType
-  onChange: (value: SelectChangeEvent<FinancialTransactionType>) => void
+  currentValue: FinancialType
+  onChange: (value: SelectChangeEvent<FinancialType>) => void
   id: string
   name: string
   label: string
@@ -22,7 +22,7 @@ interface SelectTypeProps {
 interface MenuValue {
   label: string
   id: number
-  value: FinancialTransactionType
+  value: FinancialType
 }
 
 export const SelectTypeFinantial: React.FC<SelectTypeProps> = ({

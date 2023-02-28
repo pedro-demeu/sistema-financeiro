@@ -8,22 +8,18 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Button, Checkbox, Typography } from '@mui/material';
 import {
-  DEFAULT_VALUES,
+  DEFAULT_TRANSACTION_VALUE,
   deleteTransactionModalAtom,
-  editTransactionModalAtom,
-  type Finance,
-  type FinancialTransactionType,
-  finantialTransactionModalAtom,
-  financialTransactionsAtom
-} from '../../atoms/finantial';
+  currentTransactionAtom,
+  type Transaction,
+  type FinancialType,
+  editTransactionModalAtom} from '../../atoms/transactions';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { CustomModal, EmptyState, HeaderTable } from '..';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { CustomModal } from '..';
+import { useRecoilState } from 'recoil';
 import { DeleteForm, FinantialForm } from '../forms';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import { transformDate } from '../../utils/transformDate';
 import { useTranslation } from 'react-i18next';
-import * as uuid from 'uuid';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { UserLoggedAtom, UserType } from '../../atoms/login';
@@ -32,20 +28,18 @@ interface ColumnObject {
   label: string
   dataKey?: string
   align?: 'left' | 'center' | 'right' | 'inherit' | 'justify' | undefined
-  renderValue?: (e: number | FinancialTransactionType) => string
+  renderValue?: (e: number | FinancialType) => string
 }
 
-interface BasicTableProps {
-  finantialList: Finance[],
-  handleChecked: (data: {
-    id: string;
-    isDone: boolean;
-  }) => void;
+interface TransactionTableProps {
+  transactions: Transaction[];
+  onSubmit: (transaction: Transaction) => Promise<void>;
 }
 
-const BasicTable: React.FC<BasicTableProps> = ({
-  finantialList,
-  handleChecked
+export const TransactionTable: React.FC<TransactionTableProps> = ({
+  transactions,
+  onSubmit,
+
 }) => {
   const [openDeleteModal, setOpenDeleteModal] = useRecoilState(
     deleteTransactionModalAtom
@@ -78,7 +72,7 @@ const BasicTable: React.FC<BasicTableProps> = ({
       label: 'columns:type',
       dataKey: 'type',
       renderValue: (e) =>
-        e as FinancialTransactionType === 'INCOME' ? t('_common:income') : t('spending'),
+        e as FinancialType === 'INCOME' ? t('_common:income') : t('spending'),
       align: 'left'
     },
     {
@@ -92,58 +86,9 @@ const BasicTable: React.FC<BasicTableProps> = ({
     }
   ];
 
-  const [finantialSelected, setFinantialSelected] = React.useState<Finance>(DEFAULT_VALUES);
-  const [loggedUser, setLoggedUser] = useRecoilState(UserLoggedAtom);
+  const [finantialSelected, setFinantialSelected] = useRecoilState(currentTransactionAtom);
   const [isChecked, setIsChecked] = React.useState(false);
 
-  function handleSubmit(data: Finance): void {
-    try {
-      const transformedData = {
-        ...data,
-        createdAt: transformDate(new Date()),
-        id: uuid.v4()
-      };
-      const oldFinances = JSON.parse(localStorage.getItem('finances') || '[]');
-
-      const newFinances = [...oldFinances, transformedData];
-      localStorage.setItem('finances', JSON.stringify(newFinances));
-
-
-    } catch (error: any) {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      alert(`error: ${error}`);
-    }
-  }
-
-  function handleEdit(currentFinance: Finance): void {
-    try {
-      const users: UserType[] = JSON.parse(localStorage.getItem('users') || '[]');
-      const oldFinances: Finance[] = loggedUser?.finances || []
-      const financeChanges = oldFinances.map(finance => finance.id === currentFinance.id ? currentFinance : finance);
-
-      if (loggedUser) {
-
-        const currentUserIndex = users.findIndex(user => user.id === loggedUser.id);
-
-        if (currentUserIndex !== -1) {
-          const updatedUser: UserType = {
-            ...loggedUser,
-            finances: financeChanges
-          };
-          const updatedUsers = [...users];
-          updatedUsers[currentUserIndex] = updatedUser;
-
-          localStorage.setItem('users', JSON.stringify(updatedUsers));
-          localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-
-          setLoggedUser(updatedUser);
-        }
-      }
-
-    } catch (error: any) {
-      alert(`Error: ${error}`);
-    }
-  }
   return (
     <Box>
       <TableContainer
@@ -165,14 +110,14 @@ const BasicTable: React.FC<BasicTableProps> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {finantialList.map((row) => (
+            {transactions.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell align="left" component="th" scope="row">
                   <Checkbox checked={isChecked} onChange={(e) => {
-                    setIsChecked(!row.isDone)                    
+                    setIsChecked(!row.isDone)
                   }} />
                 </TableCell>
                 <TableCell align="left" component="th" scope="row">
@@ -183,7 +128,7 @@ const BasicTable: React.FC<BasicTableProps> = ({
                     {Intl.NumberFormat('pt-BR', {
                       style: 'currency',
                       currency: 'BRL'
-                    }).format(row.value)}
+                    }).format(row?.value || 0)}
                   </Typography>
                 </TableCell>
                 <TableCell align="left">
@@ -231,73 +176,10 @@ const BasicTable: React.FC<BasicTableProps> = ({
         <FinantialForm
           key={finantialSelected.id ?? Math.random()}
           initialValues={finantialSelected}
-          onSubmit={(finantialSelected.id !== '') ? handleEdit : handleSubmit}
+          onSubmit={onSubmit}
         />
       </CustomModal>
     </Box>
   );
 };
-export const FinantialTransactionsTable: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useRecoilState(
-    finantialTransactionModalAtom
-  );
-  const isDeleteModalOpen = useRecoilValue(deleteTransactionModalAtom);
-  const isEditModalOpen = useRecoilValue(editTransactionModalAtom);
-  const [finantialList, setFinantialList] = useRecoilState(financialTransactionsAtom)
-  const [loggedUser, setLoggedUser] = useRecoilState(UserLoggedAtom);
 
-  const handleModalState = (): void => { setIsModalOpen(!isModalOpen); };
-
-
-
-  React.useEffect(function updateListWhenChangeModalState() {
-    if (loggedUser) {
-      setFinantialList(loggedUser.finances)
-    }
-  }, [isModalOpen, isDeleteModalOpen, isEditModalOpen]
-  );
-
-  function handleChecked({ id, isDone }: {
-    id: string;
-    isDone: boolean;
-  }) {
-
-    if (loggedUser) {
-
-      console.log(id, isDone);
-      
-      // const updatedUser = { ...loggedUser };
-      // const financeIndex = updatedUser.finances.findIndex(finance => finance.id === id);
-      // if (financeIndex >= 0) {
-      //   updatedUser.finances[financeIndex].isDone = isDone;
-      // }
-
-      // setLoggedUser(updatedUser);
-    }
-  }
-
-if (finantialList.length === 0) {
-  return (
-    <EmptyState
-      mt="15rem"
-      title="Crie sua primeira finança"
-      description="Não há finanças cadastradas, clique no ícone a baixo:"
-      onClick={handleModalState}
-    />
-  );
-}
-return (
-  <Box
-    sx={{
-      width: '80%',
-      maxWidth: '1200px',
-      marginTop: '10rem'
-    }}
-  >
-    <Box width="100%">
-      <HeaderTable />
-      <BasicTable handleChecked={handleChecked} finantialList={finantialList} />
-    </Box>
-  </Box>
-);
-};

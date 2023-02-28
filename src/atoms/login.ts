@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Finance } from './finantial';
+import { Transaction } from './transactions';
 
 export type FeedbackType = {
   color: undefined | string,
@@ -11,7 +11,7 @@ export type UserType = {
   email: string;
   password: string;
   id: string;
-  finances: Finance[]
+  finances: Transaction[]
 }
 export interface LoginSchema {
   email: string;

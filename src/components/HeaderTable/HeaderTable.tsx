@@ -3,11 +3,11 @@ import { Box, Button } from '@mui/material';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 import { useRecoilState } from 'recoil';
-import { finantialTransactionModalAtom } from '../../atoms/finantial';
+import { transactionModalAtom } from '../../atoms/transactions';
 
 export const HeaderTable: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
-    finantialTransactionModalAtom
+    transactionModalAtom
   );
   const handleModalState = (): void => { setIsModalOpen(!isModalOpen); };
 

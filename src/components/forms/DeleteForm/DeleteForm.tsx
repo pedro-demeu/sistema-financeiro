@@ -2,10 +2,9 @@ import { Box, Button, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { t } from 'i18next';
 import React from 'react';
-import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { FormPattern } from '../..';
-import { deleteTransactionModalAtom, Finance, financialTransactionsAtom } from '../../../atoms/finantial';
-import { UserLoggedAtom, UserType } from '../../../atoms/login';
+import { deleteTransactionModalAtom, useTransaction } from '../../../atoms/transactions';
 
 interface DeleteFormProps {
   name: string
@@ -14,35 +13,24 @@ interface DeleteFormProps {
 export const DeleteForm: React.FC<DeleteFormProps> = ({ name, id }) => {
   const setOpenDeleteModal = useSetRecoilState(deleteTransactionModalAtom);
   const handleClose = (): void => { setOpenDeleteModal(false); };
-  const [loggedUser, setLoggedUser] = useRecoilState(UserLoggedAtom);
-  
-  const deleteItem = (itemId: string) => {
-    if (loggedUser) {
-      const users: UserType[] = JSON.parse(localStorage.getItem('users') || '[]');
-      const updatedItems = loggedUser.finances.filter(item => item.id !== itemId);
-      const updatedUser: UserType = {
-        ...loggedUser,
-        finances: updatedItems
-      };
+  const {deleteTransaction} = useTransaction();
 
-      const currentUserIndex = users.findIndex(user => user.id === loggedUser.id);
-      if (currentUserIndex !== -1) {
-        users[currentUserIndex] = updatedUser;
-        localStorage.setItem('users', JSON.stringify(users));
-        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-        setLoggedUser({
-          ...loggedUser,
-          finances: updatedItems
-        })
-        handleClose()
-      }
+  const onSubmit = (transactionID: string) => {
+    try{
+      deleteTransaction(transactionID);
+    }catch (e) {
+      alert(`Error: ${e}`)
     }
   }
+
   const formik = useFormik({
     initialValues: {
-      id: 0
+      id: ''
     },
-    onSubmit: () => deleteItem(id)
+    onSubmit: () => {
+      onSubmit(id);
+      handleClose()
+    }
   });
   return (
     <FormPattern

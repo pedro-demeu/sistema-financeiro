@@ -22,7 +22,7 @@
 
 
 ##Funcionalidades em desenvolvimento
-
+[] - adicionar status sobre total disponível, se negativo mostrar msg como "saldo neegativo este mês..."
 [] - construir um CRUD bem feito para as ações em localstorage, como um useLogin useFinances
 [] - adicionar opções avançadas
 [] - Buscar 100% de coverage do cypress

@@ -25,3 +25,6 @@ dist-ssr
 
 api/db.json
 cypress/screenshots
+
+yarn.lock
+yarn-error.log

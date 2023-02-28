@@ -7,17 +7,17 @@ import {
 import { CustomTextField, FormPattern, SelectTypeFinantial } from '../..';
 import { useSetRecoilState } from 'recoil';
 import {
-  editTransactionModalAtom,
-  type Finance,
-  finantialTransactionModalAtom
-} from '../../../atoms/finantial';
+  type Transaction,
+  transactionModalAtom,
+  editTransactionModalAtom
+} from '../../../atoms/transactions';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useYupObject } from '../../../hooks';
 
 interface FinantialFormProps {
-  initialValues: Finance
-  onSubmit: (data: Finance) => void
+  initialValues: Transaction
+  onSubmit: (newTransaction: Transaction) => void
 }
 
 export const FinantialForm: React.FC<FinantialFormProps> = ({
@@ -26,7 +26,7 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
 }) => {
   const { t } = useTranslation();
   const yup = useYupObject();
-  const setModalClose = useSetRecoilState(finantialTransactionModalAtom);
+  const setModalClose = useSetRecoilState(transactionModalAtom);
   const setEditModalClose = useSetRecoilState(editTransactionModalAtom);
   const formik = useFormik({
     initialValues,
