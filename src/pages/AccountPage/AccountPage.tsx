@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import { CreateAccountForm } from '../../components/forms';
+import { CreateAccountForm } from '@/components/forms';
 
 export const AccountPage: React.FC = () => {
   return (

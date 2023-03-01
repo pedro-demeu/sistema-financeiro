@@ -1,7 +1,7 @@
 import { atom, useRecoilState } from "recoil";
-import { transformDate } from '../utils/transformDate';
 import { UserLoggedAtom, UserType } from './login';
 import * as uuid from 'uuid';
+import { transformDate } from '@/utils/transformDate';
 
 export type FinancialType = "INCOME" | "SPENDING";
 
@@ -47,6 +47,12 @@ export const currentTransactionAtom = atom<Transaction>({
   key: "currentTransactionAtom",
   default: DEFAULT_TRANSACTION_VALUE,
 });
+
+export const totalValueAtom = atom<number>({
+  key: "totalValueAtom",
+  default: 0,
+});
+
 
 export const useTransaction = () => {
 

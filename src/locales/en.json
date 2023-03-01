@@ -20,6 +20,8 @@
     "exclude": "Exclusion"
   },
   "_common": {
+    "good_health_finantial": "Congratulations, your financial health is in good shape!!",
+    "bad_health_finantial": "Negative balance, time to cut costs",
     "actions": "Actions",
     "name": "Name",
     "email": "E-mail",  

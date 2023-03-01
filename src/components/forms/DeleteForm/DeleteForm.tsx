@@ -1,10 +1,10 @@
+import { deleteTransactionModalAtom, useTransaction } from '@/atoms/transactions';
+import { FormPattern } from '@/components/FormPattern/FormPattern';
 import { Box, Button, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { t } from 'i18next';
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
-import { FormPattern } from '../..';
-import { deleteTransactionModalAtom, useTransaction } from '../../../atoms/transactions';
 
 interface DeleteFormProps {
   name: string

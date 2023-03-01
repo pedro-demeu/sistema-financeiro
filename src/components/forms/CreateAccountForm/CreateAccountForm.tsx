@@ -7,10 +7,11 @@ import {
   CustomLink,
   FormPattern
 } from '../..';
-import { FeedbackType, UserType } from '../../../atoms/login';
-import { useYupObject } from '../../../hooks';
 import * as CryptoJS from 'crypto-js';
 import * as uuid from 'uuid';
+import { FeedbackType, UserType } from '@/atoms/login';
+import { useLogin } from '@/atoms/account';
+import { useYupObject } from '@/hooks';
 
 
 export const CreateAccountForm: React.FC = () => {
@@ -19,6 +20,7 @@ export const CreateAccountForm: React.FC = () => {
     message: ''
   });
   const usernameInputRef = React.useRef(null);
+  const { createAccount } = useLogin();
 
   const { t } = useTranslation();
   const yup = useYupObject();
@@ -37,12 +39,9 @@ export const CreateAccountForm: React.FC = () => {
       // @ts-ignore
       confirmPassword: yup.string().oneOf([yup.ref('password'), null], t('_common:password_must_match')).required()
     }),
-    onSubmit: (data) => {
-      const { id, email, username } = data;
-
-      // @ts-ignore
-      const users: UserType[] = JSON.parse(localStorage.getItem('users')) || [];
-      const isDuplicate = users.some(user => user.id === id || user.email === email);
+    onSubmit: (newUser) => {
+      const users: UserType[] = JSON.parse(localStorage.getItem('users') || '[]')
+      const isDuplicate = users.some(user => user.id === newUser.id || user.email === newUser.email);
       if (isDuplicate) {
         setFeedbackMessage({
           color: '#DE1F53',
@@ -52,16 +51,13 @@ export const CreateAccountForm: React.FC = () => {
         return;
       }
 
-      const transformedData: UserType = {
-        email,
-        username,
-        id: uuid.v4(),
-        password: CryptoJS.SHA256(data.password).toString(),
-        finances: []
-      };
-
-      const updatedUsers = [...users, transformedData];
-      localStorage.setItem('users', JSON.stringify(updatedUsers));
+      createAccount({
+        email: newUser.email,
+        finances: [],
+        id: '',
+        password: newUser.password,
+        username: newUser.username
+      })
       setFeedbackMessage({
         color: '#4affab',
         message: t('_common:new_user_created')
@@ -70,8 +66,8 @@ export const CreateAccountForm: React.FC = () => {
     }
   });
 
-  React.useEffect(function cleanupFeedbackMessage(){
-    if (feedbackMessage){
+  React.useEffect(function cleanupFeedbackMessage() {
+    if (feedbackMessage) {
       const timeoutId = setTimeout(() => {
         setFeedbackMessage({
           color: undefined,

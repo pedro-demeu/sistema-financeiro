@@ -9,6 +9,7 @@ export { SelectTypeFinantial } from './SelectTypeFinantial/SelectTypeFinantial';
 export { HeaderTable } from './HeaderTable/HeaderTable';
 export { CustomModal } from './CustomModal/CustomModal';
 export { EmptyState } from './EmptyState/EmptyState';
+export { FooterBar } from './FooterBar/FooterBar';
 export { CustomTextField } from './CustomTextField/CustomTextField';
 export { ForgotPassword } from './ForgotPassword/ForgotPassword';
-export { FinanceControls } from './FinanceControls/FinanceControls'
+export { FinanceControls } from './FinanceControls/FinanceControls';

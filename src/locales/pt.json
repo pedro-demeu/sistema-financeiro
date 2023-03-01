@@ -20,6 +20,8 @@
     "exclude": "Exclusão"
   },
   "_common": {
+    "good_health_finantial": "Parabéns, sua saúde financeira está em dia!!",
+    "bad_health_finantial": "Saldo Negativo, hora de cortar gastos",
     "actions": "Ações",
     "name": "Nome",
     "email": "E-mail",

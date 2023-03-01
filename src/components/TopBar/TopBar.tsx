@@ -11,10 +11,10 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import { useSetRecoilState } from 'recoil';
-import { UserLoggedAtom, UserType } from '../../atoms/login';
 import { useNavigate } from 'react-router-dom';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import { useTranslation } from 'react-i18next';
+import { UserLoggedAtom } from '@/atoms/login';
 
 export const TopBar: React.FC = () => {
   const { t } = useTranslation();

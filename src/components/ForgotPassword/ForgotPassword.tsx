@@ -1,14 +1,10 @@
 import { Box, Button, FormControl, Typography } from '@mui/material';
 import React from 'react';
 import { useFormik } from 'formik';
-import {
-  AppContainer,
-  CustomLink,
-  CustomTextField,
-  FormPattern
-} from '../../components';
+
 import { useTranslation } from 'react-i18next';
-import { useYupObject } from '../../hooks';
+import { useYupObject } from '@/hooks';
+import { AppContainer, CustomLink, CustomTextField, FormPattern } from '@/components';
 
 export const ForgotPassword: React.FC = () => {
   const [feedbackMessage, setFeedbackMessage] = React.useState('');

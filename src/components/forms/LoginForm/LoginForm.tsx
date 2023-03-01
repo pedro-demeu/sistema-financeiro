@@ -2,11 +2,11 @@ import React from 'react';
 import { Box, Button, Checkbox, FormControl, FormControlLabel, Typography, TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import { CustomLink, FormPattern } from '../../../components';
-import { DEFAULT_VALUES, FeedbackLoginMessageAtom, type LoginSchema } from '../../../atoms/login';
 import { useTranslation } from 'react-i18next';
-import { useYupObject } from '../../../hooks';
 import { useRecoilState } from 'recoil';
+import { LoginSchema, FeedbackLoginMessageAtom, DEFAULT_VALUES } from '@/atoms/login';
+import { CustomLink, FormPattern } from '@/components/';
+import { useYupObject } from '@/hooks';
 
 interface LoginFormProps {
   onSubmit: (data: LoginSchema) => void

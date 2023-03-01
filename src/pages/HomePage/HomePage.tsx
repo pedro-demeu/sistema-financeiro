@@ -7,17 +7,12 @@ import {
   transactionModalAtom,
   transactionsAtom,
   useTransaction,
-  currentTransactionAtom,
-  deleteTransactionModalAtom
-} from '../../atoms/transactions';
-import {
-  CustomModal,
-  TransactionsTableContainer,
-  TopBar
-} from '../../components';
-import { FinantialForm } from '../../components/forms';
+  currentTransactionAtom} from '@/atoms/transactions';
+
 import { useNavigate } from 'react-router-dom';
-import { UserLoggedAtom } from '../../atoms/login';
+import { UserLoggedAtom } from '@/atoms/login';
+import { TopBar, TransactionsTableContainer, CustomModal } from '@/components';
+import { FinantialForm } from '@/components/forms';
 
 export const HomePage: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
@@ -26,8 +21,6 @@ export const HomePage: React.FC = (): JSX.Element => {
   const [loggedUser, setLoggedUser] = useRecoilState(UserLoggedAtom);
   const navigate = useNavigate();
   const [transactions, setTransactions] = useRecoilState(transactionsAtom)
-  const isDeleteModalOpen = useRecoilValue(deleteTransactionModalAtom);
-  const isEditModalOpen = useRecoilValue(currentTransactionAtom);
   const currentTransaction = useRecoilValue(currentTransactionAtom)
   const { createTransaction, editTransaction } = useTransaction();
 
@@ -65,13 +58,15 @@ export const HomePage: React.FC = (): JSX.Element => {
   }, [loggedUser?.finances]
   );
   return (
-    <Box display="flex" alignItems="center" flexDirection="column">
-      <TopBar />
-      <TransactionsTableContainer onSubmit={currentTransaction.id === '' ? handleSubmit : handleEdit} transactions={transactions} />
+    <>
+      <Box display="flex" alignItems="center" flexDirection="column">
+        <TopBar />
+        <TransactionsTableContainer onSubmit={currentTransaction.id === '' ? handleSubmit : handleEdit} transactions={transactions} />
 
-      <CustomModal open={isModalOpen} setOpen={handleModalState}>
-        <FinantialForm onSubmit={handleSubmit} initialValues={DEFAULT_TRANSACTION_VALUE} />
-      </CustomModal>
-    </Box>
+        <CustomModal open={isModalOpen} setOpen={handleModalState}>
+          <FinantialForm onSubmit={handleSubmit} initialValues={DEFAULT_TRANSACTION_VALUE} />
+        </CustomModal>
+      </Box>
+    </>
   );
 };

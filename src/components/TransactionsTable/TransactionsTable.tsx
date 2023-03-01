@@ -8,7 +8,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Button, Checkbox, Typography } from '@mui/material';
 import {
-  DEFAULT_TRANSACTION_VALUE,
   deleteTransactionModalAtom,
   currentTransactionAtom,
   type Transaction,
@@ -17,12 +16,11 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CustomModal } from '..';
 import { useRecoilState } from 'recoil';
-import { DeleteForm, FinantialForm } from '../forms';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { useTranslation } from 'react-i18next';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import { UserLoggedAtom, UserType } from '../../atoms/login';
+import { DeleteForm, FinantialForm } from '@/components/forms';
 
 interface ColumnObject {
   label: string

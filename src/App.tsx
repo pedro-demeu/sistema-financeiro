@@ -12,8 +12,7 @@ import theme from './theme/theme';
 import { UserLoggedAtom } from './atoms/login';
 
 export const App: React.FC = () => {
-  // @ts-ignore
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
   return (
     <>

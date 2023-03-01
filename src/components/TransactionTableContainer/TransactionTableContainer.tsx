@@ -1,12 +1,9 @@
+import { UserLoggedAtom } from '@/atoms/login';
+import { Transaction, transactionModalAtom } from '@/atoms/transactions';
 import { Box } from '@mui/material';
 import React from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { TransactionTable } from '..';
-import { UserLoggedAtom } from '../../atoms/login';
-import { Transaction, transactionModalAtom, deleteTransactionModalAtom, currentTransactionAtom, transactionsAtom } from '../../atoms/transactions';
-import { EmptyState } from '../EmptyState/EmptyState';
-import { FinanceControls } from '../FinanceControls/FinanceControls';
-import { HeaderTable } from '../HeaderTable/HeaderTable';
+import { EmptyState, FinanceControls, HeaderTable, TransactionTable } from '@/components';
 
 interface TransactionsTableContainerProps {
   transactions: Transaction[];

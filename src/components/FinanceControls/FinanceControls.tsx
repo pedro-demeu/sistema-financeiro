@@ -5,6 +5,8 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { useTranslation } from 'react-i18next';
+import { useSetRecoilState } from 'recoil';
+import { totalValueAtom } from '@/atoms/transactions';
 const GreenText = styled(Typography)({
   color: "#4affab",
 });
@@ -29,6 +31,12 @@ export const FinanceControls: React.FC<MyComponentProps> = ({
   total,
 }) => {
   const { t } = useTranslation();
+
+  const setTotalValueAtom = useSetRecoilState(totalValueAtom)
+
+  React.useEffect(() => {
+    setTotalValueAtom(total);
+  }, [total])
   return (
     <Box sx={{ display: "flex", width: '100%', justifyContent: 'center' }} gap="6rem" mt={10}>
       <Paper sx={{ p: 2, bgcolor: '#363440', width: '270px' }} >

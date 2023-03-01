@@ -7,9 +7,9 @@ import {
   type SelectChangeEvent,
   Typography
 } from '@mui/material';
-import { type FinancialType } from '../../atoms/transactions';
 import { useTranslation } from 'react-i18next';
 import './styles.css';
+import { FinancialType } from '@/atoms/transactions';
 
 interface SelectTypeProps {
   currentValue: FinancialType

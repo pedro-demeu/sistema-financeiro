@@ -1,11 +1,11 @@
 import { Box } from '@mui/material';
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
-import { FeedbackLoginMessageAtom, UserLoggedAtom, UserType, type LoginSchema } from '../../atoms/login';
-import { LoginForm } from '../../components/forms';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import * as CryptoJS from 'crypto-js';
+import { FeedbackLoginMessageAtom, LoginSchema, UserLoggedAtom, UserType } from '@/atoms/login';
+import { LoginForm } from '@/components/forms';
 
 export const LoginPage: React.FC = () => {
   const setLoggedUser = useSetRecoilState(UserLoggedAtom);
@@ -41,7 +41,7 @@ export const LoginPage: React.FC = () => {
   });
   
   return (
-    <Box component="main" height="100%">
+    <Box component="main" height="100%" mt={15}>
       <LoginForm
         onSubmit={handleSubmit}
       />

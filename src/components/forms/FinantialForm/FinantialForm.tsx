@@ -4,7 +4,6 @@ import {
   Box,
   Button
 } from '@mui/material';
-import { CustomTextField, FormPattern, SelectTypeFinantial } from '../..';
 import { useSetRecoilState } from 'recoil';
 import {
   type Transaction,
@@ -13,7 +12,9 @@ import {
 } from '../../../atoms/transactions';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useYupObject } from '../../../hooks';
+import { CustomTextField } from '@/components/CustomTextField/CustomTextField';
+import { FormPattern, SelectTypeFinantial } from '@/components/';
+import { useYupObject } from '@/hooks';
 
 interface FinantialFormProps {
   initialValues: Transaction
