@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button, Checkbox, Typography } from '@mui/material';
+import { Box, Button, Checkbox, Typography, useTheme } from '@mui/material';
 import {
   deleteTransactionModalAtom,
   currentTransactionAtom,
@@ -44,6 +44,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
   );
   const [editModal, setEditModal] = useRecoilState(editTransactionModalAtom);
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const columns: ColumnObject[] = [
     {
@@ -92,7 +93,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
       <TableContainer
         component={Paper}
         sx={{
-          bgcolor: '#3A3844'
+          bgcolor: theme.palette.info.main
         }}
       >
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -131,7 +132,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                 </TableCell>
                 <TableCell align="left">
                   <Box display="flex" alignItems="center" gap="1rem">
-                    {row.type === 'SPENDING' ? <ArrowDownwardIcon sx={{ color: '#DE1F53' }} /> : <ArrowUpwardIcon sx={{ color: '#4affab' }} />}
+                    {row.type === 'SPENDING' ? <ArrowDownwardIcon sx={{ color: theme.palette.error.main }} /> : <ArrowUpwardIcon sx={{ color: theme.palette.success.main }} />}
                     <Typography sx={{ color: 'white' }}>
                       {row.type === 'INCOME' ? t('_common:income').toUpperCase() : t('_common:spending').toUpperCase()}
                     </Typography>

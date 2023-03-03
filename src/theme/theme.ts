@@ -1,37 +1,79 @@
-import { createTheme } from '@mui/material/styles';
+import { CommonColors, createTheme } from '@mui/material/styles';
+
+
+interface Colors {
+  gray: string;
+  blue: string;
+  success: string;
+  warning: string;
+  error: string;
+  main: string;
+  light: string;
+  dark: string;
+  info: string;
+  secondary: string;
+}
+const COLORS: Colors = {
+  gray: '#363440',
+  blue: '#150926',
+  success: '#4affab',
+  warning: '#F6D325',
+  error: '#DE1F53',
+  main: '#FFF',
+  light: '#DDD',
+  dark: '#222',
+  info: '#3A3844',
+  secondary: '#211f27',
+}
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#DDD',
+      main: COLORS.main,
     },
     secondary: {
-      main: '#4affab',
+      main: COLORS.secondary,
+    },
+    warning: {
+      main: COLORS.warning
     },
     error: {
-      main: '#DE1F53'
+      main: COLORS.error
     },
     info: {
-      main: '#DDD'
+      main: COLORS.info
     },
     text: {
-      primary: "#DDD",
-      secondary: "#DDD"
-    }
+      primary: COLORS.main,
+      secondary: COLORS.dark,
+    },
   },
   components: {
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          color: '#DDD',
+          color: COLORS.light,
         },
       },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          'color': COLORS.main,
+          '& hover': {
+            borderColor: COLORS.main
+          },
+          '& fieldset': {
+            borderColor: COLORS.main,
+          },
+        }
+      }
     },
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
           '& fieldset': {
-            borderColor: '#DDD',
+            borderColor: COLORS.main,
           },
         },
       },

@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,7 @@ export const LoginPage: React.FC = () => {
   const setFeedBackMessage = useSetRecoilState(FeedbackLoginMessageAtom);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const handleSubmit = (data: LoginSchema): void => {
     const encryptedPassword = CryptoJS.SHA256(data.password).toString();
@@ -24,7 +25,7 @@ export const LoginPage: React.FC = () => {
 
     if (!CAN_BE_LOGIN) {
       setFeedBackMessage({
-        color: '#DE1F53',
+        color: theme.palette.error.main,
         message: `${t('_common:login_fails')}`
       })
       return;

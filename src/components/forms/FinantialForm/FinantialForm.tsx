@@ -2,7 +2,8 @@ import React from 'react';
 import {
   FormControl,
   Box,
-  Button
+  Button,
+  useTheme
 } from '@mui/material';
 import { useSetRecoilState } from 'recoil';
 import {
@@ -29,6 +30,7 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
   const yup = useYupObject();
   const setModalClose = useSetRecoilState(transactionModalAtom);
   const setEditModalClose = useSetRecoilState(editTransactionModalAtom);
+  const theme = useTheme();
   const formik = useFormik({
     initialValues,
     validationSchema: yup.object({
@@ -55,7 +57,7 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
       title={
         (initialValues.id !== '') ? t('_common:change_your_finances') : t('_common:create_your_finance')
       }
-      borderColor={(initialValues.id !== '') ? '#E3BA40' : '#6eca9f'}
+      borderColor={(initialValues.id !== '') ? theme.palette.warning.main : theme.palette.success.main}
     >
       <FormControl
         sx={{
@@ -118,9 +120,9 @@ export const FinantialForm: React.FC<FinantialFormProps> = ({
             variant="contained"
             sx={{
               width: '100%',
-              bgcolor: (initialValues.id !== '') ? '#E3BA40' : '#289E71',
+              bgcolor: (initialValues.id !== '') ? theme.palette.warning.main : theme.palette.success.main,
               '&:hover': {
-                bgcolor: (initialValues.id !== '') ? '#AB8338': '#3d825b  '
+                bgcolor: (initialValues.id !== '') ? theme.palette.warning.dark: theme.palette.success.dark
               }
             }}
           >

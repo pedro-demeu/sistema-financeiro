@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Checkbox, FormControl, FormControlLabel, Typography, TextField } from '@mui/material';
+import { Box, Button, Checkbox, FormControl, FormControlLabel, Typography, TextField, useTheme } from '@mui/material';
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   const { t } = useTranslation();
   const yup = useYupObject();
   const [feedbackMessage, setFeedbackMessage] = useRecoilState(FeedbackLoginMessageAtom);
-
+  const theme = useTheme();
   const loginValidations = yup.object({
     email: yup.string().email().required(),
     password: yup.string().required(),

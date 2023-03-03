@@ -15,9 +15,11 @@ import { useNavigate } from 'react-router-dom';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import { useTranslation } from 'react-i18next';
 import { UserLoggedAtom } from '@/atoms/login';
+import { useTheme } from '@mui/material';
 
 export const TopBar: React.FC = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
   const [username, setUsername] = React.useState('');
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -93,7 +95,7 @@ export const TopBar: React.FC = () => {
   return (
     <AppBar
       sx={{
-        bgcolor: '#363440'
+        bgcolor: theme.palette.info.main
       }}
       position="static"
     >
@@ -104,7 +106,7 @@ export const TopBar: React.FC = () => {
               sx={{
                 display: { xs: 'none', md: 'flex' },
                 marginRight: 0.5,
-                color: '#6eca9f'
+                color: theme.palette.success.main
               }}
             />
             <Typography
@@ -118,7 +120,7 @@ export const TopBar: React.FC = () => {
                 fontFamily: 'monospace',
                 fontWeight: 700,
                 letterSpacing: '.3rem',
-                color: '#6eca9f',
+                color: theme.palette.success.main,
                 textDecoration: 'none'
               }}
             >

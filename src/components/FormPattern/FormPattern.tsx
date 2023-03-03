@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import React from 'react';
 
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
@@ -12,6 +12,7 @@ export const FormPattern: React.FC<FormProps> = ({
   borderColor,
   ...props
 }) => {
+  const theme = useTheme();
   return (
     <Box
       width="100%"
@@ -26,7 +27,7 @@ export const FormPattern: React.FC<FormProps> = ({
           padding: '3rem',
           width: '400px',
           minHeight: '470px',
-          backgroundColor: '#3A3844'
+          backgroundColor: theme.palette.info.main
         }}
         {...props}
       >
@@ -47,7 +48,7 @@ export const FormPattern: React.FC<FormProps> = ({
             </Typography>
             <Box
               sx={{
-                borderBottom: `2px solid ${borderColor ?? '#6eca9f'}`,
+                borderBottom: `2px solid ${borderColor ?? theme.palette.success.light}`,
                 width: '50px',
                 marginBottom: '2rem'
               }}

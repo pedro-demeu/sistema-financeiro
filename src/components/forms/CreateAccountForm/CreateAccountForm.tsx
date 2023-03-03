@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, TextField, Typography } from '@mui/material';
+import { Box, Button, FormControl, TextField, Typography, useTheme } from '@mui/material';
 import { useFormik } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -40,11 +40,12 @@ export const CreateAccountForm: React.FC = () => {
       confirmPassword: yup.string().oneOf([yup.ref('password'), null], t('_common:password_must_match')).required()
     }),
     onSubmit: (newUser) => {
-      const users: UserType[] = JSON.parse(localStorage.getItem('users') || '[]')
+      const users: UserType[] = JSON.parse(localStorage.getItem('users') || '[]');
+      const theme = useTheme();
       const isDuplicate = users.some(user => user.id === newUser.id || user.email === newUser.email);
       if (isDuplicate) {
         setFeedbackMessage({
-          color: '#DE1F53',
+          color: theme.palette.error.main,
           message: t('_common:email_already_exists'),
         });
         formik.resetForm();
@@ -59,7 +60,7 @@ export const CreateAccountForm: React.FC = () => {
         username: newUser.username
       })
       setFeedbackMessage({
-        color: '#4affab',
+        color: theme.palette.success.main,
         message: t('_common:new_user_created')
       });
       formik.resetForm();

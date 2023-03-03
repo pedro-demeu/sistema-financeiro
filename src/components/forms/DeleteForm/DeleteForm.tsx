@@ -1,6 +1,6 @@
 import { deleteTransactionModalAtom, useTransaction } from '@/atoms/transactions';
 import { FormPattern } from '@/components/FormPattern/FormPattern';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, useTheme } from '@mui/material';
 import { useFormik } from 'formik';
 import { t } from 'i18next';
 import React from 'react';
@@ -13,12 +13,13 @@ interface DeleteFormProps {
 export const DeleteForm: React.FC<DeleteFormProps> = ({ name, id }) => {
   const setOpenDeleteModal = useSetRecoilState(deleteTransactionModalAtom);
   const handleClose = (): void => { setOpenDeleteModal(false); };
-  const {deleteTransaction} = useTransaction();
-
+  const { deleteTransaction } = useTransaction();
+  const theme = useTheme();
+  
   const onSubmit = (transactionID: string) => {
-    try{
+    try {
       deleteTransaction(transactionID);
-    }catch (e) {
+    } catch (e) {
       alert(`Error: ${e}`)
     }
   }
@@ -51,9 +52,9 @@ export const DeleteForm: React.FC<DeleteFormProps> = ({ name, id }) => {
         type="submit"
         variant="contained"
         sx={{
-          bgcolor: '#DE1F53',
+          bgcolor: theme.palette.error.main,
           '&:hover': {
-            bgcolor: '#B51943'
+            bgcolor: theme.palette.error.dark
           }
         }}
       >

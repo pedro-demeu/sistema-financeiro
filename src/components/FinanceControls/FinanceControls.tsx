@@ -1,5 +1,5 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -7,17 +7,6 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { useTranslation } from 'react-i18next';
 import { useSetRecoilState } from 'recoil';
 import { totalValueAtom } from '@/atoms/transactions';
-const GreenText = styled(Typography)({
-  color: "#4affab",
-});
-
-const RedText = styled(Typography)({
-  color: "#DE1F53",
-});
-
-const BlackText = styled(Typography)({
-  color: "#F6D325",
-});
 
 interface MyComponentProps {
   totalIncome: number;
@@ -31,7 +20,8 @@ export const FinanceControls: React.FC<MyComponentProps> = ({
   total,
 }) => {
   const { t } = useTranslation();
-
+  const theme = useTheme();
+  
   const setTotalValueAtom = useSetRecoilState(totalValueAtom)
 
   React.useEffect(() => {
@@ -39,12 +29,12 @@ export const FinanceControls: React.FC<MyComponentProps> = ({
   }, [total])
   return (
     <Box sx={{ display: "flex", width: '100%', justifyContent: 'center' }} gap="6rem" mt={10}>
-      <Paper sx={{ p: 2, bgcolor: '#363440', width: '270px' }} >
-        <GreenText variant="h6" mb={2} textTransform="uppercase">
+      <Paper sx={{ p: 2, bgcolor: theme.palette.info.main, width: '270px' }} >
+        <Typography variant="h6" mb={2} textTransform="uppercase" color={theme.palette.success.main}>
           {t('_common:total_income')}
-        </GreenText>
+        </Typography>
         <Box sx={{ display: "flex", alignItems: "center" }} gap="0.5rem">
-          <MonetizationOnIcon sx={{ color: "#4affab" }} />
+          <MonetizationOnIcon sx={{ color: theme.palette.success.main }} />
           <Typography variant="h6" component="span">
             {Intl.NumberFormat('pt-BR', {
               currency: 'BRL',
@@ -53,12 +43,12 @@ export const FinanceControls: React.FC<MyComponentProps> = ({
           </Typography>
         </Box>
       </Paper>
-      <Paper sx={{ p: 2, bgcolor: '#363440', width: '270px' }} >
-        <RedText variant="h6" mb={2} textTransform="uppercase">
+      <Paper sx={{ p: 2, bgcolor: theme.palette.info.main, width: '270px' }} >
+        <Typography variant="h6" mb={2} textTransform="uppercase" color={theme.palette.error.main}>
           {t('_common:total_spending')}
-        </RedText>
+        </Typography>
         <Box sx={{ display: "flex", alignItems: "center" }} gap="0.5rem">
-          <MonetizationOnIcon sx={{ color: '#DE1F53' }} />
+          <MonetizationOnIcon sx={{ color: theme.palette.error.main }} />
           <Typography variant="h6" component="span">
             {Intl.NumberFormat('pt-BR', {
               currency: 'BRL',
@@ -67,12 +57,12 @@ export const FinanceControls: React.FC<MyComponentProps> = ({
           </Typography>
         </Box>
       </Paper>
-      <Paper sx={{ p: 2, bgcolor: '#363440', width: '270px' }} >
-        <BlackText variant="h6" mb={2} textTransform="uppercase">
+      <Paper sx={{ p: 2, bgcolor: theme.palette.info.main, width: '270px' }} >
+        <Typography variant="h6" mb={2} textTransform="uppercase" color={theme.palette.warning.main}>
           {t('_common:total')}
-        </BlackText>
+        </Typography>
         <Box sx={{ display: "flex", alignItems: "center" }} gap="0.5rem">
-          <MonetizationOnIcon sx={{ color: '#F6D325' }} />
+          <MonetizationOnIcon sx={{ color: theme.palette.warning.main }} />
           <Typography variant="h6" component="span">
             {Intl.NumberFormat('pt-BR', {
               currency: 'BRL',

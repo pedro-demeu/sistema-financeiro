@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Typography } from '@mui/material';
+import { Box, Button, FormControl, Typography, useTheme } from '@mui/material';
 import React from 'react';
 import { useFormik } from 'formik';
 
@@ -10,6 +10,7 @@ export const ForgotPassword: React.FC = () => {
   const [feedbackMessage, setFeedbackMessage] = React.useState('');
   const { t } = useTranslation();
   const yup = useYupObject();
+  const theme = useTheme();
 
   const formik = useFormik({
     initialValues: {
@@ -58,9 +59,9 @@ export const ForgotPassword: React.FC = () => {
             variant="contained"
             sx={{
               width: '100%',
-              bgcolor: '#289E71',
+              bgcolor: theme.palette.success.light,
               '&:hover': {
-                bgcolor: '#2FBA85'
+                bgcolor: theme.palette.success.dark
               }
             }}
           >

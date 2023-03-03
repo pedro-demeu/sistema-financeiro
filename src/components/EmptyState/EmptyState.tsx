@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, useTheme } from '@mui/material';
 import PaidIcon from '@mui/icons-material/Paid';
 
 interface EmptyStateProps {
@@ -14,6 +14,8 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   description,
   mt
 }) => {
+  const theme = useTheme();
+  
   return (
     <Box width="500px" padding="2rem" marginTop={mt}>
       <Typography
@@ -32,11 +34,11 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       <Box display="flex" marginTop="2rem" justifyContent="center" width="100%">
         <Box
           sx={{
-            borderBottom: '2px solid #F6D325'
+            borderBottom: `2px solid ${theme.palette.warning.main}`
           }}
         >
           <Button onClick={onClick}>
-            <PaidIcon fontSize="large" sx={{ color: '#F6D325' }} />
+            <PaidIcon fontSize="large" sx={{ color: `${theme.palette.warning.main}` }} />
           </Button>
         </Box>
       </Box>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { useRecoilValue } from 'recoil';
 import { transactionsAtom } from '@/atoms/transactions';
 import { FooterBar } from '@/components'
@@ -9,14 +9,14 @@ interface Props {
 }
 export const AppContainer: React.FC<Props> = ({ children }) => {
   const transactions = useRecoilValue(transactionsAtom)
-
+  const theme = useTheme();
   return (
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
-        background: '#211f27'
+        background: theme.palette.secondary.main
       }}
     >
       <Box sx={{ flex: '1 auto' }} >
