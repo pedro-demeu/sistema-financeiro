@@ -81,9 +81,9 @@ const theme = createTheme({
     MuiCheckbox: {
       styleOverrides: {
         root: {
-          color: '#6eca9f', // Define a cor do Checkbox não selecionado
+          color: COLORS.secondary, // Define a cor do Checkbox não selecionado
           '&.Mui-checked': {
-            color: '#6eca9f', // Define a cor do Checkbox selecionado
+            color: COLORS.dark, // Define a cor do Checkbox selecionado
           },
         },
       },

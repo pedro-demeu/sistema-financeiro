@@ -130,7 +130,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           <Button
             type="submit"
             disabled={formik.isSubmitting}
-            className="actionButton"
+            variant="contained"
+            fullWidth
+            sx={{
+              bgcolor: theme.palette.success.main,
+              '&:hover': {
+                bgcolor: theme.palette.success.dark
+              }
+            }}
           >
             {t('forms_actions:login')}
           </Button>

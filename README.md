@@ -22,12 +22,16 @@
 [x] - construir um CRUD bem feito para as ações em localstorage, como um useLogin useFinances
 [x] - adicionar status sobre total disponível, se negativo mostrar msg como "saldo neegativo este mês..."
 [x] - Configurar para que as importações comecem com "@" ao inves de ficar buscando com ..
+[x] - Padronizar cores no theme.ts
+
+
+##fazendo:
+[] - TROCAR CORES
+[] - adicionar opções avançadas
+[] - refatorar footer e ajustar posições
 
 
 ##Funcionalidades em desenvolvimento
-[] - Padronizar cores no theme.js
-[] - refatorar footer e ajustar posições
-[] - adicionar opções avançadas
 [] - Buscar 100% de coverage do cypress
 [] - Adicionar uma paginação a tabela
 [] - Permitir que o usuário Busque pelas finanças

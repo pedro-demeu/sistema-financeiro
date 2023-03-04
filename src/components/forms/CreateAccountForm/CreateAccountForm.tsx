@@ -21,7 +21,7 @@ export const CreateAccountForm: React.FC = () => {
   });
   const usernameInputRef = React.useRef(null);
   const { createAccount } = useLogin();
-
+  const theme = useTheme();
   const { t } = useTranslation();
   const yup = useYupObject();
   const formik = useFormik({
@@ -185,7 +185,15 @@ export const CreateAccountForm: React.FC = () => {
           >
             <Button
               type="submit"
-              className="actionButton"
+              disabled={formik.isSubmitting}
+              variant="contained"
+              fullWidth
+              sx={{
+                bgcolor: theme.palette.success.main,
+                '&:hover': {
+                  bgcolor: theme.palette.success.dark
+                }
+              }}
             >
               {t('forms_actions:create')}
             </Button>
