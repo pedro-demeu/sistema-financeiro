@@ -16,9 +16,9 @@ interface Colors {
 const COLORS: Colors = {
   gray: '#363440',
   blue: '#150926',
-  success: '#4affab',
-  warning: '#F6D325',
-  error: '#DE1F53',
+  success: '#2FCDF5',
+  warning: '#E1A02F',
+  error: '#E0142F',
   main: '#FFF',
   light: '#DDD',
   dark: '#222',
@@ -30,6 +30,9 @@ const theme = createTheme({
   palette: {
     primary: {
       main: COLORS.main,
+    },
+    success: {
+      main: COLORS.success
     },
     secondary: {
       main: COLORS.secondary,
@@ -81,9 +84,9 @@ const theme = createTheme({
     MuiCheckbox: {
       styleOverrides: {
         root: {
-          color: COLORS.secondary, // Define a cor do Checkbox não selecionado
+          color: COLORS.success, // Define a cor do Checkbox não selecionado
           '&.Mui-checked': {
-            color: COLORS.dark, // Define a cor do Checkbox selecionado
+            color: COLORS.success, // Define a cor do Checkbox selecionado
           },
         },
       },

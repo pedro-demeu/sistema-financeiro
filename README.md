@@ -23,10 +23,10 @@
 [x] - adicionar status sobre total disponível, se negativo mostrar msg como "saldo neegativo este mês..."
 [x] - Configurar para que as importações comecem com "@" ao inves de ficar buscando com ..
 [x] - Padronizar cores no theme.ts
+[x] - TROCAR CORES
 
 
 ##fazendo:
-[] - TROCAR CORES
 [] - adicionar opções avançadas
 [] - refatorar footer e ajustar posições
 
