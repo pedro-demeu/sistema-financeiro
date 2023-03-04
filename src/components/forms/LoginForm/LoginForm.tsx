@@ -151,7 +151,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         }}
       >
         <CustomLink title={t('login:create_an_account')} to="/create-account" />
-        <CustomLink title={t('login:forgot_password')} to="/forgot-password" />
       </FormControl>
     </FormPattern>
   );

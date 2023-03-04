@@ -12,6 +12,7 @@ export interface Transaction {
   createdAt: string;
   isDone: boolean;
   id: string;
+  
 }
 
 export const DEFAULT_TRANSACTION_VALUE: Transaction = {

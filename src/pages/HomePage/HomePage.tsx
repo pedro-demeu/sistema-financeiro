@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   DEFAULT_TRANSACTION_VALUE,
@@ -11,7 +11,7 @@ import {
 
 import { useNavigate } from 'react-router-dom';
 import { UserLoggedAtom } from '@/atoms/login';
-import { TopBar, TransactionsTableContainer, CustomModal } from '@/components';
+import { TopBar, TransactionsTableContainer, CustomModal, FooterBar } from '@/components';
 import { FinantialForm } from '@/components/forms';
 
 export const HomePage: React.FC = (): JSX.Element => {
@@ -23,7 +23,7 @@ export const HomePage: React.FC = (): JSX.Element => {
   const [transactions, setTransactions] = useRecoilState(transactionsAtom)
   const currentTransaction = useRecoilValue(currentTransactionAtom)
   const { createTransaction, editTransaction } = useTransaction();
-
+  const theme = useTheme();
   const handleSubmit = async (newTransaction: Transaction) => {
     try {
       await createTransaction(newTransaction)
@@ -58,8 +58,15 @@ export const HomePage: React.FC = (): JSX.Element => {
   }, [loggedUser?.finances]
   );
   return (
-    <>
-      <Box display="flex" alignItems="center" flexDirection="column">
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+        background: theme.palette.secondary.main
+      }}
+    >
+      <Box display="flex" alignItems="center" flexDirection="column" flex='1 auto'>
         <TopBar />
         <TransactionsTableContainer onSubmit={currentTransaction.id === '' ? handleSubmit : handleEdit} transactions={transactions} />
 
@@ -67,6 +74,7 @@ export const HomePage: React.FC = (): JSX.Element => {
           <FinantialForm onSubmit={handleSubmit} initialValues={DEFAULT_TRANSACTION_VALUE} />
         </CustomModal>
       </Box>
-    </>
+      {transactions.length > 0 && <FooterBar inHomePage userHaveTransactions />}
+    </Box>
   );
 };

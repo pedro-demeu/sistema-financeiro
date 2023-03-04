@@ -3,8 +3,8 @@ import { useFormik } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  AppContainer,
   CustomLink,
+  FooterBar,
   FormPattern
 } from '../..';
 import * as CryptoJS from 'crypto-js';
@@ -12,6 +12,8 @@ import * as uuid from 'uuid';
 import { FeedbackType, UserType } from '@/atoms/login';
 import { useLogin } from '@/atoms/account';
 import { useYupObject } from '@/hooks';
+import { transactionsAtom } from '@/atoms/transactions';
+import { useRecoilValue } from 'recoil';
 
 
 export const CreateAccountForm: React.FC = () => {
@@ -19,9 +21,9 @@ export const CreateAccountForm: React.FC = () => {
     color: undefined,
     message: ''
   });
+  const theme = useTheme();
   const usernameInputRef = React.useRef(null);
   const { createAccount } = useLogin();
-  const theme = useTheme();
   const { t } = useTranslation();
   const yup = useYupObject();
   const formik = useFormik({
@@ -81,133 +83,145 @@ export const CreateAccountForm: React.FC = () => {
   }, [feedbackMessage]);
 
   return (
-    <AppContainer>
-      <FormPattern title={t('_common:create_account')} onSubmit={formik.handleSubmit}>
-        <FormControl
-          sx={{
-            display: 'block',
-            marginBottom: '1rem'
-          }}
-        >
-          <TextField
-            ref={usernameInputRef}
-            autoFocus
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.username && Boolean(formik.errors.username)}
-            helperText={formik.touched.username && formik.errors.username}
-            autoComplete="off"
-            label={t('_common:name')}
-            value={formik.values.username}
-            name="username"
-            fullWidth
-            id="username"
-          />
-        </FormControl>
-        <FormControl
-          sx={{
-            display: 'block',
-            marginBottom: '1rem'
-          }}
-        >
-          <TextField
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-            autoComplete="off"
-            label={t('_common:email')}
-            value={formik.values.email}
-            name="email"
-            fullWidth
-            id="email"
-            type="email"
-          />
-        </FormControl>
-        <FormControl
-          sx={{
-            display: 'block',
-            marginBottom: '1rem'
-          }}
-        >
-          <TextField
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-            autoComplete="off"
-            label={t('login:password')}
-            value={formik.values.password}
-            name="password"
-            fullWidth
-            id="password"
-            type="password"
-          />
-        </FormControl>
-        <FormControl
-          sx={{
-            display: 'block',
-            marginBottom: '1rem'
-          }}
-        >
-          <TextField
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
-            helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
-            autoComplete="off"
-            label={t('_common:confirm_pass')}
-            value={formik.values.confirmPassword}
-            name="confirmPassword"
-            fullWidth
-            id="confirmPassword"
-            type="password"
-          />
-        </FormControl>
-        <FormControl
-          sx={{
-            display: 'block',
-            marginBottom: '1rem'
-          }}
-        >
-        </FormControl>
-        <FormControl
-          sx={{
-            display: 'block',
-            margin: '2rem 0'
-          }}
-        >
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+        background: theme.palette.secondary.main,
+        alignItems: 'center'
+      }}
+    >
+      <Box sx={{ flex: '1 auto', mt: 15 }} >
+        <FormPattern title={t('_common:create_account')} onSubmit={formik.handleSubmit}>
           <FormControl
             sx={{
-              display: 'flex',
-              alignItems: 'end'
+              display: 'block',
+              marginBottom: '1rem'
             }}
           >
-            <Button
-              type="submit"
-              disabled={formik.isSubmitting}
-              variant="contained"
+            <TextField
+              ref={usernameInputRef}
+              autoFocus
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.username && Boolean(formik.errors.username)}
+              helperText={formik.touched.username && formik.errors.username}
+              autoComplete="off"
+              label={t('_common:name')}
+              value={formik.values.username}
+              name="username"
               fullWidth
+              id="username"
+            />
+          </FormControl>
+          <FormControl
+            sx={{
+              display: 'block',
+              marginBottom: '1rem'
+            }}
+          >
+            <TextField
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+              autoComplete="off"
+              label={t('_common:email')}
+              value={formik.values.email}
+              name="email"
+              fullWidth
+              id="email"
+              type="email"
+            />
+          </FormControl>
+          <FormControl
+            sx={{
+              display: 'block',
+              marginBottom: '1rem'
+            }}
+          >
+            <TextField
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              autoComplete="off"
+              label={t('login:password')}
+              value={formik.values.password}
+              name="password"
+              fullWidth
+              id="password"
+              type="password"
+            />
+          </FormControl>
+          <FormControl
+            sx={{
+              display: 'block',
+              marginBottom: '1rem'
+            }}
+          >
+            <TextField
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+              helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+              autoComplete="off"
+              label={t('_common:confirm_pass')}
+              value={formik.values.confirmPassword}
+              name="confirmPassword"
+              fullWidth
+              id="confirmPassword"
+              type="password"
+            />
+          </FormControl>
+          <FormControl
+            sx={{
+              display: 'block',
+              marginBottom: '1rem'
+            }}
+          >
+          </FormControl>
+          <FormControl
+            sx={{
+              display: 'block',
+              margin: '2rem 0'
+            }}
+          >
+            <FormControl
               sx={{
-                bgcolor: theme.palette.success.main,
-                '&:hover': {
-                  bgcolor: theme.palette.success.dark
-                }
+                display: 'flex',
+                alignItems: 'end'
               }}
             >
-              {t('forms_actions:create')}
-            </Button>
+              <Button
+                type="submit"
+                disabled={formik.isSubmitting}
+                variant="contained"
+                fullWidth
+                sx={{
+                  bgcolor: theme.palette.success.main,
+                  '&:hover': {
+                    bgcolor: theme.palette.success.dark
+                  }
+                }}
+              >
+                {t('forms_actions:create')}
+              </Button>
+            </FormControl>
+            <Box mt={4} mb={4} display="flex" width="100%" justifyContent="center" alignItems="center">
+              <Typography align='center' sx={{
+                color: feedbackMessage.color
+              }}>
+                {feedbackMessage.message}
+              </Typography>
+            </Box>
           </FormControl>
-          <Box mt={4} mb={4} display="flex" width="100%" justifyContent="center" alignItems="center">
-            <Typography align='center' sx={{
-              color: feedbackMessage.color
-            }}>
-              {feedbackMessage.message}
-            </Typography>
-          </Box>
-        </FormControl>
-        <CustomLink title={t('forms_actions:back')} to="/" />
-      </FormPattern>
-    </AppContainer>
+          <CustomLink title={t('forms_actions:back')} to="/" />
+        </FormPattern>
+      </Box>
+      <FooterBar />
+    </Box>
+
   );
 };

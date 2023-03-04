@@ -1,11 +1,13 @@
 import { Box, useTheme } from '@mui/material';
 import React from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import * as CryptoJS from 'crypto-js';
 import { FeedbackLoginMessageAtom, LoginSchema, UserLoggedAtom, UserType } from '@/atoms/login';
 import { LoginForm } from '@/components/forms';
+import { FooterBar } from '@/components';
+import { transactionsAtom } from '@/atoms/transactions';
 
 export const LoginPage: React.FC = () => {
   const setLoggedUser = useSetRecoilState(UserLoggedAtom);
@@ -13,6 +15,7 @@ export const LoginPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const theme = useTheme();
+  const transactions = useRecoilValue(transactionsAtom)
 
   const handleSubmit = (data: LoginSchema): void => {
     const encryptedPassword = CryptoJS.SHA256(data.password).toString();
@@ -36,16 +39,26 @@ export const LoginPage: React.FC = () => {
     navigate('/home');
   };
 
-  React.useEffect(function cleanUpCurrentUser(){
+  React.useEffect(function cleanUpCurrentUser() {
     localStorage.removeItem('currentUser');
     setLoggedUser(null);
   });
-  
+
   return (
-    <Box component="main" height="100%" mt={15}>
-      <LoginForm
-        onSubmit={handleSubmit}
-      />
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+        background: theme.palette.secondary.main
+      }}
+    >
+      <Box component="main" height="100%" mt={15} flex="1 auto">
+        <LoginForm
+          onSubmit={handleSubmit}
+        />
+      </Box>
+      <FooterBar />
     </Box>
   );
 };

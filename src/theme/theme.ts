@@ -16,9 +16,9 @@ interface Colors {
 const COLORS: Colors = {
   gray: '#363440',
   blue: '#150926',
-  success: '#2FCDF5',
+  success: '#20C654',
   warning: '#E1A02F',
-  error: '#E0142F',
+  error: '#FF0F2F',
   main: '#FFF',
   light: '#DDD',
   dark: '#222',

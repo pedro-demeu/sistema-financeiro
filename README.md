@@ -24,11 +24,11 @@
 [x] - Configurar para que as importações comecem com "@" ao inves de ficar buscando com ..
 [x] - Padronizar cores no theme.ts
 [x] - TROCAR CORES
+[x] - refatorar footer e ajustar posições
 
 
 ##fazendo:
 [] - adicionar opções avançadas
-[] - refatorar footer e ajustar posições
 
 
 ##Funcionalidades em desenvolvimento

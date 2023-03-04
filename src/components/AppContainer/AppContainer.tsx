@@ -8,7 +8,7 @@ interface Props {
   children: JSX.Element
 }
 export const AppContainer: React.FC<Props> = ({ children }) => {
-  const transactions = useRecoilValue(transactionsAtom)
+  
   const theme = useTheme();
   return (
     <Box
@@ -22,7 +22,7 @@ export const AppContainer: React.FC<Props> = ({ children }) => {
       <Box sx={{ flex: '1 auto' }} >
         {children}
       </Box>
-      {transactions.length > 0 && <FooterBar />}
+      
     </Box>
   );
 };
