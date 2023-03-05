@@ -25,22 +25,22 @@
 [x] - Padronizar cores no theme.ts
 [x] - TROCAR CORES
 [x] - refatorar footer e ajustar posições
+[x] - adicionar opções avançadas
 
 
 ##fazendo:
-[] - adicionar opções avançadas
+[] - Adicionar responsividade
 
 
 ##Funcionalidades em desenvolvimento
-[] - Buscar 100% de coverage do cypress
-[] - Adicionar uma paginação a tabela
 [] - Permitir que o usuário Busque pelas finanças
-[] - Permitir Download da tabela em seu estado atual (jsPDF)
+[] - Adicionar uma paginação a tabela
+[] - Buscar 100% de coverage do cypress
 [] - Permitir que o usuário possa filtrar por (valor maior/menor, data, tipo e filtros múltiplos)
+[] - Permitir Download da tabela em seu estado atual (jsPDF)
 [] - Melhorar o Readme com fotos, vídeos, documentação de qualidade
-[] - Adicionar responsividade
 [] - Implementar um ErrorBoundary
-[] - Quando melhorar o README, adicionar um tutorial para criar componentes e melhorar a renderrização para o padrão da Segware
+[] - Quando melhorar o README, adicionar um tutorial para criar componentes
 [] - desenvolver edição de usuário e página de contato e opção de compartilhar
 [] - desenvolver um comando que abre um modal onde você digita expressões matemáticas e elas retornam a resposta
 [] - desenvolver um mecanismo de importação de arquivos JSON

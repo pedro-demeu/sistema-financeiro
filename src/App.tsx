@@ -7,9 +7,11 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { BrowserRouter } from 'react-router-dom';
 import { Routes } from './routes';
 import { AppContainer } from './components';
-import { RecoilRoot, useRecoilValue } from 'recoil';
+import { RecoilRoot } from 'recoil';
 import theme from './theme/theme';
 import { UserLoggedAtom } from './atoms/login';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export const App: React.FC = () => {
   const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
@@ -19,11 +21,15 @@ export const App: React.FC = () => {
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <RecoilRoot initializeState={({ set }) => set(UserLoggedAtom, currentUser)}>
-          <AppContainer>
-            <BrowserRouter>
-              <Routes />
-            </BrowserRouter>
-          </AppContainer>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+
+            <AppContainer>
+              <BrowserRouter>
+                <Routes />
+              </BrowserRouter>
+            </AppContainer>
+          </LocalizationProvider>
+
         </RecoilRoot>
       </ThemeProvider>
     </>

@@ -7,13 +7,9 @@ import {
   FooterBar,
   FormPattern
 } from '../..';
-import * as CryptoJS from 'crypto-js';
-import * as uuid from 'uuid';
 import { FeedbackType, UserType } from '@/atoms/login';
 import { useLogin } from '@/atoms/account';
 import { useYupObject } from '@/hooks';
-import { transactionsAtom } from '@/atoms/transactions';
-import { useRecoilValue } from 'recoil';
 
 
 export const CreateAccountForm: React.FC = () => {
@@ -26,6 +22,7 @@ export const CreateAccountForm: React.FC = () => {
   const { createAccount } = useLogin();
   const { t } = useTranslation();
   const yup = useYupObject();
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -43,7 +40,6 @@ export const CreateAccountForm: React.FC = () => {
     }),
     onSubmit: (newUser) => {
       const users: UserType[] = JSON.parse(localStorage.getItem('users') || '[]');
-      const theme = useTheme();
       const isDuplicate = users.some(user => user.id === newUser.id || user.email === newUser.email);
       if (isDuplicate) {
         setFeedbackMessage({
@@ -60,7 +56,7 @@ export const CreateAccountForm: React.FC = () => {
         id: '',
         password: newUser.password,
         username: newUser.username
-      })
+      });
       setFeedbackMessage({
         color: theme.palette.success.main,
         message: t('_common:new_user_created')
@@ -196,7 +192,6 @@ export const CreateAccountForm: React.FC = () => {
             >
               <Button
                 type="submit"
-                disabled={formik.isSubmitting}
                 variant="contained"
                 fullWidth
                 sx={{

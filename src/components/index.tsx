@@ -13,3 +13,5 @@ export { FooterBar } from './FooterBar/FooterBar';
 export { CustomTextField } from './CustomTextField/CustomTextField';
 export { ForgotPassword } from './ForgotPassword/ForgotPassword';
 export { FinanceControls } from './FinanceControls/FinanceControls';
+export { SelectTags } from './SelectTags/SelectTags';
+export { SelectRepeat } from './SelectRepeat/SelectRepeat';

@@ -1,8 +1,5 @@
 import React from 'react';
 import { Box, useTheme } from '@mui/material';
-import { useRecoilValue } from 'recoil';
-import { transactionsAtom } from '@/atoms/transactions';
-import { FooterBar } from '@/components'
 
 interface Props {
   children: JSX.Element

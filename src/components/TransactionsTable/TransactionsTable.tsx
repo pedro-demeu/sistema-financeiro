@@ -12,7 +12,8 @@ import {
   currentTransactionAtom,
   type Transaction,
   type FinancialType,
-  editTransactionModalAtom} from '../../atoms/transactions';
+  editTransactionModalAtom
+} from '../../atoms/transactions';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { CustomModal } from '..';
 import { useRecoilState } from 'recoil';
@@ -20,7 +21,8 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { useTranslation } from 'react-i18next';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import { DeleteForm, FinantialForm } from '@/components/forms';
+import { DeleteForm, TransactionForm } from '@/components/forms';
+import { useTransaction } from '@/atoms/transactions';
 
 interface ColumnObject {
   label: string
@@ -47,11 +49,6 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
   const theme = useTheme();
 
   const columns: ColumnObject[] = [
-    {
-      label: 'columns:is_done',
-      dataKey: 'isDone',
-      align: 'left'
-    },
     {
       label: 'columns:name',
       dataKey: 'name',
@@ -80,14 +77,29 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
       align: 'left'
     },
     {
+      label: 'columns:updated_at',
+      dataKey: 'updated_at',
+      align: 'left'
+    },
+    {
+      label: 'columns:is_done',
+      dataKey: 'isDone',
+      align: 'left'
+    },
+    {
       label: '_common:actions',
       align: 'center'
     }
   ];
 
   const [finantialSelected, setFinantialSelected] = useRecoilState(currentTransactionAtom);
-  const [isChecked, setIsChecked] = React.useState(false);
 
+  const { editTransaction } = useTransaction();
+  const handleDoneTransaction = (row: Transaction) => {
+    setFinantialSelected(row);
+    const newRow = {...row, isDone: !row.isDone};
+    editTransaction(newRow);
+  };
   return (
     <Box>
       <TableContainer
@@ -113,17 +125,15 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
               <TableRow
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                tabIndex={-1}
+                role="checkbox"
+                hover
               >
                 <TableCell align="left" component="th" scope="row">
-                  <Checkbox checked={isChecked} onChange={(e) => {
-                    setIsChecked(!row.isDone)
-                  }} />
-                </TableCell>
-                <TableCell align="left" component="th" scope="row">
-                  <Typography sx={{ color: 'white' }}>{row.name}</Typography>
+                  <Typography sx={{ color: 'white', textDecoration: row.isDone ? 'line-through' : 'none' }}>{row.name}</Typography>
                 </TableCell>
                 <TableCell align="left">
-                  <Typography sx={{ color: 'white' }}>
+                  <Typography sx={{ color: 'white', textDecoration: row.isDone ? 'line-through' : 'none' }}>
                     {Intl.NumberFormat('pt-BR', {
                       style: 'currency',
                       currency: 'BRL'
@@ -133,16 +143,24 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                 <TableCell align="left">
                   <Box display="flex" alignItems="center" gap="1rem">
                     {row.type === 'SPENDING' ? <ArrowDownwardIcon sx={{ color: theme.palette.error.main }} /> : <ArrowUpwardIcon sx={{ color: theme.palette.success.main }} />}
-                    <Typography sx={{ color: 'white' }}>
+                    <Typography sx={{ color: 'white', textDecoration: row.isDone ? 'line-through' : 'none' }}>
                       {row.type === 'INCOME' ? t('_common:income').toUpperCase() : t('_common:spending').toUpperCase()}
                     </Typography>
                   </Box>
                 </TableCell>
 
                 <TableCell align="left">
-                  <Typography sx={{ color: 'white' }}>
+                  <Typography sx={{ color: 'white', textDecoration: row.isDone ? 'line-through' : 'none' }}>
                     {row.createdAt}
                   </Typography>
+                </TableCell>
+                <TableCell align="left">
+                  <Typography sx={{ color: 'white', textDecoration: row.isDone ? 'line-through' : 'none' }}>
+                    {row.updatedAt || row.createdAt}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography sx={{ color: 'white', textDecoration: row.isDone ? 'line-through' : 'none' }}>{row.isDone ? t('_common:done') : t('_common:undone')}</Typography>
                 </TableCell>
                 <TableCell align="center">
                   <Button
@@ -161,6 +179,8 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                   >
                     <DeleteIcon fontSize="small" sx={{ color: 'white' }} />
                   </Button>
+
+                  <Checkbox onChange={() => handleDoneTransaction(row)} checked={row.isDone} />
                 </TableCell>
               </TableRow>
             ))}
@@ -172,7 +192,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
         <DeleteForm name={finantialSelected.name} id={finantialSelected.id} />
       </CustomModal>
       <CustomModal open={editModal} setOpen={setEditModal}>
-        <FinantialForm
+        <TransactionForm
           key={finantialSelected.id ?? Math.random()}
           initialValues={finantialSelected}
           onSubmit={onSubmit}

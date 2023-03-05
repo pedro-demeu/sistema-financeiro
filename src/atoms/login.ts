@@ -36,4 +36,4 @@ export const FeedbackLoginMessageAtom = atom<FeedbackType>({
     color: undefined,
     message: null
   }
-})
+});

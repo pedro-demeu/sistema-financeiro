@@ -1,8 +1,8 @@
 import { UserLoggedAtom } from '@/atoms/login';
 import { Transaction, transactionModalAtom } from '@/atoms/transactions';
 import { Box } from '@mui/material';
-import React from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import React from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { EmptyState, FinanceControls, HeaderTable, TransactionTable } from '@/components';
 
 interface TransactionsTableContainerProps {
@@ -30,14 +30,14 @@ export const TransactionsTableContainer: React.FC<TransactionsTableContainerProp
         .filter((item) => item.type === "SPENDING")
         .reduce((accumulator, currentItem) => !(currentItem.value) ? 0 : accumulator + currentItem.value, 0);
 
-      const total = Number(totalIncome) - Number(totalSpending)
+      const total = Number(totalIncome) - Number(totalSpending);
 
-      return { totalSpending, totalIncome, total }
+      return { totalSpending, totalIncome, total };
     }
 
-    return { totalSpending: 0, totalIncome: 0, total: 0 }
+    return { totalSpending: 0, totalIncome: 0, total: 0 };
 
-  }, [loggedUser?.finances])
+  }, [loggedUser?.finances]);
 
   if (transactions.length === 0) {
     return (

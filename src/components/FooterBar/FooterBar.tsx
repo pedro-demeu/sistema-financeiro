@@ -24,7 +24,7 @@ export const FooterBar: React.FC<FooterProps> = ({ inHomePage = false, userHaveT
           © Pedro Demeu - 2023
         </Typography>
       </Box>
-    )
+    );
   }
 
   return (
@@ -38,4 +38,4 @@ export const FooterBar: React.FC<FooterProps> = ({ inHomePage = false, userHaveT
       {isPositive ? (<TagFacesIcon sx={{ color: theme.palette.success.main }} />) : (<SentimentVeryDissatisfiedIcon sx={{ color: theme.palette.error.main }} />)}
     </Box>
   );
-}
+};

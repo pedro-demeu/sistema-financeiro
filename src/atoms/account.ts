@@ -1,5 +1,6 @@
 import { UserType } from './login';
 import * as uuid from 'uuid';
+import * as CryptoJS from 'crypto-js';
 
 export const useLogin = () => {
 
@@ -29,5 +30,5 @@ export const useLogin = () => {
 
   return {
     createAccount,
-  }
-}
+  };
+};

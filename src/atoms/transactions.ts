@@ -3,7 +3,24 @@ import { UserLoggedAtom, UserType } from './login';
 import * as uuid from 'uuid';
 import { transformDate } from '@/utils/transformDate';
 
+export const TAGS = [
+  'Saúde',
+  'Profissão',
+  'Estudos',
+  'Trabalho',
+  'Família',
+  'Pessoal',
+  'Cartão',
+  'Academia',
+  'Filhos',
+  'Investimentos',
+];
+
 export type FinancialType = "INCOME" | "SPENDING";
+export type Tag = {
+  name: string
+}
+export type RepeatType = 'Monthly' | 'Weekly' | 'Yearly' | 'Never';
 
 export interface Transaction {
   name: string;
@@ -12,7 +29,10 @@ export interface Transaction {
   createdAt: string;
   isDone: boolean;
   id: string;
-  
+  updatedAt: string;
+  tags: Tag[],
+  expireIn?: Date | string;
+  repeat: RepeatType;
 }
 
 export const DEFAULT_TRANSACTION_VALUE: Transaction = {
@@ -22,6 +42,9 @@ export const DEFAULT_TRANSACTION_VALUE: Transaction = {
   isDone: false,
   createdAt: "",
   id: '',
+  updatedAt: "",
+  tags: [],
+  repeat: 'Never',
 };
 
 export const transactionsAtom = atom<Transaction[]>({
@@ -70,8 +93,11 @@ export const useTransaction = () => {
     const transformedTransaction = {
       ...newTransaction,
       createdAt: transformDate(new Date()),
+      updatedAt: transformDate(new Date()),
       id: uuid.v4()
     };
+    console.log(newTransaction);
+
     const currentUser: UserType = {
       ...loggedUser,
       finances: [...loggedUser.finances, transformedTransaction]
@@ -85,8 +111,8 @@ export const useTransaction = () => {
   }
 
   function editTransaction(transaction: Transaction) {
-    const oldFinances: Transaction[] = loggedUser?.finances || []
-    const financeChanges = oldFinances.map(finance => finance.id === transaction.id ? transaction : finance);
+    const oldFinances: Transaction[] = loggedUser?.finances || [];
+    const financeChanges = oldFinances.map(finance => finance.id === transaction.id ? ({ ...transaction, updatedAt: transformDate(new Date()) }) : finance);
 
     if (!loggedUser) throw new Error('Usuário não está logado!!');
     const currentUserIndex = listUsers.findIndex(user => user.id === loggedUser.id);
@@ -120,23 +146,13 @@ export const useTransaction = () => {
     setLoggedUser({
       ...loggedUser,
       finances: updatedItems
-    })
+    });
 
-  }
-
-  function markAsDone(transactionID: string) {
-    // TODO
-  }
-
-  function markAllAsDone() {
-    // TODO
   }
 
   return {
     createTransaction,
     editTransaction,
     deleteTransaction,
-    markAsDone,
-    markAllAsDone
-  }
-}
+  };
+};

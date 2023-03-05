@@ -1,8 +1,6 @@
-import { transactionsAtom } from '@/atoms/transactions';
 import { FooterBar, ForgotPassword } from '@/components';
 import { Box, useTheme } from '@mui/material';
 import React from 'react';
-import { useRecoilValue } from 'recoil';
 
 export const RecoveryPage: React.FC = () => {
   const theme = useTheme();

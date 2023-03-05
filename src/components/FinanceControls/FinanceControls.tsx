@@ -1,5 +1,5 @@
 import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -22,11 +22,11 @@ export const FinanceControls: React.FC<MyComponentProps> = ({
   const { t } = useTranslation();
   const theme = useTheme();
   
-  const setTotalValueAtom = useSetRecoilState(totalValueAtom)
+  const setTotalValueAtom = useSetRecoilState(totalValueAtom);
 
   React.useEffect(() => {
     setTotalValueAtom(total);
-  }, [total])
+  }, [total]);
   return (
     <Box sx={{ display: "flex", width: '100%', justifyContent: 'center' }} gap="6rem" mt={10}>
       <Paper sx={{ p: 2, bgcolor: theme.palette.info.main, width: '270px' }} >

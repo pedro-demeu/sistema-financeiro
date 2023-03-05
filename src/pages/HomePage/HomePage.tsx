@@ -7,38 +7,39 @@ import {
   transactionModalAtom,
   transactionsAtom,
   useTransaction,
-  currentTransactionAtom} from '@/atoms/transactions';
+  currentTransactionAtom
+} from '@/atoms/transactions';
 
 import { useNavigate } from 'react-router-dom';
 import { UserLoggedAtom } from '@/atoms/login';
 import { TopBar, TransactionsTableContainer, CustomModal, FooterBar } from '@/components';
-import { FinantialForm } from '@/components/forms';
+import { TransactionForm } from '@/components/forms';
 
 export const HomePage: React.FC = (): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useRecoilState(
     transactionModalAtom
   );
-  const [loggedUser, setLoggedUser] = useRecoilState(UserLoggedAtom);
+  const loggedUser = useRecoilValue(UserLoggedAtom);
   const navigate = useNavigate();
-  const [transactions, setTransactions] = useRecoilState(transactionsAtom)
-  const currentTransaction = useRecoilValue(currentTransactionAtom)
+  const [transactions, setTransactions] = useRecoilState(transactionsAtom);
+  const currentTransaction = useRecoilValue(currentTransactionAtom);
   const { createTransaction, editTransaction } = useTransaction();
   const theme = useTheme();
   const handleSubmit = async (newTransaction: Transaction) => {
     try {
-      await createTransaction(newTransaction)
-    } catch (error: any) {
+      await createTransaction(newTransaction);
+    } catch (error) {
       alert(`Error: ${error}`);
     }
-  }
+  };
 
   const handleEdit = async (newTransaction: Transaction) => {
     try {
-      await editTransaction(newTransaction)
-    } catch (error: any) {
+      await editTransaction(newTransaction);
+    } catch (error) {
       alert(`Error: ${error}`);
     }
-  }
+  };
 
   const handleModalState = (): void => {
     setIsModalOpen(!isModalOpen);
@@ -54,7 +55,7 @@ export const HomePage: React.FC = (): JSX.Element => {
   );
 
   React.useEffect(function refreshTransactions() {
-    loggedUser && setTransactions(loggedUser.finances)
+    loggedUser && setTransactions(loggedUser.finances);
   }, [loggedUser?.finances]
   );
   return (
@@ -71,7 +72,7 @@ export const HomePage: React.FC = (): JSX.Element => {
         <TransactionsTableContainer onSubmit={currentTransaction.id === '' ? handleSubmit : handleEdit} transactions={transactions} />
 
         <CustomModal open={isModalOpen} setOpen={handleModalState}>
-          <FinantialForm onSubmit={handleSubmit} initialValues={DEFAULT_TRANSACTION_VALUE} />
+          <TransactionForm onSubmit={handleSubmit} initialValues={DEFAULT_TRANSACTION_VALUE} />
         </CustomModal>
       </Box>
       {transactions.length > 0 && <FooterBar inHomePage userHaveTransactions />}

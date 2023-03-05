@@ -28,7 +28,7 @@ export const TopBar: React.FC = () => {
     null
   );
   const navigate = useNavigate();
-  const setLoggedUser = useSetRecoilState(UserLoggedAtom)
+  const setLoggedUser = useSetRecoilState(UserLoggedAtom);
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -53,7 +53,7 @@ export const TopBar: React.FC = () => {
     localStorage.removeItem('currentUser');
     setLoggedUser(null);
     navigate('/');
-  }
+  };
 
   const settings = [
     {
@@ -85,12 +85,12 @@ export const TopBar: React.FC = () => {
 
   React.useEffect(() => {
     // @ts-ignore
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
     if (currentUser) {
-      setUsername(currentUser.username)
+      setUsername(currentUser.username);
     }
-  })
+  });
 
   return (
     <AppBar

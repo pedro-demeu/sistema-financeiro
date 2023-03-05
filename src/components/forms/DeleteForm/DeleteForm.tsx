@@ -20,9 +20,9 @@ export const DeleteForm: React.FC<DeleteFormProps> = ({ name, id }) => {
     try {
       deleteTransaction(transactionID);
     } catch (e) {
-      alert(`Error: ${e}`)
+      alert(`Error: ${e}`);
     }
-  }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -30,7 +30,7 @@ export const DeleteForm: React.FC<DeleteFormProps> = ({ name, id }) => {
     },
     onSubmit: () => {
       onSubmit(id);
-      handleClose()
+      handleClose();
     }
   });
   return (

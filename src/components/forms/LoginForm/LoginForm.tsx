@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Button, Checkbox, FormControl, FormControlLabel, Typography, TextField, useTheme } from '@mui/material';
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useRecoilState } from 'recoil';
 import { LoginSchema, FeedbackLoginMessageAtom, DEFAULT_VALUES } from '@/atoms/login';

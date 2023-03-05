@@ -1,13 +1,12 @@
 import { Box, useTheme } from '@mui/material';
 import React from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import * as CryptoJS from 'crypto-js';
 import { FeedbackLoginMessageAtom, LoginSchema, UserLoggedAtom, UserType } from '@/atoms/login';
 import { LoginForm } from '@/components/forms';
 import { FooterBar } from '@/components';
-import { transactionsAtom } from '@/atoms/transactions';
 
 export const LoginPage: React.FC = () => {
   const setLoggedUser = useSetRecoilState(UserLoggedAtom);
@@ -15,7 +14,6 @@ export const LoginPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const theme = useTheme();
-  const transactions = useRecoilValue(transactionsAtom)
 
   const handleSubmit = (data: LoginSchema): void => {
     const encryptedPassword = CryptoJS.SHA256(data.password).toString();
@@ -30,7 +28,7 @@ export const LoginPage: React.FC = () => {
       setFeedBackMessage({
         color: theme.palette.error.main,
         message: `${t('_common:login_fails')}`
-      })
+      });
       return;
     }
     const currentUser = users.find(user => user.email === data.email && user.password === encryptedPassword);

@@ -1,4 +1,4 @@
-import { CommonColors, createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
 
 interface Colors {
@@ -24,7 +24,7 @@ const COLORS: Colors = {
   dark: '#222',
   info: '#3A3844',
   secondary: '#211f27',
-}
+};
 
 const theme = createTheme({
   palette: {

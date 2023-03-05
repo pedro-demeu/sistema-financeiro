@@ -20,6 +20,17 @@
     "exclude": "Exclusão"
   },
   "_common": {
+    "mark_to_done_task": "Está paga? Clique abaixo!!",
+    "done": "Finalizado",
+    "undone": "Em aberto",
+    "monthly": "Mensal",
+    "weekly": "Semanal",
+    "yearly": "Anual",
+    "never": "Nunca",
+    "repeat": "Repetir",
+    "expire_in": "Vencimento",
+    "show_advanced_options": "Opções avançadas",
+    "hidden_advanced_options": "Esconder opções avançadas",
     "good_health_finantial": "Parabéns, sua saúde financeira está em dia!!",
     "bad_health_finantial": "Saldo Negativo, hora de cortar gastos",
     "actions": "Ações",
@@ -43,11 +54,12 @@
     "total": "Total disponível"
   },
   "columns": {
-    "is_done": "Pago",
+    "is_done": "Status",
     "name": "Apelido",
     "type": "Tipo de despesa",
     "value": "Valor",
-    "create_at": "Criado em"
+    "create_at": "Criado em",
+    "updated_at": "Atualizado em"
   },
   "forms": {
     "optional": "opcional",

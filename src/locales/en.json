@@ -20,6 +20,15 @@
     "exclude": "Exclusion"
   },
   "_common": {
+    "mark_to_done_task": "is done? Click downside",
+    "done": "Done",
+    "undone": "Opened",
+    "monthly": "Monthly",
+    "weekly": "Weekly",
+    "yearly": "Yearly",
+    "never": "Never",
+    "repeat": "Repeat",
+    "expire_in": "Expire in",
     "good_health_finantial": "Congratulations, your financial health is in good shape!!",
     "bad_health_finantial": "Negative balance, time to cut costs",
     "actions": "Actions",
@@ -40,14 +49,17 @@
     "login_fails": "Wrong E-mail or Password!!",
     "total_income": "Total Income",
     "total_spending": "Total Spending",
-    "total": "Total"
+    "total": "Total",
+    "show_advanced_options": "Advanced options",
+    "hidden_advanced_options": "Hidden advanced options"
   },
   "columns": {
-    "is_done": "is Done?",
+    "is_done": "Status",
     "name": "Name",
     "type": "Finantial Type",
     "value": "Value",
-    "create_at": "Created at"
+    "create_at": "Created at",
+    "updated_at": "Updated at"
   },
   "forms": {
     "optional": "optional",
