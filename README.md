@@ -47,42 +47,29 @@ Este projeto está licenciado sob a Licença MIT. Consulte o arquivo LICENSE par
 
 ## Backlog
 
-- [ ] Permitir que o usuário Busque pelas finanças
 - [ ] Adicionar uma paginação a tabela
 - [ ] Buscar 100% de coverage do cypress
-- [ ] Permitir que o usuário possa filtrar por (valor maior/menor, data, tipo e filtros múltiplos)
-- [ ] Permitir Download da tabela em seu estado atual (jsPDF)
 - [ ] Melhorar o Readme com fotos, vídeos, documentação de qualidade
 - [ ] Implementar um ErrorBoundary
+- [ ] Página de configurações e metas
+- [ ] Cadastro de Categorias
+- [ ] Página de Dívidas
+- [ ] Página de investimentos
+- [ ] Extrato cartões (futuro)
 - [ ] Quando melhorar o README, adicionar um tutorial para criar componentes
 - [ ] Desenvolver edição de usuário e página de contato e opção de compartilhar
 - [ ] Desenvolver um comando que abre um modal onde você digita expressões matemáticas e elas retornam a resposta
 - [ ] Desenvolver um mecanismo de importação de arquivos JSON
+- [ ] Adicionar opção de visualização por gráfico ao invés de tabela e ter opção de pizza ou gráfico de linhas (pesquisar)
 - [ ] Disponibilizar funcionalidade para importar um json simples de exemplo para novos usuários
 - [ ] Construção de uma pipeline e criar uma imagem para subir via docker
+- [ ] Adicionar responsividade
+
+- [ ] Permitir que o usuário possa filtrar por (valor maior/menor, data, tipo e filtros múltiplos)
+- [ ] Permitir que o usuário Busque pelas finanças
+- [ ] Permitir Download da tabela em seu estado atual (jsPDF)
 
 ## Desenvolvendo
-
-- [ ... ] Adicionar responsividade
+- [ ] Reformular Layout
 
 ## Funcionalidades Concluídas
-
-- [x] Desenvolver projeto em React e Typescript
-- [x] Login Simples para acessar Página Home (Não persistir no back)
-- [x] Tabela com listagem de finanças
-- [x] Modal para adição de uma nova transação
-- [x] Opção de excluir transação
-- [x] Opção de editar transação
-- [x] Mostrar um EmptyState da listagem
-- [x] Testes básicos com Cypress
-- [x] Validações com Formik e Yup
-- [x] Tradução do Projeto para EN-US e PT-BR com (i18n)
-- [x] Configuração do Eslint
-- [x] Criar um contador e total das despesas
-- [x] Construir um CRUD bem feito para as ações em localstorage, como um useLogin useFinances
-- [x] Adicionar status sobre total disponível, se negativo mostrar msg como "saldo negativo este mês..."
-- [x] Configurar para que as importações comecem com "@" ao invés de ficar buscando com ".."
-- [x] Padronizar cores no theme.ts
-- [x] Trocar cores
-- [x] Refatorar footer e ajustar posições
-- [x] Adicionar opções avançadas
