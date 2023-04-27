@@ -38,9 +38,9 @@ Este projeto está licenciado sob a Licença MIT. Consulte o arquivo LICENSE par
 
 
 ## Contato
-Pedro Demeu
-pdemeu@outlook.com
-https://www.linkedin.com/in/pdemeu/
+- Pedro Demeu
+- pdemeu@outlook.com
+- https://www.linkedin.com/in/pdemeu/
 
 
 # Gestão
