@@ -46,7 +46,15 @@ Este projeto está licenciado sob a Licença MIT. Consulte o arquivo LICENSE par
 # Gestão
 
 ## Backlog
-
+- [ ] desenhar um figma
+- [ ] melhorar a organização das informações
+- [ ] fluxo cadastro de salario
+- [ ] desenhar a estruturação de dados
+- [ ] usar uma fake api funcional
+- [ ] alteração no cad finança Adicionar vencimento por dia do mês (vence todo dia 10) até (data específica (boletos) | indeterminado (alugueis)), formatar valor para real ao adicionar uma nova FINANÇA
+- [ ] cadastro das tags
+- [ ] Primeira finança
+- [ ] Salario no HeaderBar com opção de Edição
 - [ ] Adicionar uma paginação a tabela
 - [ ] Buscar 100% de coverage do cypress
 - [ ] Melhorar o Readme com fotos, vídeos, documentação de qualidade
@@ -68,6 +76,18 @@ Este projeto está licenciado sob a Licença MIT. Consulte o arquivo LICENSE par
 - [ ] Permitir que o usuário possa filtrar por (valor maior/menor, data, tipo e filtros múltiplos)
 - [ ] Permitir que o usuário Busque pelas finanças
 - [ ] Permitir Download da tabela em seu estado atual (jsPDF)
+
+
+- [ ] estudo para uso do mongodb
+- [ ] metas e objetivos financeiros
+- [ ] servidor node para criação da api e integração com mongodb
+- [ ] revisão da pipeline e criação da mesma no back
+- [ ] estudo para serviços de hospedagem (aws)
+- [ ] plano de negócios tentar fazer virar renda $$$$$$$$$$
+
+
+- [] ideia pro futuro bem distante (criar planos com IA (premium))
+- 
 
 ## Desenvolvendo
 - [ ] Reformular Layout
