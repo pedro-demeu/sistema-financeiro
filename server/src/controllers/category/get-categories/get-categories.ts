@@ -1,4 +1,4 @@
-import { IController } from '../protocols';
+import { IController } from '../../protocols';
 import { IGetCategoriesRepository } from './protocols';
 
 export class GetCategoriesController implements IController {

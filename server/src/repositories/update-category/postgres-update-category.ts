@@ -1,7 +1,7 @@
 import {
   IUpdateCategoryRepository,
   UpdateCategoryParams,
-} from '../../controllers/update-category/protocols';
+} from '../../controllers/category/update-category/protocols';
 import prismaClient from '../../database/prismaClient';
 import { ICategory } from '../../models/Category';
 

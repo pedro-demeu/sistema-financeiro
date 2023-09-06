@@ -1,4 +1,4 @@
-import { IGetCategoriesRepository } from '../../controllers/get-categories/protocols';
+import { IGetCategoriesRepository } from '../../controllers/category/get-categories/protocols';
 import prismaClient from '../../database/prismaClient';
 import { ICategory } from '../../models/Category';
 

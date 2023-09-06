@@ -1,5 +1,5 @@
-import { ICategory } from '../../models/Category';
-import { HttpRequest, HttpResponse, IController } from '../protocols';
+import { ICategory } from '../../../models/Category';
+import { IController, HttpRequest, HttpResponse } from '../../protocols';
 import { IDeleteCategoryRepository } from './protocols';
 
 export class DeleteCategoryController implements IController {

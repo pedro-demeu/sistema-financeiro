@@ -1,5 +1,5 @@
 import { Category } from '@prisma/client';
-import { IController, HttpRequest, HttpResponse } from '../protocols';
+import { IController, HttpRequest, HttpResponse } from '../../protocols';
 import { CreateCategoryParams, ICreateCategoryRepository } from './protocols';
 
 export class CreateCategoryController implements IController {

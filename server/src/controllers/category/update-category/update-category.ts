@@ -1,6 +1,5 @@
-import prismaClient from '../../database/prismaClient';
-import { ICategory } from '../../models/Category';
-import { HttpRequest, HttpResponse, IController } from '../protocols';
+import { ICategory } from '../../../models/Category';
+import { IController, HttpRequest, HttpResponse } from '../../protocols';
 import { IUpdateCategoryRepository, UpdateCategoryParams } from './protocols';
 
 export class UpdateCategoryController implements IController {

@@ -1,7 +1,7 @@
 import {
   CreateCategoryParams,
   ICreateCategoryRepository,
-} from '../../controllers/create-category/protocols';
+} from '../../controllers/category/create-category/protocols';
 import prismaClient from '../../database/prismaClient';
 import { ICategory } from '../../models/Category';
 

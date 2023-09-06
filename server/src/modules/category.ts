@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { PostgresGetCategories } from '../repositories/get-categories/postgres-get-categories';
-import { GetCategoriesController } from '../controllers/get-categories/get-categories';
+import { GetCategoriesController } from '../controllers/category/get-categories/get-categories';
 import { PostgresCreateCategory } from '../repositories/create-category/postgres-create-category';
-import { CreateCategoryController } from '../controllers/create-category/create-category';
+import { CreateCategoryController } from '../controllers/category/create-category/create-category';
 import { PostgresUpdateCategoryRepository } from '../repositories/update-category/postgres-update-category';
-import { UpdateCategoryController } from '../controllers/update-category/update-category';
+import { UpdateCategoryController } from '../controllers/category/update-category/update-category';
 import { PostgresDeleteCategoryRepository } from '../repositories/delete-category/postgres-delete-category';
-import { DeleteCategoryController } from '../controllers/delete-category/delete-category';
+import { DeleteCategoryController } from '../controllers/category/delete-category/delete-category';
 
 export const routes = Router();
 
