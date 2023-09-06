@@ -37,7 +37,6 @@ routes.put('/:id', async (req, res) => {
     categoryUpdateRepository,
   );
 
-  console.log(req.body, req.params);
   const { body, statusCode } = await updateCategoryController.handle({
     body: req.body,
     params: req.params,
