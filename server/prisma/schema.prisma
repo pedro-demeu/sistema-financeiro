@@ -17,3 +17,21 @@ model Category {
 
   @@map("categories")
 }
+
+model Finance {
+  id          Int      @id @default(autoincrement())
+  userId      String
+  name        String
+  value       Float
+  type        String
+  isPaid      Boolean
+  expiresAt   DateTime
+  repeat      Boolean
+  repeatType  String
+  tags        Int[]
+  repeatUntil DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("finances")
+}
