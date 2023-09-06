@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres:14.2-alpine
+    container_name: SISTEMA_FINANCEIRO_CONTAINER_DB
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: SISTEMA_FINANCEIRO_DB
+    ports:
+      - '5432:5432'
