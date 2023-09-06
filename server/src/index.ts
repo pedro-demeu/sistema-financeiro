@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import express from 'express';
 import { config } from 'dotenv';
 import { routes as CategoryRoutes } from './modules/category';
+import { routes as FinancesRoutes } from './modules/finances';
 
 config();
 
@@ -16,3 +17,4 @@ app.listen(PORT, () => {
 });
 
 app.use('/v1/api/category', CategoryRoutes);
+app.use('/v1/api/finances', FinancesRoutes);
