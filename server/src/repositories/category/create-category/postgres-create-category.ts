@@ -1,9 +1,9 @@
 import {
   CreateCategoryParams,
   ICreateCategoryRepository,
-} from '../../controllers/category/create-category/protocols';
-import prismaClient from '../../database/prismaClient';
-import { ICategory } from '../../models/Category';
+} from '../../../controllers/category/create-category/protocols';
+import prismaClient from '../../../database/prismaClient';
+import { ICategory } from '../../../models/Category';
 
 export class PostgresCreateCategory implements ICreateCategoryRepository {
   async createCategory(params: CreateCategoryParams): Promise<ICategory> {

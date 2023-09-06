@@ -1,6 +1,6 @@
-import { ICategory } from '../../models/Category';
-import prismaClient from '../../database/prismaClient';
-import { IDeleteCategoryRepository } from '../../controllers/category/delete-category/protocols';
+import { ICategory } from '../../../models/Category';
+import prismaClient from '../../../database/prismaClient';
+import { IDeleteCategoryRepository } from '../../../controllers/category/delete-category/protocols';
 
 export class PostgresDeleteCategoryRepository
   implements IDeleteCategoryRepository
