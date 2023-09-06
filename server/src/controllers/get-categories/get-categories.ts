@@ -1,7 +1,7 @@
-import { Controller } from '../protocols';
+import { IController } from '../protocols';
 import { IGetCategoriesRepository } from './protocols';
 
-export class GetCategoriesController implements Controller {
+export class GetCategoriesController implements IController {
   constructor(private readonly getCategories: IGetCategoriesRepository) {}
 
   async handle() {

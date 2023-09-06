@@ -9,8 +9,6 @@ export interface HttpRequest<B> {
   params?: any;
 }
 
-export interface Controller {
-  handle: (
-    httpResponse: HttpResponse<unknown>,
-  ) => Promise<HttpResponse<unknown>>;
+export interface IController {
+  handle(httpRequest: HttpRequest<unknown>): Promise<HttpResponse<unknown>>;
 }
