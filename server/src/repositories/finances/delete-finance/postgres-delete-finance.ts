@@ -16,6 +16,12 @@ export class PostgresDeleteFinanceRepository
       throw new Error('finance_not_found');
     }
 
+    await prismaClient.financeCategories.deleteMany({
+      where: {
+        financeId: id,
+      },
+    });
+
     const deletedFinance = await prismaClient.finance.delete({
       where: {
         id,

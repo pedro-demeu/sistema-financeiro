@@ -26,6 +26,9 @@ export class DeleteFinanceController implements IController {
         body: category,
       };
     } catch (err) {
+      console.log({
+        err,
+      });
       return {
         statusCode: 500,
         body: 'internal_server_error',
