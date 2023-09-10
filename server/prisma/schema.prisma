@@ -15,11 +15,13 @@ model Category {
   name      String   @unique
   createdAt DateTime @default(now())
 
+  finances FinanceCategories[]
+
   @@map("categories")
 }
 
 model Finance {
-  id          Int      @id @default(autoincrement())
+  id          Int                 @id @default(autoincrement())
   userId      String
   name        String
   value       Float
@@ -28,10 +30,20 @@ model Finance {
   expiresAt   DateTime
   repeat      Boolean
   repeatType  String
-  tags        Int[]
   repeatUntil DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  categories  FinanceCategories[]
 
   @@map("finances")
+}
+
+model FinanceCategories {
+  id         Int      @id @default(autoincrement())
+  financeId  Int
+  finance    Finance  @relation(fields: [financeId], references: [id])
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@map("finance_categories")
 }
