@@ -5,6 +5,8 @@ import { PostgresGetFinances } from '../repositories/finances/get-finances/postg
 import { GetFinancesController } from '../controllers/finances/get-finances/get-finances';
 import { PostgresDeleteFinanceRepository } from '../repositories/finances/delete-finance/postgres-delete-finance';
 import { DeleteFinanceController } from '../controllers/finances/delete-finance/delete-finance';
+import { PostgresUpdateFinanceRepository } from '../repositories/finances/update-finance/postgres-update-finance';
+import { UpdateFinanceController } from '../controllers/finances/update-finance/update-finance';
 
 export const routes = Router();
 
@@ -27,7 +29,19 @@ routes.post('/', async (req, res) => {
   res.status(statusCode).send(body);
 });
 
-routes.put('/:id', async (req, res) => {});
+routes.put('/:id', async (req, res) => {
+  const financeRepository = new PostgresUpdateFinanceRepository();
+  const updateFinanceController = new UpdateFinanceController(
+    financeRepository,
+  );
+
+  const { body, statusCode } = await updateFinanceController.handle({
+    body: req.body,
+    params: req.params,
+  });
+
+  res.status(statusCode).send(body);
+});
 
 routes.delete('/:id', async (req, res) => {
   const financeRepository = new PostgresDeleteFinanceRepository();
