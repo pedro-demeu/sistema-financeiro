@@ -12,6 +12,7 @@ export interface CreateFinanceParams {
   repeatUntil?: Date;
   createdAt: Date;
   updatedAt: Date;
+  categories: number[];
 }
 
 export interface ICreateFinanceRepository {

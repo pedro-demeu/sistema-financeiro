@@ -36,6 +36,9 @@ export class UpdateFinanceController implements IController {
         body: financeResponse,
       };
     } catch (err) {
+      console.log({
+        err,
+      });
       return {
         statusCode: 500,
         body: 'internal_server_error',

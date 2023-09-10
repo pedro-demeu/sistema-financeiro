@@ -9,6 +9,7 @@ export interface UpdateFinanceParams {
   repeat: boolean;
   repeatType: RepeatType;
   repeatUntil?: Date;
+  categories?: number[];
 }
 
 export interface IUpdateFinanceRepository {

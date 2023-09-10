@@ -17,11 +17,22 @@ export class PostgresCreateFinance implements ICreateFinanceRepository {
         repeat: data.repeat,
         repeatType: data.repeatType,
         repeatUntil: data.repeatUntil || '',
-        createdAt: data.createdAt,
-        updatedAt: data.updatedAt,
+        createdAt: new Date(),
+        updatedAt: new Date(),
         userId: data.userId,
       },
     });
+
+    if (data.categories?.length) {
+      for (const categoryId of data.categories) {
+        await prismaClient.financeCategories.create({
+          data: {
+            financeId: finance.id,
+            categoryId,
+          },
+        });
+      }
+    }
 
     const financeCreated = await prismaClient.finance.findUnique({
       where: {

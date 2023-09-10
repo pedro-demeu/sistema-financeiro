@@ -18,9 +18,7 @@ export class PostgresUpdateFinanceRepository
       },
     });
 
-    if (finance?.name === params.name) {
-      throw new Error('finance_already_exists');
-    }
+    const { categories, ...rest } = params;
 
     if (!finance) {
       throw new Error('finance_not_found');
@@ -31,11 +29,43 @@ export class PostgresUpdateFinanceRepository
         id,
       },
       data: {
-        ...params,
+        ...rest,
         updatedAt: new Date(),
       },
     });
 
+    if (categories?.length) {
+      await prismaClient.financeCategories.deleteMany({
+        where: {
+          financeId: id,
+        },
+      });
+
+      for (const categoryId of categories) {
+        const categoryExists = await prismaClient.category.findUnique({
+          where: {
+            id: categoryId,
+          },
+        });
+
+        if (!categoryExists) {
+          throw new Error('category_not_found');
+        }
+
+        await prismaClient.financeCategories.create({
+          data: {
+            financeId: id,
+            categoryId,
+          },
+        });
+      }
+    } else {
+      await prismaClient.financeCategories.deleteMany({
+        where: {
+          financeId: id,
+        },
+      });
+    }
     if (!updatedFinance) {
       throw new Error('category_not_updated');
     }
