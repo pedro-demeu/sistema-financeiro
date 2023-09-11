@@ -12,7 +12,7 @@ export class DeleteCronogramController implements IController {
     httpRequest: HttpRequest<any>,
   ): Promise<HttpResponse<ICronogram>> {
     try {
-      const id = Number(httpRequest.params?.id);
+      const id = Number(httpRequest.params);
 
       if (!id) {
         return {

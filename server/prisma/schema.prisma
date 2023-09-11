@@ -56,8 +56,6 @@ model Cronogram {
   repeat    Boolean
   status    Boolean
   dueDate   DateTime
-  name      String
-  value     Float
   type      RepeatType
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt

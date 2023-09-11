@@ -13,8 +13,6 @@ export class UpdateCronogramController implements IController {
     if (!body?.type) return 'type_required';
     if (!RepeatType[body.type]) return 'type_invalid';
     if (!body?.dueDate) return 'dueDate_required';
-    if (!body?.repeat) return 'repeat_required';
-    if (!body?.status) return 'status_required';
     return null;
   }
 
@@ -22,7 +20,7 @@ export class UpdateCronogramController implements IController {
     httpRequest: HttpRequest<CronogramUpdateParams>,
   ): Promise<HttpResponse<ICronogram>> {
     try {
-      const id = Number(httpRequest?.params?.id);
+      const id = Number(httpRequest?.params);
       const body = httpRequest?.body;
 
       if (!id) {
