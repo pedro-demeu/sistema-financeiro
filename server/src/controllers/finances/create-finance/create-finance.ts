@@ -11,57 +11,75 @@ export class CreateFinanceController implements IController {
     httpRequest: HttpRequest<CreateFinanceParams>,
   ): Promise<HttpResponse<IFinance>> {
     try {
-      const data = httpRequest.body;
-      if (!data?.name)
+      const body = httpRequest.body;
+
+      if (!body?.name)
         return {
           statusCode: 400,
           body: 'name_required',
         };
 
-      if (!data.name && data.name.length < 3)
+      if (!body.name && body.name.length < 3)
         return {
           statusCode: 400,
           body: 'name_min_length_3',
         };
 
-      if (!data?.type)
+      if (!body?.type)
         return {
           statusCode: 400,
           body: 'type_required',
         };
 
-      if (!data?.value)
+      if (body.type !== 'INCOME' && body.type !== 'SPENDING')
+        return {
+          statusCode: 400,
+          body: 'type_invalid',
+        };
+
+      if (!body?.value)
         return {
           statusCode: 400,
           body: 'value_required',
         };
 
-      if (!data?.isPaid)
+      if (!body?.isPaid)
         return {
           statusCode: 400,
           body: 'isPaid_required',
         };
 
-      if (!data?.repeat)
+      if (!body?.repeat)
         return {
           statusCode: 400,
           body: 'repeat_required',
         };
 
-      if (!data?.repeatType)
+      if (!body?.repeatType)
         return {
           statusCode: 400,
           body: 'repeatType_required',
         };
 
-      if (!data?.userId)
+      if (
+        body?.repeatType !== 'Monthly' &&
+        body?.repeatType !== 'Weekly' &&
+        body?.repeatType !== 'Yearly' &&
+        body?.repeatType !== 'Never'
+      )
+        return {
+          statusCode: 400,
+          body: 'repeatType_type_invalid',
+        };
+
+      if (!body?.userId)
         return {
           statusCode: 400,
           body: 'userId_required',
         };
 
       const finance = await this.createFinanceRepository.createFinance({
-        ...data,
+        ...body,
         createdAt: new Date(),
         updatedAt: new Date(),
       });

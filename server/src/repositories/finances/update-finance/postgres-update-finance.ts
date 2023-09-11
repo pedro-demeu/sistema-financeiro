@@ -10,62 +10,18 @@ export class PostgresUpdateFinanceRepository
 {
   async updateFinance(
     id: number,
-    params: UpdateFinanceParams,
+    params: Omit<UpdateFinanceParams, 'categories'>,
   ): Promise<IFinance> {
-    const finance = await prismaClient.finance.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    const { categories, ...rest } = params;
-
-    if (!finance) {
-      throw new Error('finance_not_found');
-    }
-
     const updatedFinance = await prismaClient.finance.update({
       where: {
         id,
       },
       data: {
-        ...rest,
+        ...params,
         updatedAt: new Date(),
       },
     });
 
-    if (categories?.length) {
-      await prismaClient.financeCategories.deleteMany({
-        where: {
-          financeId: id,
-        },
-      });
-
-      for (const categoryId of categories) {
-        const categoryExists = await prismaClient.category.findUnique({
-          where: {
-            id: categoryId,
-          },
-        });
-
-        if (!categoryExists) {
-          throw new Error('category_not_found');
-        }
-
-        await prismaClient.financeCategories.create({
-          data: {
-            financeId: id,
-            categoryId,
-          },
-        });
-      }
-    } else {
-      await prismaClient.financeCategories.deleteMany({
-        where: {
-          financeId: id,
-        },
-      });
-    }
     if (!updatedFinance) {
       throw new Error('category_not_updated');
     }
