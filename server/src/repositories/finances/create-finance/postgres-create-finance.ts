@@ -10,13 +10,14 @@ export class PostgresCreateFinance implements ICreateFinanceRepository {
     const finance = await prismaClient.finance.create({
       data: {
         name: data.name,
+        beneficiary: data.beneficiary,
         value: data.value,
         type: data.type,
         isPaid: data.isPaid,
-        expiresAt: data.expiresAt || new Date(),
-        repeat: data.repeat,
-        repeatType: data.repeatType,
-        repeatUntil: data.repeatUntil || '',
+        expiration: data.expiration,
+        expirationDay: new Date(data.expiration).getUTCDate(),
+        paymentKey: data.paymentKey || '',
+        paymentMethod: data.paymentMethod,
         createdAt: new Date(),
         updatedAt: new Date(),
         userId: data.userId,

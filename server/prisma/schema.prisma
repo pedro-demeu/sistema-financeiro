@@ -21,7 +21,7 @@ model Finance {
   id Int @id @default(autoincrement())
 
   name          String
-  benefeiciary  String
+  beneficiary   String
   value         Float
   type          FinanceType
   paymentMethod PaymentMethodType

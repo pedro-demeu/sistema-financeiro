@@ -1,14 +1,16 @@
-import { FinanceType, IFinance, RepeatType } from '../../../models/Finance';
+import { FinanceType, IFinance, PaymentMethod } from '../../../models/Finance';
 
 export interface UpdateFinanceParams {
   name: string;
+  beneficiary: string;
   value: number;
   type: FinanceType;
+  paymentMethod: PaymentMethod;
+  paymentKey: string;
+  expiration: Date;
+  expirationDay: number;
   isPaid: boolean;
-  expiresAt?: Date;
   repeat: boolean;
-  repeatType: RepeatType;
-  repeatUntil?: Date;
   categories?: number[];
 }
 
