@@ -3,6 +3,7 @@ import express from 'express';
 import { config } from 'dotenv';
 import { routes as CategoryRoutes } from './modules/category';
 import { routes as FinancesRoutes } from './modules/finances';
+import { routes as CronogramsRoutes } from './modules/cronogram';
 
 config();
 
@@ -18,3 +19,4 @@ app.listen(PORT, () => {
 
 app.use('/v1/api/category', CategoryRoutes);
 app.use('/v1/api/finances', FinancesRoutes);
+app.use('/v1/api/cronograms', CronogramsRoutes);
