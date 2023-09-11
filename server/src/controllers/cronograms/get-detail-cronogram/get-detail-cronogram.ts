@@ -2,7 +2,7 @@ import { ICronogram } from '../../../models/Cronogram';
 import { HttpRequest, HttpResponse, IController } from '../../protocols';
 import { IGetDetailCronogramRepository } from './protocols';
 
-export class GetCronogramController implements IController {
+export class GetDetailCronogramController implements IController {
   constructor(
     private readonly getDetailCronogramRepository: IGetDetailCronogramRepository,
   ) {}

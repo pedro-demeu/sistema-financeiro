@@ -4,7 +4,7 @@ import { IController, HttpRequest, HttpResponse } from '../../protocols';
 import { CronogramRepository, CronogramUpdateParams } from './protocols';
 import { ICronogram } from '../../../models/Cronogram';
 
-export class UpdateFinanceController implements IController {
+export class UpdateCronogramController implements IController {
   constructor(
     private readonly updateCronogramRepository: CronogramRepository,
   ) {}
