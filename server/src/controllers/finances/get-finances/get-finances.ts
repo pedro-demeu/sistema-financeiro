@@ -13,7 +13,7 @@ export class GetFinancesController implements IController {
         body: finances,
       };
     } catch (err) {
-      console.log(err);
+      console.error(err);
       return {
         statusCode: 500,
         body: 'internal_server_error',

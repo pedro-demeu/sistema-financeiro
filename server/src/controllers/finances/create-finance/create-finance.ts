@@ -71,9 +71,7 @@ export class CreateFinanceController implements IController {
         body: finance,
       };
     } catch (err) {
-      console.log({
-        err,
-      });
+      console.error(err);
       return {
         statusCode: 500,
         body: 'internal_server_error',

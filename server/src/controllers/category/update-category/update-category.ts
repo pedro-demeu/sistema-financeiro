@@ -34,6 +34,7 @@ export class UpdateCategoryController implements IController {
         body: categoryResponse,
       };
     } catch (err) {
+      console.error(err);
       return {
         statusCode: 500,
         body: 'internal_server_error',

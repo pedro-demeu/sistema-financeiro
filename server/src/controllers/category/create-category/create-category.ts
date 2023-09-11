@@ -1,6 +1,7 @@
 import { Category } from '@prisma/client';
 import { IController, HttpRequest, HttpResponse } from '../../protocols';
 import { CreateCategoryParams, ICreateCategoryRepository } from './protocols';
+import prismaClient from '../../../database/prismaClient';
 
 export class CreateCategoryController implements IController {
   constructor(
@@ -11,29 +12,45 @@ export class CreateCategoryController implements IController {
     httpRequest: HttpRequest<CreateCategoryParams>,
   ): Promise<HttpResponse<Category>> {
     try {
-      const name = httpRequest.body;
-      if (!name)
+      const body = httpRequest.body;
+
+      if (!body?.name) {
         return {
           statusCode: 400,
           body: 'name_required',
         };
+      }
 
-      if (String(name).length < 3)
+      if (body.name.length < 3) {
         return {
           statusCode: 400,
           body: 'name_min_length_3',
         };
+      }
+      const findByName = await prismaClient.category.findFirst({
+        where: {
+          name: body.name,
+        },
+      });
 
-      const category = await this.createCategoryRepository.createCategory(name);
+      if (findByName) {
+        return {
+          statusCode: 400,
+          body: 'category_already_exists',
+        };
+      }
+
+      const category = await this.createCategoryRepository.createCategory(body);
 
       return {
         statusCode: 201,
         body: category,
       };
     } catch (err) {
+      console.error(err);
       return {
         statusCode: 500,
-        body: 'internal_server_error',
+        body: err as string,
       };
     }
   }

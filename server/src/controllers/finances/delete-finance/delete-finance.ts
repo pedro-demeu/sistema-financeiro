@@ -26,6 +26,7 @@ export class DeleteFinanceController implements IController {
         body: category,
       };
     } catch (err) {
+      console.error(err);
       console.log({
         err,
       });

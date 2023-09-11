@@ -13,6 +13,7 @@ export class GetCategoriesController implements IController {
         body: categories,
       };
     } catch (err) {
+      console.error(err);
       return {
         statusCode: 500,
         body: 'internal_server_error',

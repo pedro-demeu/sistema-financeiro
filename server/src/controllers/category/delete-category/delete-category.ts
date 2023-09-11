@@ -28,6 +28,7 @@ export class DeleteCategoryController implements IController {
         body: category,
       };
     } catch (err) {
+      console.error(err);
       return {
         statusCode: 500,
         body: 'internal_server_error',
