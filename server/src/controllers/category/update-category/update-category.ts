@@ -1,3 +1,4 @@
+import prismaClient from '../../../database/prismaClient';
 import { ICategory } from '../../../models/Category';
 import { IController, HttpRequest, HttpResponse } from '../../protocols';
 import { IUpdateCategoryRepository, UpdateCategoryParams } from './protocols';
@@ -24,6 +25,19 @@ export class UpdateCategoryController implements IController {
         return {
           statusCode: 400,
           body: `missing_param_id`,
+        };
+      }
+
+      const checkIfCategoryExists = await prismaClient.category.findFirst({
+        where: {
+          name: body.name,
+        },
+      });
+
+      if (checkIfCategoryExists) {
+        return {
+          statusCode: 400,
+          body: 'category_already_exists',
         };
       }
 
