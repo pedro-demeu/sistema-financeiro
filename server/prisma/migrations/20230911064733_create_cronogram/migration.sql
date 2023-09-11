@@ -33,8 +33,6 @@ CREATE TABLE "cronograms" (
     "repeat" BOOLEAN NOT NULL,
     "status" BOOLEAN NOT NULL,
     "dueDate" TIMESTAMP(3) NOT NULL,
-    "name" TEXT NOT NULL,
-    "value" DOUBLE PRECISION NOT NULL,
     "type" "RepeatType" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
