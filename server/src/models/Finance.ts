@@ -1,17 +1,32 @@
-export type FinanceType = 'INCOME' | 'SPENDING';
-export type RepeatType = 'Monthly' | 'Weekly' | 'Yearly' | 'Never';
+export type FinanceType =
+  | 'SALARY'
+  | 'BONUS'
+  | 'SPENDING'
+  | 'INVESTMENT'
+  | 'OTHERS';
+
+export type PaymentMethod =
+  | 'CREDIT_CARD'
+  | 'DEBIT_CARD'
+  | 'MONEY'
+  | 'PIX'
+  | 'TRANSFER'
+  | 'BANK_SLIP'
+  | 'SPECIAL_CHECK'
+  | 'OTHERS';
 
 export interface IFinance {
   id?: number;
-  userId: string;
   name: string;
+  beneficiary: string;
   value: number;
-  type: FinanceType | string;
+  type: FinanceType;
+  paymentMethod: PaymentMethod;
+  paymentKey: string;
+  expiration: Date;
+  expirationDay: number;
   isPaid: boolean;
-  expiresAt?: Date;
-  repeat: boolean;
-  repeatType: RepeatType | string;
-  repeatUntil?: Date;
+  userId: string;
   createdAt: Date;
   updatedAt: Date;
 }
